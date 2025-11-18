@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>21 Dias de Devocional Interativo (João - NVI)</title>
+    <title>21 Dias: Soberania e Fé em João (Devocional Reformado)</title>
     <style>
         /* CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
         body {
@@ -80,13 +80,14 @@
             font-style: italic;
         }
         
-        /* 2. NAVEGAÇÃO E UTILS */
+        /* 2. NAVEGAÇÃO E UTILS (Ajustado para Mobile) */
         .top-utils {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
             flex-wrap: wrap; 
+            gap: 15px; /* Espaço entre os elementos */
         }
         .language-selector {
              display: flex;
@@ -121,6 +122,8 @@
             border-radius: 5px;
             color: #333;
             transition: all 0.2s;
+            margin-left: auto; /* Empurra para a direita quando há espaço */
+            white-space: nowrap; /* Evita que o texto quebre */
         }
 
         .navigation {
@@ -130,11 +133,19 @@
             margin-top: 30px;
             padding-top: 15px;
             border-top: 1px solid #ddd;
+            flex-wrap: wrap; /* Permite que os botões quebrem de linha em telas pequenas */
+            gap: 15px; 
+        }
+        .progress-check {
+            flex-grow: 1; 
+            text-align: center; /* CENTRALIZAÇÃO DO LABEL */
+            white-space: nowrap; 
         }
         .progress-check label {
             cursor: pointer;
             font-weight: bold;
             color: #28a745;
+            margin-left: 5px; 
         }
         .nav-button {
             padding: 10px 15px;
@@ -208,7 +219,7 @@
 
         /* 4. ANIMAÇÕES DE VIRADA DE PÁGINA */
         #devotionalContent {
-            min-height: 400px; /* Garante que o container não encolha durante a transição */
+            min-height: 400px; 
         }
         .page-out-left {
             opacity: 0;
@@ -220,7 +231,6 @@
             transform: translateX(50px);
             transition: opacity 0.3s ease-in, transform 0.3s ease-in;
         }
-        /* Efeito de Entrada (Para o conteúdo que acabou de ser renderizado) */
         .page-in-right {
             opacity: 1;
             transform: translateX(0);
@@ -230,6 +240,33 @@
             opacity: 1;
             transform: translateX(0);
             transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        /* 5. MEDIA QUERIES (Ajustes para Celular) */
+        @media (max-width: 600px) {
+            .book-container {
+                padding: 20px 25px; 
+                width: 95%; 
+            }
+            .top-utils {
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 10px; 
+            }
+            #themeToggle {
+                margin-left: 0; 
+            }
+            .navigation {
+                flex-direction: column; 
+                gap: 10px; 
+            }
+            .nav-button {
+                width: 100%; 
+            }
+            .progress-check {
+                order: -1; /* Coloca o checkbox acima dos botões Anterior/Próximo em mobile */
+                width: 100%;
+            }
         }
 
     </style>
@@ -248,7 +285,7 @@
         </div>
         
         <h1 id="mainTitle">21 Dias: Soberania e Fé em João</h1>
-        <p class="subtitle" id="subTitle">Foco na natureza divina de Jesus, novo nascimento e a autoridade do Filho (Capítulos 1-5).</p>
+        <p class="subtitle" id="subTitle">Foco na natureza divina de Jesus, novo nascimento e a autoridade do Filho.</p>
         
         <p id="pageCounter" style="text-align: right;"></p>
         
@@ -416,7 +453,7 @@
                     h2: "Jour 3: « Viens et Vois »",
                     versiculos: `<strong>Jean 1:45-46 (Louis Segond):</strong> Philippe rencontra Nathanaël, et lui dit: Celui de qui Moïse a écrit dans la loi et dont les prophètes ont parlé, nous l'avons trouvé, Jésus... Philippe lui dit: Viens et vois.`,
                     resumo: "C'est le modèle fondamental de **l'évangélisation**. Philippe l'invite à une **rencontre personnelle** avec le Christ. La vraie foi naît de la rencontre avec Jésus, qui est l'accomplissement de toute la Loi et des Prophètes.",
-                    aplicacao: "Ne laissez pas vos **préjugés** vous empêcher, vous ou d'autres, de trouver Jésus. La meilleure façon d'évangéliser est avec l'invitation personnelle: **« Viens et vois »** la transformation en Christ."
+                    aplicacao: "Approchez-vous de Jésus aujourd'hui en tant que votre **Créateur et Autorité Suprême**. Cherchez Sa Parole pour apporter **clarté et direction** (Lumière) à votre vie, reconnaissant Sa suprématie."
                 }
             },
             4: {
@@ -515,7 +552,7 @@
                 es: {
                     h2: "Día 7: El Amor de Dios Manifestado",
                     versiculos: `<strong>Juan 3:16-17 (NVI):</strong> Porque tanto amó Dios al mundo, que dio a su Hijo unigénito, para que todo el que cree en él no se pierda, sino que tenga vida eterna...`,
-                    resumo: "Este versículo resume la esencia del Evangelio: la salvación es un acto de **amor sacrificial de Dios (gracia)** y se recibe por la **fe**. La soberanía de Dios se manifiesta en el don, y la responsabilidad humana es la fe. El propósito de Cristo no es principalmente condenar, sino salvar.",
+                    resumo: "Este versículo resume la esencia del Evangelio: la salvação é um acto de **amor sacrificial de Deus (graça)** e é recebida pela **fé**. La soberanía de Dios se manifiesta en el don, y la responsabilidad humana es la fe. El propósito de Cristo no es principalmente condenar, sino salvar.",
                     aplicacion: "Mantén el amor de Dios (manifestado en la cruz) como el **centro de tu fe**. Si crees, tienes la certeza de la vida eterna. No vivas bajo condenación, sino en gratitud por la salvación que Él ha provisto gratuitamente."
                 },
                 fr: {
@@ -593,7 +630,7 @@
                 es: {
                     h2: "Día 10: El Maestro y Sus Campos",
                     versiculos: `<strong>Juan 4:35 (NVI):</strong> ¿No dicen ustedes: “Todavía faltan cuatro meses para la cosecha”? Yo les digo: ¡Abran los ojos y miren los campos! Ya están listos para la cosecha.`,
-                    resumo: "Jesús desplaza el enfoque de los discípulos de la paciencia cultural a la **urgencia de la misión espiritual**. Los 'campos' son las personas listas para escuchar el Evangelio. El trabajo de la cosecha es un **mandato continuo** para la Iglesia, motivado por la soberanía de Dios que ya preparó los corazones.",
+                    resumo: "Jesús desplaza el enfoque de los discípulos de la paciência cultural a la **urgencia de la misión espiritual**. Los 'campos' son las personas listas para escuchar el Evangelio. El trabajo de la cosecha es un **mandato continuo** para la Iglesia, motivado por la soberanía de Dios que ya preparó los corazones.",
                     aplicacion: "No esperes el momento 'perfecto' para compartir tu fe. Mira tu entorno (trabajo, familia, vecindario) como **campos maduros** y ora por audacia para testificar de Cristo hoy."
                 },
                 fr: {
@@ -645,7 +682,7 @@
                 es: {
                     h2: "Día 12: El Pan de Vida y la Preservación",
                     versiculos: `<strong>Juan 6:35, 37 (NVI):</strong> Entonces Jesús declaró: «Yo soy el pan de vida. El que a mí viene nunca tendrá hambre, y el que en mí cree nunca tendrá sed. (...) Todo el que el Padre me da vendrá a mí; y al que a mí viene, no lo echaré fuera.».`,
-                    resumo: "Jesús es la **única provisión** para el hambre y la sed espiritual. El Padre da personas a Cristo (elección), y Cristo las recibe y las **preserva perfectamente** (perseverancia de los santos). No hay pérdida de ninguno de los elegidos.",
+                    resumo: "Jesús es la **única provisão** para el hambre y la sed espiritual. El Padre da personas a Cristo (elección), y Cristo las recibe y las **preserva perfectamente** (perseverancia de los santos). No hay pérdida de ninguno de los elegidos.",
                     aplicacion: "Descansa en la **seguridad eterna** que Cristo ofrece. Tu fe no depende solo de tus esfuerzos, sino de la obra garantizada del Padre que te dio al Hijo, y de la promesa del Hijo de que **jamás te echará fuera**."
                 },
                 fr: {
@@ -671,7 +708,7 @@
                 es: {
                     h2: "Día 13: El Llamamiento Eficaz del Padre",
                     versiculos: `<strong>Juan 6:44 (NVI):</strong> Nadie puede venir a mí a menos que lo atraiga el Padre que me envió, y yo lo resucitaré en el día final.`,
-                    resumo: "Este es un pilar de la doctrina reformada (Gracia Irresistible). La **fe salvadora es un don**, y el acto de 'venir' a Cristo es precedido por el **llamamiento eficaz** (atracción) de Dios. El hombre no puede iniciar la salvación; el Padre lo hace soberanamente, garantizando la resurrección.",
+                    resumo: "Este es un pilar de la doctrina reformada (Gracia Irresistible). La **fe salvadora es um don**, y el acto de 'venir' a Cristo es precedido por el **llamamiento eficaz** (atracción) de Dios. El hombre no puede iniciar la salvación; el Padre lo hace soberanamente, garantizando la resurrección.",
                     aplicacion: "Agradece hoy a Dios por haber **iniciado la obra** en tu corazón. Si creíste, fue porque el Padre te atrajo. Esto debe generar una humildad profunda y una confianza absoluta en Su obra."
                 },
                 fr: {
@@ -723,7 +760,7 @@
                 es: {
                     h2: "Día 15: La Verdad que Libera",
                     versiculos: `<strong>Juan 8:31-32 (NVI):</strong> Si se mantienen fieles a mis enseñanzas, serán realmente mis discípulos; y conocerán la verdad, y la verdad los hará libres.`,
-                    resumo: "La **permanencia en la Palabra** es la marca del verdadero discípulo y la evidencia de la salvación. La liberación no es primariamente social o política, sino **espiritual**: liberación de la esclavitud del pecado. La verdad del Evangelio (Sola Scriptura) es el único medio de santificación.",
+                    resumo: "La **permanência na Palabra** es la marca del verdadero discípulo y la evidencia de la salvación. La liberación no es primariamente social o política, sino **espiritual**: liberación de la esclavitud del pecado. La verdad del Evangelio (Sola Scriptura) es el único medio de santificación.",
                     aplicacion: "Comprométete con la **disciplina diaria** de meditar en la Palabra. Reconoce que tu verdadera libertad se encuentra en la obediencia continua a la verdad de Cristo, y no en la satisfacción de tus propias voluntades."
                 },
                 fr: {
@@ -782,7 +819,7 @@
                     h2: "Jour 17: Je Suis la Résurrection et la Vie",
                     versiculos: `<strong>Jean 11:25-26 (Louis Segond):</strong> Jésus lui dit: Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort; et quiconque vit et croit en moi ne mourra jamais. Crois-tu cela?`,
                     resumo: "La promesse de Jésus ne concerne pas seulement la vie après la mort, mais la **vie *en Lui***. Il est la source active de la résurrection (physique et spirituelle). La foi en Christ garantit la vie éternelle, qui commence maintenant et culmine dans la résurrection finale. Le salut est centré sur Sa personne.",
-                    aplicacao: "Face à la souffrance ou à la perte, ancrez votre espérance dans la **Personne du Christ**. Il ne fait pas qu'*offrir* la vie, Il *est* la Vie. Répondez à Sa question avec conviction: « Oui, Seigneur, je crois cela! »"
+                    aplicacao: "Face à la souffrance ou à la perte, ancrez votre espérance dans la **Personne du Christ**. Il ne fait qu'*offrir* la vie, Il *est* la Vie. Répondez à Sa question avec conviction: « Oui, Seigneur, je crois cela! »"
                 }
             },
             18: {
@@ -827,7 +864,7 @@
                 es: {
                     h2: "Día 19: El Camino Exclusivo y Final",
                     versiculos: `<strong>Juan 14:6 (NVI):</strong> Jesús le contestó: «Yo soy el camino, la verdad y la vida. Nadie llega al Padre sino por mí.»`,
-                    resumo: "Este versículo establece la **exclusividad y la finalidad** de Jesús. No hay múltiples caminos hacia Dios. Él es el Único Mediador (Cristo es todo en todo). La salvación se obtiene **solo por medio de Él** (*Solus Christus*).",
+                    resumo: "Este versículo establece la **exclusividade y la finalidad** de Jesús. No hay múltiples caminos hacia Dios. Él es el Único Mediador (Cristo es todo en todo). La salvación se obtiene **solo por medio de Él** (*Solus Christus*).",
                     aplicacion: "Afirma tu fe en la **exclusividad salvadora de Cristo**. Resiste la tentación cultural de relativizar esta verdad. Vive y testifica con valentía que el único camino para la reconciliación con el Padre es Jesús."
                 },
                 fr: {
@@ -879,8 +916,8 @@
                 es: {
                     h2: "Día 21: El Propósito Final de la Escritura",
                     versiculos: `<strong>Juan 20:30-31 (NVI):</strong> Jesús hizo muchas otras señales milagrosas en presencia de sus discípulos, las cuales no están registradas en este libro. Pero estas se han escrito para que ustedes crean que Jesús es el Cristo, el Hijo de Dios, y para que al creer, tengan vida en su nombre.`,
-                    resumo: "El Evangelio de Juan tiene un **propósito claro e intencional**: guiar al lector a la **fe salvadora** en Jesús (Sola Fide) como el Mesías divino. La Escritura es la única regla de fe y práctica y contiene todo lo necesario para la salvación. El resultado de la fe es la vida en Su Nombre.",
-                    aplicacion: "Reafirma tu **fe y confianza** únicamente en las Sagradas Escrituras. Pide a Dios que use el conocimiento adquirido en estos 21 días para consolidar tu fe en Cristo, el Hijo de Dios, y vivir la vida abundante que Él te ha dado."
+                    resumo: "El Evangelio de João tiene un **propósito claro e intencional**: guiar al lector a la **fe salvadora** en Jesús (Sola Fide) como el Mesías divino. La Escritura es la única regla de fe y práctica y contiene todo lo necesario para la salvación. El resultado de la fe es la vida en Su Nombre.",
+                    aplicacion: "Afirma tu **fe y confianza** únicamente en las Sagradas Escrituras. Pide a Dios que use el conocimiento adquirido en estos 21 días para consolidar tu fe en Cristo, el Hijo de Dios, y vivir la vida abundante que Él te ha dado."
                 },
                 fr: {
                     h2: "Jour 21: Le But Final de l'Écriture",
@@ -938,14 +975,17 @@
             document.getElementById('nextButton').disabled = currentDay === totalDays;
 
             const check = document.getElementById('completedCheck');
+            // Remove o listener anterior para evitar duplicações
+            check.onchange = null; 
+            
             check.checked = getDayStatus(currentDay);
             
-            check.onchange = null;
             check.onchange = () => {
                 saveDayStatus(currentDay, check.checked);
+                // Avança automaticamente se marcar como completo e não for o último dia
                 if (check.checked && currentDay < totalDays) {
                      setTimeout(() => {
-                         handleNavigation(1); // Avança após marcar como completo
+                         handleNavigation(1); 
                      }, 300);
                 }
             };
@@ -976,8 +1016,8 @@
             const outClass = direction === 1 ? 'page-out-left' : 'page-out-right';
             const inClass = direction === 1 ? 'page-in-right' : 'page-in-left';
             
-            devotionalContentDiv.classList.add(outClass);
             devotionalContentDiv.classList.remove('page-in-right', 'page-in-left');
+            devotionalContentDiv.classList.add(outClass);
 
             setTimeout(() => {
                 currentDay = newDay;
@@ -1024,13 +1064,17 @@
         });
 
         window.onload = () => {
+            // Aplica tema salvo
             document.body.classList.remove('light-theme', 'dark-theme');
             document.body.classList.add(currentTheme);
             
+            // Carrega dia salvo
             currentDay = getSavedProgress();
             
+            // Renderiza e atualiza textos
             updateTexts();
             
+            // Inicia com a animação de entrada
             devotionalContentDiv.classList.add('page-in-right');
         };
 
