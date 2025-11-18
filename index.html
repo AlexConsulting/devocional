@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21 Dias de Devocional Interativo (João - NVI)</title>
+    <style>
+        /* CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            background-color: #e6e0d3; /* Papel envelhecido */
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .book-container {
+            max-width: 650px;
+            width: 90%;
+            background: #fdfdfd;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+            position: relative;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        h1 {
+            color: #4b0082;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            border-bottom: 2px solid #4b0082;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 0.95em;
+        }
+        h2 {
+            color: #007bff;
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .versiculos {
+            font-style: italic;
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-left: 5px solid #28a745;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        .section {
+            margin-top: 20px;
+            padding: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .section strong {
+            display: block;
+            color: #dc3545;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .oracao-final {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #fffae0;
+            border-left: 5px solid #ffc107;
+            font-weight: bold;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        /* 2. NAVEGAÇÃO E UTILS */
+        .top-utils {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap; 
+        }
+        .language-selector {
+             display: flex;
+             gap: 8px;
+        }
+        /* ESTILO PARA SIGLAS DE IDIOMA (PT, EN, ES, FR) */
+        .language-selector button {
+            background: none;
+            border: 1px solid #ccc; 
+            font-size: 0.9em; 
+            font-weight: bold;
+            color: #4b0082;
+            padding: 5px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
+        }
+        .language-selector button.active {
+            opacity: 1;
+            transform: scale(1.05);
+            background-color: #007bff; 
+            color: white;
+            border-color: #007bff;
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5);
+        }
+        #themeToggle {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #333;
+            transition: all 0.2s;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        .progress-check label {
+            cursor: pointer;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .nav-button {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: opacity 0.2s, background 0.2s;
+        }
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        /* 3. DARK THEME CSS */
+        .dark-theme {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        .dark-theme .book-container {
+            background: #1e1e1e;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border-color: #333;
+        }
+        .dark-theme h1 {
+            color: #bb86fc;
+            border-bottom-color: #bb86fc;
+        }
+        .dark-theme .subtitle {
+            color: #aaa;
+        }
+        .dark-theme h2 {
+            color: #03dac6;
+        }
+        .dark-theme .versiculos {
+            background-color: #2c2c2c;
+            border-left-color: #03dac6;
+        }
+        .dark-theme .section {
+            border-bottom-color: #444;
+        }
+        .dark-theme .section strong {
+            color: #cf6679;
+        }
+        .dark-theme .oracao-final {
+            background-color: #33331c;
+            border-left-color: #ffd600;
+        }
+        .dark-theme #themeToggle {
+            color: #f4f4f4;
+            border-color: #555;
+            background: #1e1e1e;
+        }
+        .dark-theme .language-selector button {
+            color: #bb86fc;
+            border-color: #555;
+            background: #1e1e1e;
+        }
+        .dark-theme .language-selector button.active {
+            background-color: #bb86fc;
+            color: #1e1e1e;
+            border-color: #bb86fc;
+            box-shadow: 0 2px 5px rgba(187, 134, 252, 0.5);
+        }
+        .dark-theme .nav-button {
+            background-color: #03dac6;
+            border-color: #03dac6;
+            color: #1e1e1e;
+        }
+
+        /* 4. ANIMAÇÕES DE VIRADA DE PÁGINA */
+        #devotionalContent {
+            min-height: 400px; /* Garante que o container não encolha durante a transição */
+        }
+        .page-out-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+        }
+        .page-out-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+        }
+        /* Efeito de Entrada (Para o conteúdo que acabou de ser renderizado) */
+        .page-in-right {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .page-in-left {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+    </style>
+</head>
+<body class="light-theme">
+
+    <div class="book-container">
+        <div class="top-utils">
+            <div class="language-selector" id="languageSelector">
+                <button data-lang="pt" class="active" title="Português">PT</button>
+                <button data-lang="en" title="English">EN</button>
+                <button data-lang="es" title="Español">ES</button>
+                <button data-lang="fr" title="Français">FR</button>
+            </div>
+            <button id="themeToggle" title="Alternar Tema">☀️ Escuro/Claro 🌙</button>
+        </div>
+        
+        <h1 id="mainTitle">21 Dias: Soberania e Fé em João</h1>
+        <p class="subtitle" id="subTitle">Foco na natureza divina de Jesus, novo nascimento e a autoridade do Filho (Capítulos 1-5).</p>
+        
+        <p id="pageCounter" style="text-align: right;"></p>
+        
+        <div id="devotionalContent">
+            </div>
+
+        <div class="navigation">
+            <button id="prevButton" class="nav-button" disabled>« Anterior</button>
+            
+            <div class="progress-check">
+                <input type="checkbox" id="completedCheck">
+                <label for="completedCheck" id="checkLabel">Devocional Realizado</label>
+            </div>
+            
+            <button id="nextButton" class="nav-button">Próximo »</button>
+        </div>
+
+    </div>
+
+    <script>
+        const totalDays = 21;
+        let currentDay = 1;
+        let currentLang = localStorage.getItem('devotionalLang') || 'pt';
+        let currentTheme = localStorage.getItem('devotionalTheme') || 'light-theme';
+        const devotionalContentDiv = document.getElementById('devotionalContent');
+
+        // --- DADOS MULTI-IDIOMA ---
+        
+        const langData = {
+            'pt': {
+                title: "21 Dias: Soberania e Fé em João",
+                subtitle: "Foco na natureza divina de Jesus, novo nascimento e a autoridade do Filho.",
+                prev: "« Anterior",
+                next: "Próximo »",
+                checkLabel: "Devocional Realizado",
+                themeToggle: "☀️ Escuro/Claro 🌙",
+                page: "Dia",
+                of: "de",
+                sections: {
+                    resumo: "Breve Resumo:",
+                    aplicacao: "Aplicação Prática:",
+                    oracao: "Ore para que Deus te fortaleça e te ajude a colocar esses ensinamentos em prática."
+                }
+            },
+            'en': {
+                title: "21 Days: Sovereignty and Faith in John",
+                subtitle: "Focus on the divine nature of Jesus, new birth, and the Son's authority.",
+                prev: "« Previous",
+                next: "Next »",
+                checkLabel: "Devotional Completed",
+                themeToggle: "☀️ Dark/Light 🌙",
+                page: "Day",
+                of: "of",
+                sections: {
+                    resumo: "Brief Summary (Baptist/Reformed):",
+                    aplicacao: "Practical Application:",
+                    oracao: "Pray that God will strengthen you and help you put these teachings into practice."
+                }
+            },
+            'es': {
+                title: "21 Días: Soberanía y Fe en Juan",
+                subtitle: "Enfoque en la naturaleza divina de Jesús, el nuevo nacimiento y la autoridad del Hijo.",
+                prev: "« Anterior",
+                next: "Próximo »",
+                checkLabel: "Devocional Realizado",
+                themeToggle: "☀️ Oscuro/Claro 🌙",
+                page: "Día",
+                of: "de",
+                sections: {
+                    resumo: "Resumen Breve (Bautista/Reformado):",
+                    aplicacion: "Aplicación Práctica:",
+                    oracao: "Ora para que Dios te fortalezca y te ayude a poner estas enseñanzas en práctica."
+                }
+            },
+            'fr': {
+                title: "21 Jours: Souveraineté et Foi en Jean",
+                subtitle: "Accent mis sur la nature divine de Jésus, la nouvelle naissance et l'autorité du Fils.",
+                prev: "« Précédent",
+                next: "Suivant »",
+                checkLabel: "Dévotion Accomplie",
+                themeToggle: "☀️ Sombre/Clair 🌙",
+                page: "Jour",
+                of: "sur",
+                sections: {
+                    resumo: "Bref Résumé (Baptiste/Réformé):",
+                    aplicacao: "Application Pratique:",
+                    oracao: "Priez pour que Dieu vous fortifie et vous aide à mettre ces enseignements en pratique."
+                }
+            }
+        };
+
+        const devotionalContent = {
+            1: {
+                pt: {
+                    h2: "Dia 1: A Luz Brilha nas Trevas",
+                    versiculos: `<strong>João 1:1-5 (NVI):</strong> No princípio era o Verbo, e o Verbo estava com Deus, e o Verbo era Deus. Ele estava com Deus no princípio...`,
+                    resumo: "Este prólogo estabelece a **divindade eterna e a preexistência de Cristo**. Ele é o Criador. A Luz de Cristo é invencível, e a **Soberania** de Deus garante a vitória da Sua verdade.",
+                    aplicacao: "Aproxime-se de Jesus hoje como seu **Criador e Autoridade Máxima**. Busque Sua Palavra para trazer **clareza e direção** (Luz) à sua vida, reconhecendo Sua supremacia."
+                },
+                en: {
+                    h2: "Day 1: The Light Shines in the Darkness",
+                    versiculos: `<strong>John 1:1-5 (NIV):</strong> In the beginning was the Word, and the Word was with God, and the Word was God. He was with God in the beginning...`,
+                    resumo: "This prologue establishes the **eternal divinity and pre-existence of Christ**. He is the Creator. Christ's Light is invincible, and God's **Sovereignty** guarantees the victory of His truth.",
+                    aplicacao: "Approach Jesus today as your **Creator and Highest Authority**. Seek His Word to bring **clarity and direction** (Light) to your life, recognizing His supremacy."
+                },
+                es: {
+                    h2: "Día 1: La Luz Brilla en las Tinieblas",
+                    versiculos: `<strong>Juan 1:1-5 (NVI):</strong> En el principio ya existía el Verbo, y el Verbo estaba con Dios, y el Verbo era Dios. Él estaba con Dios en el principio...`,
+                    resumo: "Este prólogo establece la **divinidad eterna e a preexistencia de Cristo**. Él es el Creador. La Luz de Cristo es invencible, y la **Soberanía** de Dios garantiza la victoria de Su verdad.",
+                    aplicacion: "Acércate a Jesús hoy como tu **Creador y Autoridad Suprema**. Busca Su Palabra para traer **claridad y dirección** (Luz) a tu vida, reconociendo Su supremacía."
+                },
+                fr: {
+                    h2: "Jour 1: La Lumière Brille dans les Ténèbres",
+                    versiculos: `<strong>Jean 1:1-5 (Louis Segond):</strong> Au commencement était la Parole, et la Parole était avec Dieu, et la Parole était Dieu. Elle était au commencement avec Dieu...`,
+                    resumo: "Ce prologue établit la **divinité éternelle et la préexistence du Christ**. Il est le Créateur. La Lumière du Christ est invincible, et la **Souveraineté** de Dieu garantit la victoire de Sa vérité.",
+                    aplicacao: "Approchez-vous de Jésus aujourd'hui en tant que votre **Créateur et Autorité Suprême**. Cherchez Sa Parole pour apporter **clarté et direction** (Lumière) à votre vie, reconnaissant Sa suprématie."
+                }
+            },
+            2: {
+                 pt: {
+                    h2: "Dia 2: O Propósito do Testemunho",
+                    versiculos: `<strong>João 1:6-8 (NVI):</strong> Surgia um homem enviado por Deus, cujo nome era João. Ele veio como testemunha, a fim de testificar a respeito daquela luz...`,
+                    resumo: "O ministério de João Batista é uma lição de **humildade e foco na missão**. Ele veio para apontar para Cristo. A fé salvadora é gerada através do **testemunho**, o meio escolhido por Deus para nos chamar.",
+                    aplicacao: "Avalie se o seu testemunho aponta para **Jesus** ou para você. O seu propósito principal é ser um **instrumento** de Deus, diminuindo para que Cristo cresça."
+                },
+                en: {
+                    h2: "Day 2: The Purpose of Testimony",
+                    versiculos: `<strong>John 1:6-8 (NIV):</strong> There came a man who was sent from God—his name was John. He came as a witness to testify concerning that light...`,
+                    resumo: "John the Baptist's ministry is a lesson in **humility and focus on the mission**. He came to point to Christ. Saving faith is generated through **testimony**, the means chosen by God to call His elect.",
+                    aplicacao: "Evaluate whether your testimony points to **Jesus** or to yourself. Your main purpose is to be an **instrument** of God, decreasing so that Christ may increase."
+                },
+                es: {
+                    h2: "Día 2: El Propósito del Testimonio",
+                    versiculos: `<strong>Juan 1:6-8 (NVI):</strong> Vino un hombre llamado Juan. Vino para dar testimonio de la luz, a fin de que por medio de él todos creyeran...`,
+                    resumo: "El ministerio de Juan el Bautista es una lección de **humildad y enfoque en la misión**. Vino a señalar a Cristo. La fe salvadora se genera a través del **testimonio**, el medio elegido por Dios para llamar a Sus elegidos.",
+                    aplicacion: "Evalúa si tu testimonio apunta a **Jesús** o a ti mismo. Tu propósito principal es ser un **instrumento** de Dios, disminuyendo para que Cristo crezca."
+                },
+                fr: {
+                    h2: "Jour 2: Le But du Témoignage",
+                    versiculos: `<strong>Jean 1:6-8 (Louis Segond):</strong> Il y eut un homme envoyé de Dieu: son nom était Jean. Il vint pour servir de témoin, pour rendre témoignage à la lumière...`,
+                    resumo: "Le ministère de Jean-Baptiste est une leçon **d'humilité et de concentration sur la mission**. Il est venu pour pointer vers le Christ. La foi salvatrice est générée par le **témoignage**, le moyen choisi par Dieu pour appeler Ses élus.",
+                    aplicacao: "Évaluez si votre témoignage pointe vers **Jésus** ou vers vous-même. Votre objectif principal est d'être un **instrument** de Dieu, diminuant pour que le Christ grandisse."
+                }
+            },
+            3: {
+                pt: {
+                    h2: "Dia 3: \"Venham e Vejam\"",
+                    versiculos: `<strong>João 1:45-46 (NVI):</strong> Filipe encontrou Natanael e lhe disse: "Achamos aquele sobre quem Moisés escreveu..." Disse Filipe: "Venha e veja".`,
+                    resumo: "Este é o modelo fundamental do **evangelismo**. Filipe o convida ao **encontro pessoal** com Cristo. A fé verdadeira surge do encontro com Jesus, que é o cumprimento de toda a Lei e Profetas.",
+                    aplicacao: "Não deixe que seus **preconceitos** impeçam você ou outros de encontrar Jesus. A melhor forma de evangelizar é com o convite pessoal: **\"Venha e veja\"** a transformação em Cristo."
+                },
+                en: {
+                    h2: "Day 3: \"Come and See\"",
+                    versiculos: `<strong>John 1:45-46 (NIV):</strong> Philip found Nathanael and told him, “We have found the one Moses wrote about...” Philip said, “Come and see.”`,
+                    resumo: "This is the fundamental model of **evangelism**. Philip invites him to a **personal encounter** with Christ. True faith arises from the encounter with Jesus, who is the fulfillment of all Law and Prophets.",
+                    aplicacao: "Don't let your **prejudices** prevent you or others from finding Jesus. The best way to evangelize is with the personal invitation: **\"Come and see\"** the transformation in Christ."
+                },
+                es: {
+                    h2: "Día 3: \"Ven y Mira\"",
+                    versiculos: `<strong>Juan 1:45-46 (NVI):</strong> Felipe encontró a Natanael y le dijo: «Hemos hallado a aquel sobre quien escribió Moisés...» Felipe le dijo: «Ven y mira».`,
+                    resumo: "Este es el modelo fundamental del **evangelismo**. Felipe lo convida a un **encuentro personal** con Cristo. La fe verdadera surge del encuentro con Jesus, que es el cumplimiento de toda la Ley y los Profetas.",
+                    aplicacion: "No permitas que tus **prejuicios** te impidan a ti o a otros encontrar a Jesús. La mejor forma de evangelizar es con la invitación personal: **\"Ven y mira\"** la transformación en Cristo."
+                },
+                fr: {
+                    h2: "Jour 3: « Viens et Vois »",
+                    versiculos: `<strong>Jean 1:45-46 (Louis Segond):</strong> Philippe rencontra Nathanaël, et lui dit: Celui de qui Moïse a écrit dans la loi et dont les prophètes ont parlé, nous l'avons trouvé, Jésus... Philippe lui dit: Viens et vois.`,
+                    resumo: "C'est le modèle fondamental de **l'évangélisation**. Philippe l'invite à une **rencontre personnelle** avec le Christ. La vraie foi naît de la rencontre avec Jésus, qui est l'accomplissement de toute la Loi et des Prophètes.",
+                    aplicacao: "Ne laissez pas vos **préjugés** vous empêcher, vous ou d'autres, de trouver Jésus. La meilleure façon d'évangéliser est avec l'invitation personnelle: **« Viens et vois »** la transformation en Christ."
+                }
+            },
+            4: {
+                pt: {
+                    h2: "Dia 4: O Primeiro Sinal da Glória",
+                    versiculos: `<strong>João 2:11 (NVI):</strong> Este foi o primeiro dos seus sinais, em Caná da Galileia. Revelou a sua glória, e os seus discípulos creram nele.`,
+                    resumo: "O milagre da transformação da água em vinho não foi um mero truque, mas uma **manifestação da glória de Cristo**. Ele demonstra Sua **soberania sobre a criação** e antecipa o banquete messiânico. A fé dos discípulos é consolidada ao verem Sua glória.",
+                    aplicacao: "Confie em Jesus para transformar o comum e o vazio em algo de **valor e alegria**. Busque ver a glória de Cristo nas pequenas e grandes providências da sua vida diária, reforçando sua fé."
+                },
+                en: {
+                    h2: "Day 4: The First Sign of Glory",
+                    versiculos: `<strong>John 2:11 (NIV):</strong> What Jesus did here in Cana of Galilee was the first of the signs through which he revealed his glory; and his disciples believed in him.`,
+                    resumo: "The miracle of turning water into wine was not a mere trick, but a **manifestation of Christ's glory**. It demonstrates His **sovereignty over creation** and anticipates the messianic banquet. The disciples' faith is solidified upon seeing His glory.",
+                    aplicacao: "Approach Jesus today as your **Creator and Highest Authority**. Seek His Word to bring **clarity and direction** (Light) to your life, recognizing His supremacy."
+                },
+                es: {
+                    h2: "Día 4: La Primera Señal de Gloria",
+                    versiculos: `<strong>Juan 2:11 (NVI):</strong> Esta señal milagrosa, la primera, la hizo Jesús en Caná de Galilea. Así reveló su gloria, y sus discípulos creyeron en él.`,
+                    resumo: "El milagro de convertir el agua en vino no fue un simple truco, sino una **manifestación de la gloria de Cristo**. Demuestra Su **soberanía sobre la creación** y anticipa el banquete mesiánico. La fe de los discípulos se consolida al ver Su gloria.",
+                    aplicacion: "Confía en Jesús para transformar lo ordinario y vacío en algo de **valor y alegría**. Busca ver la gloria de Cristo en las pequeñas y grandes provisiones de tu vida diaria, fortaleciendo tu fe."
+                },
+                fr: {
+                    h2: "Jour 4: Le Premier Signe de Gloire",
+                    versiculos: `<strong>Jean 2:11 (Louis Segond):</strong> Tel fut, à Cana en Galilée, le premier des miracles que fit Jésus. Il manifesta sa gloire, et ses disciples crurent en lui.`,
+                    resumo: "Le miracle de transformer l'eau en vin n'était pas un simple tour, mais une **manifestation de la gloire du Christ**. Il démontre Sa **souveraineté sur la création** et anticipe le festin messianique. La foi des disciples est consolidée en voyant Sa gloire.",
+                    aplicacao: "Faites confiance à Jésus pour transformer l'ordinaire et le vide en quelque chose de **valeur et de joie**. Cherchez à voir la gloire du Christ dans les petites et grandes provisions de votre vie quotidienne, renforçant ainsi votre foi."
+                }
+            },
+            5: {
+                pt: {
+                    h2: "Dia 5: O Zelo Pela Casa do Pai",
+                    versiculos: `<strong>João 2:16-17 (NVI):</strong> Aos que vendiam pombas, disse: “Tirem estas coisas daqui! Parem de fazer da casa de meu Pai um mercado!” Seus discípulos lembraram-se que está escrito: “O zelo pela tua casa me consumirá”.`,
+                    resumo: "A purificação do templo revela a **autoridade divina de Jesus** e Seu **zelo pela adoração pura**. Sua ação mostra que Ele é o Messias que veio para julgar e restaurar a verdadeira relação com Deus. Não podemos comercializar ou trivializar o sagrado.",
+                    aplicacao: "Examine seu coração e suas práticas espirituais. Seu 'templo' (seu corpo e sua vida de adoração) está sendo usado para o **propósito correto** (a glória de Deus) ou está cheio de 'mercadorias' (distrações, egoísmo)? Cultive o zelo pela santidade."
+                },
+                en: {
+                    h2: "Day 5: Zeal for the Father's House",
+                    versiculos: `<strong>John 2:16-17 (NIV):</strong> To those who sold doves he said, “Get these out of here! Stop turning my Father’s house into a market!” His disciples remembered that it is written: “Zeal for your house will consume me.”`,
+                    resumo: "The cleansing of the temple reveals Jesus' **divine authority** and His **zeal for pure worship**. His action shows He is the Messiah who came to judge and restore the true relationship with God. We cannot commercialize or trivialize the sacred.",
+                    aplicacao: "Examine your heart and spiritual practices. Is your 'temple' (your body and worship life) being used for the **right purpose** (God's glory) or is it filled with 'merchandise' (distractions, selfishness)? Cultivate zeal for holiness."
+                }
+                ,
+                es: {
+                    h2: "Día 5: El Celo por la Casa del Padre",
+                    versiculos: `<strong>Juan 2:16-17 (NVI):</strong> Y a los que vendían palomas les dijo: «¡Saquen esto de aquí! ¡Dejen de hacer de la casa de mi Padre un mercado!» Sus discípulos se acordaron de que está escrito: «El celo por tu casa me consumirá.»`,
+                    resumo: "La purificación del templo revela la **autoridad divina de Jesús** y Su **celo por la adoración pura**. Su acción muestra que Él es el Mesías que vino a juzgar y restaurar la verdadera relación con Dios. No podemos mercantilizar ni trivializar lo sagrado.",
+                    aplicacion: "Examina tu corazón y tus prácticas espirituales. ¿Se está usando tu 'templo' (tu cuerpo y tu vida de adoración) para el **propósito correcto** (la gloria de Dios) o está lleno de 'mercancías' (distracciones, egoísmo)? Cultiva el celo por la santidad."
+                }
+                ,
+                fr: {
+                    h2: "Jour 5: Le Zèle pour la Maison du Père",
+                    versiculos: `<strong>Jean 2:16-17 (Louis Segond):</strong> et il dit aux vendeurs de pigeons: Ôtez cela d'ici, ne faites pas de la maison de mon Père une maison de trafic. Ses disciples se souvinrent qu'il est écrit: Le zèle de ta maison me dévore.`,
+                    resumo: "La purification du temple révèle **l'autorité divine de Jésus** et Son **zèle pour l'adoration pure**. Son action montre qu'Il est le Messie venu pour juger et restaurer la véritable relation avec Dieu. Nous ne devons pas commercialiser ou trivialiser le sacré.",
+                    aplicacao: "Examinez votre cœur et vos pratiques spirituelles. Votre 'temple' (votre corps et votre vie d'adoration) est-il utilisé dans le **bon but** (la gloire de Dieu) ou est-il rempli de 'marchandises' (distractions, égoïsme)? Cultivez le zèle pour la sainteté."
+                }
+            },
+            6: {
+                pt: {
+                    h2: "Dia 6: O Novo Nascimento e a Soberania",
+                    versiculos: `<strong>João 3:3-5 (NVI):</strong> Jesus declarou: “Digo a você a verdade: ninguém pode ver o Reino de Deus, se não nascer de novo. (...) ninguém pode entrar no Reino de Deus, se não nascer da água e do Espírito”.`,
+                    resumo: "A conversa com Nicodemos estabelece que a entrada no Reino é um ato de **regeneração radical (novo nascimento)**, que é inteiramente obra do Espírito Santo (Soberania de Deus). Este é o caminho para todos, independentemente de sua posição social ou religiosa.",
+                    aplicacao: "Reflita sobre a profundidade da sua conversão. Você experimentou o novo nascimento que é uma **transformação interna** (obra do Espírito)? Não confie em rituais externos ou obras; confie somente na obra soberana e regeneradora de Cristo."
+                },
+                en: {
+                    h2: "Day 6: New Birth and Sovereignty",
+                    versiculos: `<strong>John 3:3-5 (NIV):</strong> Jesus replied, “Very truly I tell you, no one can see the kingdom of God unless they are born again. (...) no one can enter the kingdom of God unless they are born of water and the Spirit.”`,
+                    resumo: "The conversation with Nicodemus establishes that entry into the Kingdom is an act of **radical regeneration (new birth)**, which is entirely the work of the Holy Spirit (God's Sovereignty). This is the way for everyone, regardless of their social or religious standing.",
+                    aplicacao: "Reflect on the depth of your conversion. Have you experienced the new birth, which is an **internal transformation** (work of the Spirit)? Do not rely on external rituals or works; rely only on the sovereign and regenerating work of Christ."
+                },
+                es: {
+                    h2: "Día 6: El Nuevo Nacimiento y la Soberanía",
+                    versiculos: `<strong>Juan 3:3-5 (NVI):</strong> De veras te aseguro que quien no nazca de nuevo no puede ver el reino de Dios. (...) nadie puede entrar en el reino de Dios si no nace de agua y del Espíritu.`,
+                    resumo: "La conversación con Nicodemo establece que la entrada al Reino es un acto de **regeneración radical (nuevo nacimiento)**, que es enteramente obra del Espíritu Santo (Soberanía de Dios). Este es el camino para todos, independientemente de su posición social o religiosa.",
+                    aplicacion: "Reflexiona sobre la profundidad de tu conversión. ¿Experimentaste el nuevo nacimiento, que es una **transformación interna** (obra del Espíritu)? No confíes en rituales externos u obras; confía solo en la obra soberana y regeneradora de Cristo."
+                },
+                fr: {
+                    h2: "Jour 6: La Nouvelle Naissance et la Souveraineté",
+                    versiculos: `<strong>Jean 3:3-5 (Louis Segond):</strong> Jésus lui répondit: En vérité, en vérité, je te le dis, si un homme ne naît de nouveau, il ne peut voir le royaume de Dieu. (...) si un homme ne naît d'eau et d'Esprit, il ne peut entrer dans le royaume de Dieu.`,
+                    resumo: "La conversation avec Nicodème établit que l'entrée dans le Royaume est un acte de **régénération radicale (nouvelle naissance)**, qui est entièrement l'œuvre du Saint-Esprit (Souveraineté de Dieu). C'est le chemin pour tous, quelle que soit leur position sociale ou religieuse.",
+                    aplicacao: "Réfléchissez à la profondeur de votre conversion. Avez-vous expérimenté la nouvelle naissance qui est une **transformation interne** (œuvre de l'Esprit)? Ne vous fiez pas aux rituels externes ou aux œuvres; fiez-vous uniquement à l'œuvre souveraine et régénératrice du Christ."
+                }
+            },
+            7: {
+                pt: {
+                    h2: "Dia 7: O Amor de Deus Manifestado",
+                    versiculos: `<strong>João 3:16-17 (NVI):</strong> Porque Deus tanto amou o mundo que deu o seu Filho Unigênito, para que todo o que nele crer não pereça, mas tenha a vida eterna...`,
+                    resumo: "Este versículo resume a essência do Evangelho: a salvação é um ato de **amor sacrificial de Deus (graça)** e é recebida pela **fé**. A soberania de Deus é manifestada na dádiva, e a responsabilidade humana é a fé. O propósito de Cristo não é primariamente condenar, mas salvar.",
+                    aplicacao: "Mantenha o amor de Deus (manifesto na cruz) como o **centro da sua fé**. Se você crê, tem a certeza da vida eterna. Não viva sob condenação, mas em gratidão pela salvação que Ele gratuitamente providenciou."
+                },
+                en: {
+                    h2: "Day 7: The Love of God Manifested",
+                    versiculos: `<strong>John 3:16-17 (NIV):</strong> For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life...`,
+                    resumo: "This verse summarizes the essence of the Gospel: salvation is an act of **God's sacrificial love (grace)** and is received by **faith**. God's sovereignty is manifested in the gift, and human responsibility is faith. Christ's purpose is not primarily to condemn, but to save.",
+                    aplicacao: "Keep the love of God (manifested on the cross) as the **center of your faith**. If you believe, you have the certainty of eternal life. Do not live under condemnation, but in gratitude for the salvation He has freely provided."
+                },
+                es: {
+                    h2: "Día 7: El Amor de Dios Manifestado",
+                    versiculos: `<strong>Juan 3:16-17 (NVI):</strong> Porque tanto amó Dios al mundo, que dio a su Hijo unigénito, para que todo el que cree en él no se pierda, sino que tenga vida eterna...`,
+                    resumo: "Este versículo resume la esencia del Evangelio: la salvación es un acto de **amor sacrificial de Dios (gracia)** y se recibe por la **fe**. La soberanía de Dios se manifiesta en el don, y la responsabilidad humana es la fe. El propósito de Cristo no es principalmente condenar, sino salvar.",
+                    aplicacion: "Mantén el amor de Dios (manifestado en la cruz) como el **centro de tu fe**. Si crees, tienes la certeza de la vida eterna. No vivas bajo condenación, sino en gratitud por la salvación que Él ha provisto gratuitamente."
+                },
+                fr: {
+                    h2: "Jour 7: L'Amour de Dieu Manifesté",
+                    versiculos: `<strong>Jean 3:16-17 (Louis Segond):</strong> Car Dieu a tant aimé le monde qu'il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu'il ait la vie éternelle...`,
+                    resumo: "Ce verset résume l'essence de l'Évangile: le salut est un acte d'**amour sacrificiel de Dieu (grâce)** et est reçu par la **foi**. La souveraineté de Dieu se manifeste dans le don, et la responsabilité humaine est la foi. Le but du Christ n'est pas principalement de juger, mais de sauver.",
+                    aplicacao: "Gardez l'amour de Dieu (manifesté à la croix) comme le **centre de votre foi**. Si vous croyez, vous avez la certitude de la vie éternelle. Ne vivez pas sous la condamnation, mais dans la gratitude pour le salut qu'Il a gratuitement pourvu."
+                }
+            },
+            8: {
+                pt: {
+                    h2: "Dia 8: Cristo Deve Crescer",
+                    versiculos: `<strong>João 3:30 (NVI):</strong> É necessário que ele cresça e que eu diminua.`,
+                    resumo: "Esta é a declaração humilde de João Batista. Ela estabelece a hierarquia clara: **Jesus é superior e preexistente**. A atitude de todo crente deve ser de **autonegação** para que o Reino de Deus e a glória de Cristo sejam exaltados.",
+                    aplicacao: "Em suas decisões, metas e ambições, pergunte-se: Isso fará **Cristo crescer** ou eu diminuir? Busque viver de forma a desviar o foco de si mesmo e direcioná-lo totalmente à pessoa e obra de Jesus."
+                },
+                en: {
+                    h2: "Day 8: Christ Must Increase",
+                    versiculos: `<strong>John 3:30 (NIV):</strong> He must become greater; I must become less.`,
+                    resumo: "This is John the Baptist's humble declaration. It establishes the clear hierarchy: **Jesus is superior and pre-existent**. The attitude of every believer should be one of **self-denial** so that the Kingdom of God and the glory of Christ are exalted.",
+                    aplicacao: "In your decisions, goals, and ambitions, ask yourself: Will this make **Christ greater** or myself less? Seek to live in a way that shifts the focus away from yourself and entirely toward the person and work of Jesus."
+                },
+                es: {
+                    h2: "Día 8: Es Necesario que Él Crezca",
+                    versiculos: `<strong>Juan 3:30 (NVI):</strong> A él le toca crecer, y a mí menguar.`,
+                    resumo: "Esta es la humilde declaración de Juan el Bautista. Establece la jerarquía clara: **Jesús es superior y preexistente**. La atitude de todo creyente debe ser de **abnegación** para que el Reino de Dios y la gloria de Cristo sean exaltados.",
+                    aplicacion: "En tus decisiones, metas y ambiciones, pregúntate: ¿Esto hará **crecer a Cristo** o a mí menguar? Busca vivir de tal manera que el enfoque se desvíe de ti mismo y se dirija totalmente a la persona y obra de Jesús."
+                },
+                fr: {
+                    h2: "Jour 8: Il Faut qu'Il Croisse",
+                    versiculos: `<strong>Jean 3:30 (Louis Segond):</strong> Il faut qu'il croisse, et que je diminue.`,
+                    resumo: "Ceci est l'humble déclaration de Jean-Baptiste. Elle établit la hiérarchie claire: **Jésus est supérieur et préexistant**. L'attitude de chaque croyant doit être celle du **renoncement à soi** afin que le Royaume de Dieu et la gloire du Christ soient exaltés.",
+                    aplicacao: "Dans vos décisions, objectifs et ambitions, demandez-vous: Cela fera-t-il **grandir le Christ** ou moi diminuer? Cherchez à vivre de manière à détourner l'attention de vous-même et à la diriger entièrement vers la personne et l'œuvre de Jésus."
+                }
+            },
+            9: {
+                pt: {
+                    h2: "Dia 9: A Fonte da Água Viva",
+                    versiculos: `<strong>João 4:13-14 (NVI):</strong> Jesus respondeu: “Quem beber desta água voltará a ter sede, mas quem beber da água que eu lhe der nunca mais terá sede. Ao contrário, a água que eu lhe der se tornará nele uma fonte a jorrar para a vida eterna”.`,
+                    resumo: "Jesus revela ser a **única fonte de satisfação espiritual duradoura**. A 'água' que Ele oferece é o Espírito Santo e a vida eterna, que **saciam permanentemente** a busca humana por significado.",
+                    aplicacao: "Reconheça as 'sedes' temporárias (bens, prazer, aprovação) que você tenta saciar. Direcione seu desejo e sua busca para **Cristo**, a verdadeira Água Viva, confiando que Ele pode preencher seu vazio de forma eterna e profunda."
+                },
+                en: {
+                    h2: "Day 9: The Spring of Living Water",
+                    versiculos: `<strong>John 4:13-14 (NIV):</strong> Jesus answered, “Everyone who drinks this water will be thirsty again, but whoever drinks the water I give them will never thirst. Indeed, the water I give them will become in them a spring of water welling up to eternal life.”`,
+                    resumo: "In the encounter with the Samaritan woman, Jesus reveals Himself to be the **only source of lasting spiritual satisfaction**. The 'water' He offers is the Holy Spirit and eternal life, which **permanently quench** the human search for meaning.",
+                    aplicacao: "Recognize the temporary 'thirsts' (possessions, pleasure, approval) you try to satisfy. Direct your desire and pursuit toward **Christ**, the true Living Water, trusting that He can fill your emptiness eternally and deeply."
+                },
+                es: {
+                    h2: "Día 9: La Fuente del Agua Viva",
+                    versiculos: `<strong>Juan 4:13-14 (NVI):</strong> Jesús le contestó: «Cualquiera que beba de esta agua volverá a tener sed, pero el que beba del agua que yo le daré, no volverá a tener sed jamás, sino que dentro de él esa agua se convertirá en un manantial del que brotará vida eterna.»`,
+                    resumo: "En el encuentro con la mujer samaritana, Jesús revela ser la **única fuente de satisfacción espiritual duradera**. El 'agua' que Él ofrece es el Espíritu Santo y la vida eterna, que **sacia permanentemente** la búsqueda humana de significado.",
+                    aplicacion: "Reconoce las 'sedes' temporales (bienes, placer, aprobación) que intentas saciar. Dirige tu deseo y tu búsqueda hacia **Cristo**, el verdadero Agua Viva, confiando en que Él puede llenar tu vacío de forma eterna y profunda."
+                },
+                fr: {
+                    h2: "Jour 9: La Source de l'Eau Vive",
+                    versiculos: `<strong>Jean 4:13-14 (Louis Segond):</strong> Jésus lui répondit: Quiconque boit de cette eau aura encore soif; mais celui qui boira de l'eau que je lui donnerai n'aura jamais soif, et l'eau que je lui donnerai deviendra en lui une source d'eau qui jaillira jusque dans la vie éternelle.`,
+                    resumo: "Dans la rencontre avec la femme samaritaine, Jésus révèle qu'Il est la **seule source de satisfaction spirituelle durable**. L'« eau » qu'Il offre est le Saint-Esprit et la vie éternelle, qui **étanchent en permanence** la quête humaine de sens.",
+                    aplicacao: "Reconnaissez les « soifs » temporaires (biens, plaisir, approbation) que vous essayez d'apaiser. Dirigez votre désir et votre quête vers le **Christ**, la véritable Eau Vive, confiant qu'Il peut combler votre vide de manière éternelle et profonde."
+                }
+            },
+            10: {
+                pt: {
+                    h2: "Dia 10: O Mestre e Seus Campos",
+                    versiculos: `<strong>João 4:35 (NVI):</strong> Vocês não dizem: ‘Ainda faltam quatro meses para a colheita?’ Eu lhes digo: Abram os olhos e vejam os campos! Estão maduros para a colheita.`,
+                    resumo: "Jesus desloca o foco dos discípulos da paciência cultural para a **urgência da missão espiritual**. Os 'campos' são as pessoas prontas para ouvir o Evangelho. O trabalho da colheita é um **mandato contínuo** para a Igreja, motivado pela soberania de Deus que já preparou os corações.",
+                    aplicacao: "Não espere pelo momento 'perfeito' para compartilhar sua fé. Olhe para o seu entorno (trabalho, família, vizinhança) como **campos maduros** e ore por ousadia para testemunhar de Cristo hoje."
+                },
+                en: {
+                    h2: "Day 10: The Master and His Fields",
+                    versiculos: `<strong>John 4:35 (NIV):</strong> Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.`,
+                    resumo: "Jesus shifts the disciples' focus from cultural patience to the **urgency of the spiritual mission**. The 'fields' are people ready to hear the Gospel. The work of harvest is a **continuous mandate** for the Church, motivated by God's sovereignty that has already prepared hearts.",
+                    aplicacao: "Don't wait for the 'perfect' moment to share your faith. Look at your surroundings (work, family, neighborhood) as **ripe fields** and pray for boldness to witness about Christ today."
+                },
+                es: {
+                    h2: "Día 10: El Maestro y Sus Campos",
+                    versiculos: `<strong>Juan 4:35 (NVI):</strong> ¿No dicen ustedes: “Todavía faltan cuatro meses para la cosecha”? Yo les digo: ¡Abran los ojos y miren los campos! Ya están listos para la cosecha.`,
+                    resumo: "Jesús desplaza el enfoque de los discípulos de la paciencia cultural a la **urgencia de la misión espiritual**. Los 'campos' son las personas listas para escuchar el Evangelio. El trabajo de la cosecha es un **mandato continuo** para la Iglesia, motivado por la soberanía de Dios que ya preparó los corazones.",
+                    aplicacion: "No esperes el momento 'perfecto' para compartir tu fe. Mira tu entorno (trabajo, familia, vecindario) como **campos maduros** y ora por audacia para testificar de Cristo hoy."
+                },
+                fr: {
+                    h2: "Jour 10: Le Maître et Ses Champs",
+                    versiculos: `<strong>Jean 4:35 (Louis Segond):</strong> Ne dites-vous pas qu'il y a encore quatre mois jusqu'à la moisson? Voici, je vous le dis, levez les yeux, et regardez les champs, qui sont déjà blancs pour la moisson.`,
+                    resumo: "Jésus déplace l'attention des disciples de la patience culturelle à **l'urgence de la mission spirituelle**. Les «champs» sont les personnes prêtes à entendre l'Évangile. Le travail de la moisson est un **mandat continu** pour l'Église, motivé par la souveraineté de Dieu qui a déjà préparé les cœurs.",
+                    aplicacao: "N'attendez pas le moment 'parfait' pour partager votre foi. Regardez votre environnement (travail, famille, voisinage) comme des **champs mûrs** et priez pour l'audace de témoigner du Christ aujourd'hui."
+                }
+            },
+            11: {
+                pt: {
+                    h2: "Dia 11: A Autoridade Soberana do Filho",
+                    versiculos: `<strong>João 5:19-21 (NVI):</strong> Jesus lhes disse: “Eu lhes digo a verdade: O Filho não pode fazer nada por si mesmo, a não ser o que vê o Pai fazendo, pois o que o Pai faz o Filho também faz..."`,
+                    resumo: "Este texto revela a **unidade e a subordinação funcional** entre o Pai e o Filho. A obediência de Jesus ao Pai não anula Sua divindade, mas a cumpre. Cristo possui a **autoridade soberana** para dar vida, mostrando que a salvação está totalmente em Suas mãos (Soberania de Deus).",
+                    aplicacao: "Quando você orar, confie que Jesus tem a **autoridade total** sobre a vida e a morte, e que Suas ações são a perfeita vontade de Deus. Renda-se à Sua liderança, sabendo que Ele age em perfeita harmonia com o Pai."
+                },
+                en: {
+                    h2: "Day 11: The Sovereign Authority of the Son",
+                    versiculos: `<strong>John 5:19-21 (NIV):</strong> Jesus gave them this answer: “Very truly I tell you, the Son can do nothing by himself; he can do only what he sees his Father doing, because whatever the Father does the Son also does..."`,
+                    resumo: "This text reveals the **unity and functional subordination** between the Father and the Son. Jesus' obedience to the Father does not negate His divinity but fulfills it. Christ possesses **sovereign authority** to give life, showing that salvation is entirely in His hands (God's Sovereignty).",
+                    aplicacao: "When you pray, trust that Jesus has **total authority** over life and death, and that His actions are the perfect will of God. Surrender to His leadership, knowing that He acts in perfect harmony with the Father."
+                },
+                es: {
+                    h2: "Día 11: La Autoridad Soberana del Hijo",
+                    versiculos: `<strong>Juan 5:19-21 (NVI):</strong> Jesús les respondió: «Ciertamente les aseguro que el Hijo no puede hacer nada por su propia cuenta, sino solamente lo que ve que su Padre hace, porque todo lo que hace el Padre lo hace también el Hijo..."`,
+                    resumo: "Este texto revela la **unidad y la subordinación funcional** entre el Padre y el Hijo. La obediencia de Jesús al Padre no anula Su divinidad, sino que la cumple. Cristo posee la **autoridad soberana** para dar vida, mostrando que la salvación está totalmente en Sus manos (Soberanía de Dios).",
+                    aplicacion: "Cuando ores, confía en que Jesús tiene **autoridad total** sobre la vida y la muerte, y que Sus acciones son la perfecta voluntad de Dios. Ríndete a Su liderazgo, sabiendo que Él actúa en perfecta armonía con el Padre."
+                },
+                fr: {
+                    h2: "Jour 11: L'Autorité Souveraine du Fils",
+                    versiculos: `<strong>Jean 5:19-21 (Louis Segond):</strong> Jésus reprit donc la parole, et leur dit: En vérité, en vérité, je vous le dis, le Fils ne peut rien faire de lui-même, à moins qu'il ne le voie faire au Père; car tout ce que le Père fait, le Fils le fait pareillement...`,
+                    resumo: "Ce texte révèle **l'unité et la subordination fonctionnelle** entre le Père et le Fils. L'obéissance de Jésus au Père n'annule pas Sa divinité, mais l'accomplit. Le Christ possède **l'autorité souveraine** pour donner la vie, montrant que le salut est entièrement entre Ses mains (Souveraineté de Dieu).",
+                    aplicacao: "Lorsque vous priez, faites confiance au fait que Jésus a **l'autorité totale** sur la vie et la mort, et que Ses actions sont la volonté parfaite de Dieu. Abandonnez-vous à Son leadership, sachant qu'Il agit en parfaite harmonie avec le Père."
+                }
+            },
+            12: {
+                pt: {
+                    h2: "Dia 12: O Pão da Vida e a Preservação",
+                    versiculos: `<strong>João 6:35, 37 (NVI):</strong> Então Jesus declarou: “Eu sou o pão da vida. Aquele que vem a mim nunca terá fome; aquele que crê em mim nunca terá sede. (...) Todo o que o Pai me der virá a mim, e quem vier a mim eu jamais rejeitarei.”`,
+                    resumo: "Jesus é a **única provisão** para a fome e sede espiritual. O Pai dá pessoas a Cristo (eleição), e Cristo as recebe e as **preserva perfeitamente** (perseverança dos santos). Não há perda de um dos eleitos.",
+                    aplicacao: "Descanse na **segurança eterna** que Cristo oferece. Sua fé não depende apenas de seus esforços, mas da obra garantida do Pai que te deu ao Filho, e da promessa do Filho que **jamais te rejeitará**."
+                },
+                en: {
+                    h2: "Day 12: The Bread of Life and Preservation",
+                    versiculos: `<strong>John 6:35, 37 (NIV):</strong> Then Jesus declared, “I am the bread of life. Whoever comes to me will never go hungry, and whoever believes in me will never be thirsty. (...) All those the Father gives me will come to me, and whoever comes to me I will never drive away.”`,
+                    resumo: "Jesus is the **sole provision** for spiritual hunger and thirst. The Father gives people to Christ (election), and Christ receives and **perfectly preserves** them (perseverance of the saints). There is no loss of any of the elect.",
+                    aplicacao: "Rest in the **eternal security** Christ offers. Your faith depends not just on your efforts, but on the guaranteed work of the Father who gave you to the Son, and the Son's promise that He **will never drive you away**."
+                },
+                es: {
+                    h2: "Día 12: El Pan de Vida y la Preservación",
+                    versiculos: `<strong>Juan 6:35, 37 (NVI):</strong> Entonces Jesús declaró: «Yo soy el pan de vida. El que a mí viene nunca tendrá hambre, y el que en mí cree nunca tendrá sed. (...) Todo el que el Padre me da vendrá a mí; y al que a mí viene, no lo echaré fuera.».`,
+                    resumo: "Jesús es la **única provisión** para el hambre y la sed espiritual. El Padre da personas a Cristo (elección), y Cristo las recibe y las **preserva perfectamente** (perseverancia de los santos). No hay pérdida de ninguno de los elegidos.",
+                    aplicacion: "Descansa en la **seguridad eterna** que Cristo ofrece. Tu fe no depende solo de tus esfuerzos, sino de la obra garantizada del Padre que te dio al Hijo, y de la promesa del Hijo de que **jamás te echará fuera**."
+                },
+                fr: {
+                    h2: "Jour 12: Le Pain de Vie et la Préservation",
+                    versiculos: `<strong>Jean 6:35, 37 (Louis Segond):</strong> Jésus leur dit: Je suis le pain de vie. Celui qui vient à moi n'aura jamais faim, et celui qui croit en moi n'aura jamais soif. (...) Tous ceux que le Père me donne viendront à moi, et je ne mettrai point dehors celui qui vient à moi.`,
+                    resumo: "Jésus est la **seule provision** pour la faim et la soif spirituelles. Le Père donne des gens au Christ (élection), et le Christ les reçoit et les **préserve parfaitement** (persévérance des saints). Il n'y a aucune perte de l'un des élus.",
+                    aplicacao: "Reposez-vous dans la **sécurité éternelle** qu'offre le Christ. Votre foi ne dépend pas seulement de vos efforts, mais de l'œuvre garantie du Père qui vous a donné au Fils, et de la promesse du Fils qu'Il **ne vous rejettera jamais**."
+                }
+            },
+            13: {
+                pt: {
+                    h2: "Dia 13: O Chamado Efficaz do Pai",
+                    versiculos: `<strong>João 6:44 (NVI):</strong> Ninguém pode vir a mim, se o Pai, que me enviou, não o trouxer; e eu o ressuscitarei no último dia.`,
+                    resumo: "Este é um pilar da doutrina reformada (Graça Irresistível). A **fé salvadora é um dom**, e o ato de 'vir' a Cristo é precedido pelo **chamado eficaz** (tração) de Deus. O homem não pode iniciar a salvação; o Pai o faz soberanamente, garantindo a ressurreição.",
+                    aplicacao: "Agradeça hoje a Deus por Ele ter **iniciado a obra** em seu coração. Se você creu, foi porque o Pai o atraiu. Isso deve gerar humildade profunda e confiança absoluta na Sua obra."
+                },
+                en: {
+                    h2: "Day 13: The Effectual Calling of the Father",
+                    versiculos: `<strong>John 6:44 (NIV):</strong> No one can come to me unless the Father who sent me draws them, and I will raise them up at the last day.`,
+                    resumo: "This is a pillar of Reformed doctrine (Irresistible Grace). **Saving faith is a gift**, and the act of 'coming' to Christ is preceded by the **effectual calling** (drawing) of God. Man cannot initiate salvation; the Father does so sovereignly, guaranteeing resurrection.",
+                    aplicacao: "Thank God today for **initiating the work** in your heart. If you believed, it was because the Father drew you. This should lead to deep humility and absolute confidence in His work."
+                },
+                es: {
+                    h2: "Día 13: El Llamamiento Eficaz del Padre",
+                    versiculos: `<strong>Juan 6:44 (NVI):</strong> Nadie puede venir a mí a menos que lo atraiga el Padre que me envió, y yo lo resucitaré en el día final.`,
+                    resumo: "Este es un pilar de la doctrina reformada (Gracia Irresistible). La **fe salvadora es un don**, y el acto de 'venir' a Cristo es precedido por el **llamamiento eficaz** (atracción) de Dios. El hombre no puede iniciar la salvación; el Padre lo hace soberanamente, garantizando la resurrección.",
+                    aplicacion: "Agradece hoy a Dios por haber **iniciado la obra** en tu corazón. Si creíste, fue porque el Padre te atrajo. Esto debe generar una humildad profunda y una confianza absoluta en Su obra."
+                },
+                fr: {
+                    h2: "Jour 13: L'Appel Efficace du Père",
+                    versiculos: `<strong>Jean 6:44 (Louis Segond):</strong> Nul ne peut venir à moi, si le Père qui m'a envoyé ne l'attire; et je le ressusciterai au dernier jour.`,
+                    resumo: "Ceci est un pilier de la doctrine réformée (Grâce Irrésistible). La **foi salvatrice est un don**, et l'acte de « venir » au Christ est précédé par **l'appel efficace** (attraction) de Dieu. L'homme ne peut pas initier le salut; le Père le fait souverainement, garantissant la résurrection.",
+                    aplicacao: "Remerciez Dieu aujourd'hui d'avoir **initié l'œuvre** dans votre cœur. Si vous avez cru, c'est parce que le Père vous a attiré. Cela doit engendrer une humilité profonde et une confiance absolue en Son œuvre."
+                }
+            },
+            14: {
+                pt: {
+                    h2: "Dia 14: Rios de Água Viva (O Espírito)",
+                    versiculos: `<strong>João 7:37-39 (NVI):</strong> Jesus Se pôs em pé e exclamou: “Se alguém tem sede, venha a mim e beba. Quem crer em mim, como diz a Escritura, do seu interior fluirão rios de água viva”. Ele estava se referindo ao Espírito...`,
+                    resumo: "Jesus é a **Fonte do Espírito Santo**. A promessa é que a fé Nele resultará em um **transbordar** do Espírito na vida do crente, que então se torna um canal de bênção para outros. O Espírito é o agente que aplica a salvação de Cristo e nos santifica.",
+                    aplicacao: "Peça hoje ao Espírito Santo para **encher você** novamente. Não retenha a bênção; permita que o poder e o testemunho de Cristo fluam de você para o mundo, impactando aqueles ao seu redor."
+                },
+                en: {
+                    h2: "Day 14: Rivers of Living Water (The Spirit)",
+                    versiculos: `<strong>John 7:37-39 (NIV):</strong> Jesus stood and said in a loud voice, “Let anyone who is thirsty come to me and drink. Whoever believes in me, as Scripture has said, rivers of living water will flow from within them.” By this he meant the Spirit...`,
+                    resumo: "Jesus is the **Source of the Holy Spirit**. The promise is that faith in Him will result in an **overflow** of the Spirit in the believer's life, who then becomes a channel of blessing to others. The Spirit is the agent who applies Christ's salvation and sanctifies us.",
+                    aplicacao: "Ask the Holy Spirit to **fill you** again today. Do not hold back the blessing; allow the power and testimony of Christ to flow from you into the world, impacting those around you."
+                },
+                es: {
+                    h2: "Día 14: Ríos de Agua Viva (El Espíritu)",
+                    versiculos: `<strong>Juan 7:37-39 (NVI):</strong> Jesús se puso de pie y exclamó: «Si alguno tiene sed, venga a mí y beba. De aquel que cree en mí, como dice la Escritura, brotarán ríos de agua viva.» Con esto se refería al Espíritu...`,
+                    resumo: "Jesús es la **Fuente del Espíritu Santo**. La promesa es que la fe en Él resultará en un **desbordamiento** del Espíritu en la vida del creyente, quien luego se convierte en un canal de bendición para otros. El Espíritu es el agente que aplica la salvación de Cristo y nos santifica.",
+                    aplicacion: "Pide hoy al Espíritu Santo que te **llene** de nuevo. No retengas la bendición; permite que el poder y el testimonio de Cristo fluyan de ti hacia el mundo, impactando a quienes te rodean."
+                },
+                fr: {
+                    h2: "Jour 14: Fleuves d'Eau Vive (L'Esprit)",
+                    versiculos: `<strong>Jean 7:37-39 (Louis Segond):</strong> Jésus, se tenant debout, s'écria: Si quelqu'un a soif, qu'il vienne à moi, et qu'il boive. Celui qui croit en moi, des fleuves d'eau vive couleront de son sein, comme dit l'Écriture. Il dit cela de l'Esprit...`,
+                    resumo: "Jésus est la **Source du Saint-Esprit**. La promesse est que la foi en Lui aboutira à un **débordement** de l'Esprit dans la vie du croyant, qui devient alors un canal de bénédiction pour les autres. L'Esprit est l'agent qui applique le salut du Christ et nous sanctifie.",
+                    aplicacao: "Demandez au Saint-Esprit de vous **remplir** à nouveau aujourd'hui. Ne retenez pas la bénédiction; permettez que la puissance et le témoignage du Christ coulent de vous dans le monde, impactant ceux qui vous entourent."
+                }
+            },
+            15: {
+                pt: {
+                    h2: "Dia 15: A Verdade que Liberta",
+                    versiculos: `<strong>João 8:31-32 (NVI):</strong> Se vocês permanecerem firmes na minha palavra, verdadeiramente serão meus discípulos. E conhecerão a verdade, e a verdade os libertará.`,
+                    resumo: "A **permanência na Palavra** é a marca do verdadeiro discípulo e a evidência da salvação. A libertação não é primariamente social ou política, mas sim **espiritual**: liberação da escravidão do pecado. A verdade do Evangelho (Sola Scriptura) é o único meio de santificação.",
+                    aplicacao: "Comprometa-se com a **disciplina diária** de meditar na Palavra. Reconheça que sua verdadeira liberdade é encontrada na obediência contínua à verdade de Cristo, e não na satisfação das suas vontades."
+                },
+                en: {
+                    h2: "Day 15: The Truth That Sets Free",
+                    versiculos: `<strong>John 8:31-32 (NIV):</strong> If you hold to my teaching, you are really my disciples. Then you will know the truth, and the truth will set you free.`,
+                    resumo: "The **perseverance in the Word** is the mark of the true disciple and the evidence of salvation. Freedom is not primarily social or political, but **spiritual**: liberation from the bondage of sin. The truth of the Gospel (Sola Scriptura) is the only means of sanctification.",
+                    aplicacao: "Commit to the **daily discipline** of meditating on the Word. Recognize that your true freedom is found in continuous obedience to Christ's truth, not in the satisfaction of your own desires."
+                },
+                es: {
+                    h2: "Día 15: La Verdad que Libera",
+                    versiculos: `<strong>Juan 8:31-32 (NVI):</strong> Si se mantienen fieles a mis enseñanzas, serán realmente mis discípulos; y conocerán la verdad, y la verdad los hará libres.`,
+                    resumo: "La **permanencia en la Palabra** es la marca del verdadero discípulo y la evidencia de la salvación. La liberación no es primariamente social o política, sino **espiritual**: liberación de la esclavitud del pecado. La verdad del Evangelio (Sola Scriptura) es el único medio de santificación.",
+                    aplicacion: "Comprométete con la **disciplina diaria** de meditar en la Palabra. Reconoce que tu verdadera libertad se encuentra en la obediencia continua a la verdad de Cristo, y no en la satisfacción de tus propias voluntades."
+                },
+                fr: {
+                    h2: "Jour 15: La Vérité qui Libère",
+                    versiculos: `<strong>Jean 8:31-32 (Louis Segond):</strong> Et il dit aux Juifs qui avaient cru en lui: Si vous demeurez dans ma parole, vous êtes vraiment mes disciples; vous connaîtrez la vérité, et la vérité vous affranchira.`,
+                    resumo: "La **persévérance dans la Parole** est la marque du vrai disciple et la preuve du salut. La liberté n'est pas principalement sociale ou politique, mais **spirituelle**: libération de l'esclavage du péché. La vérité de l'Évangile (Sola Scriptura) est le seul moyen de sanctification.",
+                    aplicacao: "Engagez-vous dans la **discipline quotidienne** de méditer sur la Parole. Reconnaissez que votre véritable liberté se trouve dans l'obéissance continue à la vérité du Christ, et non dans la satisfaction de vos propres désirs."
+                }
+            },
+            16: {
+                pt: {
+                    h2: "Dia 16: O Pastor, Suas Ovelhas e a Segurança",
+                    versiculos: `<strong>João 10:27-29 (NVI):</strong> As minhas ovelhas ouvem a minha voz; eu as conheço, e elas me seguem. Eu lhes dou a vida eterna, e elas jamais perecerão; ninguém as poderá arrancar da minha mão. Meu Pai, que as deu para mim, é maior do que todos; ninguém pode arrancá-las da mão de meu Pai.`,
+                    resumo: "Este texto é fundamental para a doutrina da **Segurança Eterna/Perseverança dos Santos**. A salvação é duplamente segura: pela mão de Cristo e pela mão do Pai. A fidelidade da ovelha (ouvir e seguir) é uma **evidência**, mas a **causa** da segurança é a Soberania protetora de Deus.",
+                    aplicacao: "Descanse na promessa inquebrável de Cristo: você jamais perecerá. Isso deve motivá-lo à **santidade e ao serviço**, não à complacência, pois a sua preservação depende do poder de Deus, não da sua força."
+                },
+                en: {
+                    h2: "Day 16: The Shepherd, His Sheep, and Security",
+                    versiculos: `<strong>John 10:27-29 (NIV):</strong> My sheep listen to my voice; I know them, and they follow me. I give them eternal life, and they shall never perish; no one will snatch them out of my hand. My Father, who has given them to me, is greater than all; no one can snatch them out of my Father’s hand.`,
+                    resumo: "This text is foundational for the doctrine of **Eternal Security/Perseverance of the Saints**. Salvation is doubly secured: by Christ's hand and the Father's hand. The sheep's faithfulness (listening and following) is **evidence**, but the **cause** of security is God's protective Sovereignty.",
+                    aplicacao: "Rest in Christ's unbreakable promise: you will never perish. This should motivate you to **holiness and service**, not complacency, because your preservation depends on God's power, not your strength."
+                },
+                es: {
+                    h2: "Día 16: El Pastor, Sus Ovejas y la Seguridad",
+                    versiculos: `<strong>Juan 10:27-29 (NVI):</strong> Mis ovejas oyen mi voz; yo las conozco, y ellas me siguen. Yo les doy vida eterna, y nunca perecerán, ni nadie podrá arrebatármelas de la mano. Mi Padre, que me las ha dado, es más grande que todos; y de la mano de mi Padre nadie las puede arrebatar.`,
+                    resumo: "Este texto es fundamental para la doctrina de la **Seguridad Eterna/Perseverancia de los Santos**. La salvación está doblemente asegurada: por la mano de Cristo y por la mano del Padre. La fidelidad de la oveja (oír y seguir) es una **evidencia**, pero la **causa** de la seguridad es la Soberanía protectora de Dios.",
+                    aplicacion: "Descansa en la promesa inquebrantable de Cristo: nunca perecerás. Esto debe motivarte a la **santidad y al servicio**, no a la complacencia, porque tu preservación depende del poder de Dios, no de tu fuerza."
+                },
+                fr: {
+                    h2: "Jour 16: Le Berger, Ses Brebis et la Sécurité",
+                    versiculos: `<strong>Jean 10:27-29 (Louis Segond):</strong> Mes brebis entendent ma voix; je les connais, et elles me suivent. Je leur donne la vie éternelle; et elles ne périront jamais, et personne ne les ravira de ma main. Mon Père, qui me les a données, est plus grand que tous; et personne ne peut les ravir de la main de mon Père.`,
+                    resumo: "Ce texte est fondamental pour la doctrine de la **Sécurité Éternelle/Persévérance des Saints**. Le salut est doublement sécurisé: par la main du Christ et la main du Père. La fidélité de la brebis (écouter et suivre) est une **preuve**, mais la **cause** de la sécurité est la Souveraineté protectrice de Dieu.",
+                    aplicacao: "Reposez-vous sur la promesse inébranlable du Christ: vous ne périrez jamais. Cela doit vous motiver à la **sainteté et au service**, non à la complaisance, car votre préservation dépend de la puissance de Dieu, et non de votre force."
+                }
+            },
+            17: {
+                pt: {
+                    h2: "Dia 17: Eu Sou a Ressurreição e a Vida",
+                    versiculos: `<strong>João 11:25-26 (NVI):</strong> Disse-lhe Jesus: “Eu sou a ressurreição e a vida. Aquele que crê em mim, ainda que morra, viverá; e todo o que vive e crê em mim nunca jamais morrerá. Você crê nisso?”`,
+                    resumo: "A promessa de Jesus não é meramente sobre vida após a morte, mas sobre **vida *Nele***. Ele é a fonte ativa da ressurreição (física e espiritual). A fé em Cristo garante a vida eterna, que começa agora e culmina na ressurreição final. A salvação é centralizada em Sua pessoa.",
+                    aplicacao: "Diante do sofrimento ou da perda, ancore sua esperança na **Pessoa de Cristo**. Ele não apenas *dá* a vida, Ele *é* a Vida. Responda à Sua pergunta com convicção: 'Sim, Senhor, eu creio nisso!'"
+                },
+                en: {
+                    h2: "Day 17: I Am the Resurrection and the Life",
+                    versiculos: `<strong>John 11:25-26 (NIV):</strong> Jesus said to her, “I am the resurrection and the life. The one who believes in me will live, even though they die; and whoever lives by believing in me will never die. Do you believe this?”`,
+                    resumo: "Jesus' promise is not merely about life after death, but about **life *in Him***. He is the active source of the resurrection (physical and spiritual). Faith in Christ guarantees eternal life, which begins now and culminates in the final resurrection. Salvation is centered in His person.",
+                    aplicacao: "In the face of suffering or loss, anchor your hope in the **Person of Christ**. He doesn't just *give* life, He *is* the Life. Answer His question with conviction: 'Yes, Lord, I believe this!'"
+                },
+                es: {
+                    h2: "Día 17: Yo Soy la Resurrección y la Vida",
+                    versiculos: `<strong>Juan 11:25-26 (NVI):</strong> Le dijo Jesús: «Yo soy la resurrección y la vida. El que cree en mí vivirá, aunque muera; y todo el que vive y cree en mí no morirá jamás. ¿Crees esto?»`,
+                    resumo: "La promesa de Jesús no es meramente sobre vida después de la muerte, sino sobre **vida *en Él***. Él es la fuente activa de la resurrección (física y espiritual). La fe en Cristo garantiza la vida eterna, que comienza ahora y culmina en la resurrección final. La salvación se centra en Su persona.",
+                    aplicacion: "Ante el sufrimiento o la pérdida, ancla tu esperanza en la **Persona de Cristo**. Él no solo *da* la vida, Él *es* la Vida. Responde a Su pregunta con convicción: '¡Sí, Señor, yo creo esto!'"
+                },
+                fr: {
+                    h2: "Jour 17: Je Suis la Résurrection et la Vie",
+                    versiculos: `<strong>Jean 11:25-26 (Louis Segond):</strong> Jésus lui dit: Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort; et quiconque vit et croit en moi ne mourra jamais. Crois-tu cela?`,
+                    resumo: "La promesse de Jésus ne concerne pas seulement la vie après la mort, mais la **vie *en Lui***. Il est la source active de la résurrection (physique et spirituelle). La foi en Christ garantit la vie éternelle, qui commence maintenant et culmine dans la résurrection finale. Le salut est centré sur Sa personne.",
+                    aplicacao: "Face à la souffrance ou à la perte, ancrez votre espérance dans la **Personne du Christ**. Il ne fait pas qu'*offrir* la vie, Il *est* la Vie. Répondez à Sa question avec conviction: « Oui, Seigneur, je crois cela! »"
+                }
+            },
+            18: {
+                pt: {
+                    h2: "Dia 18: O Novo Mandamento do Amor",
+                    versiculos: `<strong>João 13:34-35 (NVI):</strong> Um novo mandamento lhes dou: Amem-se uns aos outros. Como eu os amei, vocês devem amar-se uns aos outros. Com isso todos saberão que vocês são meus discípulos...`,
+                    resumo: "O amor mútuo é o **sinal exterior e visível** da regeneração e do discipulado. Não é um amor natural, mas sobrenatural, baseado no **amor sacrificial de Cristo** por nós. Esse amor é o testemunho mais poderoso do Evangelho ao mundo incrédulo.",
+                    aplicacao: "Examine como você tem amado os outros crentes. Seu amor é condicional ou é um reflexo do **sacrifício e da paciência** que Cristo demonstrou por você? Peça a Deus graça para amar como Jesus amou."
+                },
+                en: {
+                    h2: "Day 18: The New Commandment of Love",
+                    versiculos: `<strong>John 13:34-35 (NIV):</strong> A new command I give you: Love one another. As I have loved you, so you must love one another. By this everyone will know that you are my disciples...`,
+                    resumo: "Mutual love is the **outward and visible sign** of regeneration and discipleship. It is not natural love, but supernatural, based on **Christ's sacrificial love** for us. This love is the most powerful testimony of the Gospel to the unbelieving world.",
+                    aplicacao: "Examine how you have loved other believers. Is your love conditional or is it a reflection of the **sacrifice and patience** Christ showed for you? Ask God for grace to love as Jesus loved."
+                },
+                es: {
+                    h2: "Día 18: El Nuevo Mandamiento del Amor",
+                    versiculos: `<strong>Juan 13:34-35 (NVI):</strong> Este mandamiento nuevo les doy: Que se amen los unos a los otros. Así como yo los he amado, también ustedes deben amarse los unos a los otros. De este modo todos sabrán que son mis discípulos...`,
+                    resumo: "El amor mutuo es la **señal exterior y visible** de la regeneración y del discipulado. No es un amor natural, sino sobrenatural, basado en el **amor sacrificial de Cristo** por nosotros. Este amor es el testimonio más poderoso del Evangelio al mundo incrédulo.",
+                    aplicacion: "Examina cómo has amado a otros creyentes. ¿Es tu amor condicional o es un reflejo del **sacrificio y la paciencia** que Cristo demostró por ti? Pide a Dios gracia para amar como Jesús amó."
+                },
+                fr: {
+                    h2: "Jour 18: Le Nouveau Commandement de l'Amour",
+                    versiculos: `<strong>Jean 13:34-35 (Louis Segond):</strong> Je vous donne un commandement nouveau: Aimez-vous les uns les autres; comme je vous ai aimés, vous aussi, aimez-vous les uns les autres. A cela tous connaîtront que vous êtes mes disciples...`,
+                    resumo: "L'amour mutuel est le **signe extérieur et visible** de la régénération et du disciple. Ce n'est pas un amour naturel, mais surnaturel, basé sur **l'amour sacrificiel du Christ** pour nous. Cet amour est le témoignage le plus puissant de l'Évangile au monde incrédule.",
+                    aplicacao: "Examinez comment vous avez aimé les autres croyants. Votre amour est-il conditionnel ou est-il un reflet du **sacrifice et de la patience** que le Christ a démontrés pour vous? Demandez à Dieu la grâce d'aimer comme Jésus a aimé."
+                }
+            },
+            19: {
+                pt: {
+                    h2: "Dia 19: O Caminho Exclusivo e Final",
+                    versiculos: `<strong>João 14:6 (NVI):</strong> Respondeu Jesus: “Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai, a não ser por mim.”`,
+                    resumo: "Este versículo estabelece a **exclusividade e a finalidade** de Jesus. Não há múltiplos caminhos para Deus. Ele é o Único Mediador (Cristo é tudo em tudo). A salvação é obtida **somente por meio dEle** (*Solus Christus*).",
+                    aplicacao: "Afirme sua fé na **exclusividade salvadora de Cristo**. Resista à tentação cultural de relativizar essa verdade. Viva e testemunhe com coragem que o único caminho para a reconciliação com o Pai é Jesus."
+                },
+                en: {
+                    h2: "Day 19: The Exclusive and Final Way",
+                    versiculos: `<strong>John 14:6 (NIV):</strong> Jesus answered, “I am the way and the truth and the life. No one comes to the Father except through me.”`,
+                    resumo: "This verse establishes the **exclusivity and finality** of Jesus. There are no multiple paths to God. He is the Only Mediator (Christ is all in all). Salvation is obtained **only through Him** (*Solus Christus*).",
+                    aplicacao: "Affirm your faith in the **saving exclusivity of Christ**. Resist the cultural temptation to relativize this truth. Live and witness with courage that the only way to reconciliation with the Father is Jesus."
+                },
+                es: {
+                    h2: "Día 19: El Camino Exclusivo y Final",
+                    versiculos: `<strong>Juan 14:6 (NVI):</strong> Jesús le contestó: «Yo soy el camino, la verdad y la vida. Nadie llega al Padre sino por mí.»`,
+                    resumo: "Este versículo establece la **exclusividad y la finalidad** de Jesús. No hay múltiples caminos hacia Dios. Él es el Único Mediador (Cristo es todo en todo). La salvación se obtiene **solo por medio de Él** (*Solus Christus*).",
+                    aplicacion: "Afirma tu fe en la **exclusividad salvadora de Cristo**. Resiste la tentación cultural de relativizar esta verdad. Vive y testifica con valentía que el único camino para la reconciliación con el Padre es Jesús."
+                },
+                fr: {
+                    h2: "Jour 19: Le Chemin Exclusif et Final",
+                    versiculos: `<strong>Jean 14:6 (Louis Segond):</strong> Jésus lui dit: Je suis le chemin, la vérité, et la vie. Nul ne vient au Père que par moi.`,
+                    resumo: "Ce verset établit **l'exclusivité et la finalité** de Jésus. Il n'y a pas de multiples chemins vers Dieu. Il est le Seul Médiateur (le Christ est tout en tout). Le salut s'obtient **seulement par Lui** (*Solus Christus*).",
+                    aplicacao: "Affirmez votre foi dans **l'exclusivité salvatrice du Christ**. Résistez à la tentation culturelle de relativiser cette vérité. Vivez et témoignez avec courage que le seul chemin vers la réconciliation avec le Père est Jésus."
+                }
+            },
+            20: {
+                pt: {
+                    h2: "Dia 20: Santificação pela Verdade",
+                    versiculos: `<strong>João 17:3, 17 (NVI):</strong> Esta é a vida eterna: que conheçam a ti, o único Deus verdadeiro, e a Jesus Cristo, a quem enviaste. (...) Santifica-os na verdade; a tua palavra é a verdade.`,
+                    resumo: "A **Vida Eterna é o conhecimento pessoal de Deus** revelado em Cristo. A oração sacerdotal de Jesus foca na **santificação do crente**, que acontece exclusivamente pela **Palavra de Deus** (*Sola Scriptura*). O conhecimento de Deus e a obediência à Sua Palavra são inseparáveis.",
+                    aplicacao: "Comprometa-se com uma santidade cada vez mais profunda. Reconheça que sua santificação não é um esforço pessoal isolado, mas uma obra realizada pelo Espírito Santo, **aplicando a verdade das Escrituras** em seu dia a dia."
+                },
+                en: {
+                    h2: "Day 20: Sanctification by Truth",
+                    versiculos: `<strong>John 17:3, 17 (NIV):</strong> Now this is eternal life: that they know you, the only true God, and Jesus Christ, whom you have sent. (...) Sanctify them by the truth; your word is truth.`,
+                    resumo: "**Eternal Life is the personal knowledge of God** revealed in Christ. Jesus' High Priestly prayer focuses on the **sanctification of the believer**, which happens exclusively through the **Word of God** (*Sola Scriptura*). The knowledge of God and obedience to His Word are inseparable.",
+                    aplicacao: "Commit yourself to ever deeper holiness. Recognize that your sanctification is not an isolated personal effort, but a work carried out by the Holy Spirit, **applying the truth of Scripture** in your daily life."
+                },
+                es: {
+                    h2: "Día 20: Santificación por la Verdad",
+                    versiculos: `<strong>Juan 17:3, 17 (NVI):</strong> Y esta es la vida eterna: que te conozcan a ti, el único Dios verdadero, y a Jesucristo, a quien has enviado. (...) Santifícalos en la verdad; tu palabra es la verdad.`,
+                    resumo: "La **Vida Eterna es el conocimiento personal de Dios** revelado en Cristo. La oración sacerdotal de Jesús se centra en la **santificación del creyente**, que ocurre exclusivamente por la **Palabra de Dios** (*Sola Scriptura*). El conocimiento de Dios y la obediencia a Su Palabra son inseparables.",
+                    aplicacion: "Comprométete con una santidad cada vez más profunda. Reconoce que tu santificación no es un esfuerzo personal aislado, sino una obra realizada por el Espíritu Santo, **aplicando la verdad de las Escrituras** en tu día a día."
+                },
+                fr: {
+                    h2: "Jour 20: Sanctification par la Vérité",
+                    versiculos: `<strong>Jean 17:3, 17 (Louis Segond):</strong> Or, la vie éternelle, c'est qu'ils te connaissent, toi, le seul vrai Dieu, et celui que tu as envoyé, Jésus Christ. (...) Sanctifie-les par ta vérité: ta parole est la vérité.`,
+                    resumo: "La **Vie Éternelle est la connaissance personnelle de Dieu** révélée en Christ. La prière sacerdotale de Jésus se concentre sur la **sanctification du croyant**, qui se réalise exclusivement par la **Parole de Dieu** (*Sola Scriptura*). La connaissance de Dieu et l'obéissance à Sa Parole sont inséparables.",
+                    aplicacao: "Engagez-vous dans une sainteté de plus en plus profonde. Reconnaissez que votre sanctification n'est pas un effort personnel isolé, mais une œuvre réalisée par le Saint-Esprit, **appliquant la vérité des Écritures** dans votre vie quotidienne."
+                }
+            },
+            21: {
+                pt: {
+                    h2: "Dia 21: O Propósito Final da Escrita",
+                    versiculos: `<strong>João 20:30-31 (NVI):</strong> Jesus realizou na presença dos seus discípulos muitos outros sinais miraculosos, que não estão registrados neste livro. Mas estes foram escritos para que vocês creiam que Jesus é o Cristo, o Filho de Deus, e para que, crendo, tenham vida em seu nome.`,
+                    resumo: "O Evangelho de João tem um **propósito claro e intencional**: conduzir o leitor à **fé salvadora** em Jesus (Sola Fide) como o Messias divino. A Escritura é a única regra de fé e prática e contém tudo o que é necessário para a salvação. O resultado da fé é a vida em Seu Nome.",
+                    aplicacao: "Reafirme sua **fé e confiança** unicamente nas Escrituras Sagradas. Peça a Deus para usar o conhecimento adquirido nestes 21 dias para consolidar sua fé em Cristo, o Filho de Deus, e viver a vida abundante que Ele lhe deu."
+                },
+                en: {
+                    h2: "Day 21: The Final Purpose of the Writing",
+                    versiculos: `<strong>John 20:30-31 (NIV):</strong> Jesus performed many other signs in the presence of his disciples, which are not recorded in this book. But these are written that you may believe that Jesus is the Christ, the Son of God, and that by believing you may have life in his name.`,
+                    resumo: "The Gospel of John has a **clear and intentional purpose**: to lead the reader to **saving faith** in Jesus (Sola Fide) as the divine Messiah. Scripture is the only rule of faith and practice and contains everything necessary for salvation. The result of faith is life in His Name.",
+                    aplicacao: "Reaffirm your **faith and trust** solely in the Holy Scriptures. Ask God to use the knowledge gained over these 21 days to solidify your faith in Christ, the Son of God, and to live the abundant life He has given you."
+                },
+                es: {
+                    h2: "Día 21: El Propósito Final de la Escritura",
+                    versiculos: `<strong>Juan 20:30-31 (NVI):</strong> Jesús hizo muchas otras señales milagrosas en presencia de sus discípulos, las cuales no están registradas en este libro. Pero estas se han escrito para que ustedes crean que Jesús es el Cristo, el Hijo de Dios, y para que al creer, tengan vida en su nombre.`,
+                    resumo: "El Evangelio de Juan tiene un **propósito claro e intencional**: guiar al lector a la **fe salvadora** en Jesús (Sola Fide) como el Mesías divino. La Escritura es la única regla de fe y práctica y contiene todo lo necesario para la salvación. El resultado de la fe es la vida en Su Nombre.",
+                    aplicacion: "Reafirma tu **fe y confianza** únicamente en las Sagradas Escrituras. Pide a Dios que use el conocimiento adquirido en estos 21 días para consolidar tu fe en Cristo, el Hijo de Dios, y vivir la vida abundante que Él te ha dado."
+                },
+                fr: {
+                    h2: "Jour 21: Le But Final de l'Écriture",
+                    versiculos: `<strong>Jean 20:30-31 (Louis Segond):</strong> Jésus a fait encore, en présence de ses disciples, beaucoup d'autres miracles, qui ne sont pas écrits dans ce livre. Mais ceci a été écrit afin que vous croyiez que Jésus est le Christ, le Fils de Dieu, et qu'en croyant, vous ayez la vie en son nom.`,
+                    resumo: "L'Évangile de Jean a un **but clair et intentionnel**: conduire le lecteur à la **foi salvatrice** en Jésus (Sola Fide) comme le Messie divin. L'Écriture est la seule règle de foi et de pratique et contient tout ce qui est nécessaire au salut. Le résultat de la foi est la vie en Son Nom.",
+                    aplicacao: "Réaffirmez votre **foi et votre confiance** uniquement dans les Saintes Écritures. Demandez à Dieu d'utiliser les connaissances acquises au cours de ces 21 jours pour consolider votre foi en Christ, le Fils de Dieu, et vivre la vie abondante qu'Il vous a donnée."
+                }
+            }
+        };
+
+        // --- FUNÇÕES DE ARMAZENAMENTO E INTERFACE ---
+        
+        function getSavedProgress() {
+            const savedDay = localStorage.getItem('devotionalCurrentDay');
+            return savedDay ? parseInt(savedDay) : 1;
+        }
+        function saveProgress(day) {
+            localStorage.setItem('devotionalCurrentDay', day);
+        }
+        function getDayStatus(day) {
+            return localStorage.getItem('devotionalDay_' + day) === 'true';
+        }
+        function saveDayStatus(day, status) {
+            localStorage.setItem('devotionalDay_' + day, status);
+        }
+
+        function renderDayContent(day) {
+            const content = devotionalContent[day];
+            const langContent = content ? (content[currentLang] || content['pt']) : devotionalContent[1]['pt'];
+            const labels = langData[currentLang].sections;
+            
+            const devotionalDiv = document.createElement('div');
+            devotionalDiv.innerHTML = `
+                <h2>${langContent.h2}</h2>
+                <div class="versiculos">${langContent.versiculos}</div>
+                <div class="section">
+                    <strong>${labels.resumo}</strong>
+                    <p>${langContent.resumo}</p>
+                </div>
+                <div class="section">
+                    <strong>${labels.aplicacao}</strong>
+                    <p>${langContent.aplicacao}</p>
+                </div>
+                <div class="oracao-final">
+                    <p>${labels.oracao}</p>
+                </div>
+            `;
+            
+            devotionalContentDiv.innerHTML = devotionalDiv.innerHTML;
+            
+            const data = langData[currentLang];
+            document.getElementById('pageCounter').textContent = `${data.page} ${currentDay} ${data.of} ${totalDays}`;
+
+            document.getElementById('prevButton').disabled = currentDay === 1;
+            document.getElementById('nextButton').disabled = currentDay === totalDays;
+
+            const check = document.getElementById('completedCheck');
+            check.checked = getDayStatus(currentDay);
+            
+            check.onchange = null;
+            check.onchange = () => {
+                saveDayStatus(currentDay, check.checked);
+                if (check.checked && currentDay < totalDays) {
+                     setTimeout(() => {
+                         handleNavigation(1); // Avança após marcar como completo
+                     }, 300);
+                }
+            };
+        }
+
+        function updateTexts() {
+            const data = langData[currentLang];
+            document.getElementById('mainTitle').textContent = data.title;
+            document.getElementById('subTitle').textContent = data.subtitle;
+            document.getElementById('prevButton').textContent = data.prev;
+            document.getElementById('nextButton').textContent = data.next;
+            document.getElementById('checkLabel').textContent = data.checkLabel;
+            document.getElementById('themeToggle').textContent = data.themeToggle;
+
+            document.querySelectorAll('.language-selector button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === currentLang);
+            });
+            
+            renderDayContent(currentDay);
+        }
+        
+        // --- FUNÇÃO CENTRAL DE NAVEGAÇÃO COM ANIMAÇÃO ---
+
+        function handleNavigation(direction) { // direction: 1 para Próximo, -1 para Anterior
+            const newDay = currentDay + direction;
+            if (newDay < 1 || newDay > totalDays) return;
+
+            const outClass = direction === 1 ? 'page-out-left' : 'page-out-right';
+            const inClass = direction === 1 ? 'page-in-right' : 'page-in-left';
+            
+            devotionalContentDiv.classList.add(outClass);
+            devotionalContentDiv.classList.remove('page-in-right', 'page-in-left');
+
+            setTimeout(() => {
+                currentDay = newDay;
+                saveProgress(currentDay);
+                
+                renderDayContent(currentDay);
+
+                devotionalContentDiv.classList.remove(outClass);
+                
+                // Força o reflow para reiniciar a animação CSS
+                void devotionalContentDiv.offsetWidth; 
+
+                devotionalContentDiv.classList.add(inClass);
+
+            }, 300); 
+        }
+
+        function toggleTheme() {
+            if (document.body.classList.contains('light-theme')) {
+                document.body.classList.replace('light-theme', 'dark-theme');
+                currentTheme = 'dark-theme';
+            } else {
+                document.body.classList.replace('dark-theme', 'light-theme');
+                currentTheme = 'light-theme';
+            }
+            localStorage.setItem('devotionalTheme', currentTheme);
+            updateTexts();
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('devotionalLang', lang);
+            updateTexts();
+        }
+
+        // --- MANUSEIO DE EVENTOS E INICIALIZAÇÃO ---
+        document.getElementById('prevButton').addEventListener('click', () => handleNavigation(-1));
+        document.getElementById('nextButton').addEventListener('click', () => handleNavigation(1));
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        
+        document.querySelectorAll('.language-selector button').forEach(btn => {
+            btn.addEventListener('click', () => changeLanguage(btn.dataset.lang));
+        });
+
+        window.onload = () => {
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(currentTheme);
+            
+            currentDay = getSavedProgress();
+            
+            updateTexts();
+            
+            devotionalContentDiv.classList.add('page-in-right');
+        };
+
+    </script>
+
+</body>
+</html>
