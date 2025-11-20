@@ -5,407 +5,423 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="docTitle">30 Dias: Soberania e Fé em Jesus (Devocional)</title>
     <style>
-        /* CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
-        body {
-            font-family: 'Georgia', serif;
-            margin: 0;
-            background-color: #e6e0d3; /* Papel envelhecido */
-            color: #333;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column; 
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .book-container {
-            max-width: 650px;
-            width: 90%;
-            background: #fdfdfd;
-            padding: 30px 40px;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            border: 1px solid #ccc;
-            position: relative;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        h1, h2 {
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            color: #4b0082; /* Índigo */
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
-            margin-top: 0;
-            transition: color 0.3s;
-        }
-        h1 {
-            font-size: 1.8em;
-            text-align: center;
-            line-height: 1.3;
-        }
-        h2 {
-            font-size: 1.5em;
-            color: #1e8449; /* Verde escuro */
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-style: italic;
-            color: #666;
-            margin-bottom: 25px;
-        }
-        .versiculos {
-            background-color: #f0f8ff; /* Alice Blue */
-            border-left: 5px solid #4b0082;
-            padding: 15px;
-            margin: 15px 0;
-            font-style: italic;
-            font-size: 1.1em;
-            line-height: 1.5;
-            transition: background-color 0.3s;
-        }
-        .section {
-            margin-bottom: 20px;
-            padding-top: 10px;
-            border-top: 1px dashed #eee;
-        }
-        .oracao-final {
-            margin-top: 30px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            font-style: italic;
-            transition: background-color 0.3s;
-        }
+<style>
+/* CORREÇÃO CRÍTICA DE CENTRALIZAÇÃO: Garante 100% da altura da viewport */
+html {
+    height: 100%; 
+}
+/* FIM DA CORREÇÃO CRÍTICA */
+
+/* CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
+body {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    background-color: #e6e0d3; /* Papel envelhecido */
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+.book-container {
+    max-width: 650px;
+    width: 90%;
+    background: #fdfdfd;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    position: relative;
+    transition: background 0.3s, border-color 0.3s;
+}
+h1, h2 {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    color: #4b0082; /* Índigo */
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    margin-top: 0;
+    transition: color 0.3s;
+}
+h1 {
+    font-size: 1.8em;
+    text-align: center;
+    line-height: 1.3;
+}
+h2 {
+    font-size: 1.5em;
+    color: #1e8449; /* Verde escuro */
+    text-align: center;
+}
+.subtitle {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 25px;
+}
+.versiculos {
+    background-color: #f0f8ff; /* Alice Blue */
+    border-left: 5px solid #4b0082;
+    padding: 15px;
+    margin: 15px 0;
+    font-style: italic;
+    font-size: 1.1em;
+    line-height: 1.5;
+    transition: background-color 0.3s;
+}
+.section {
+    margin-bottom: 20px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+}
+/* ALTERAÇÃO: ORAÇÃO FINAL - TEMA CLARO */
+.oracao-final {
+    margin-top: 30px;
+    padding: 15px;
+    /* FITA AMARELA LATERAL (BORDER) */
+    border: 1px solid #ccc;
+    border-left: 8px solid #ffc107; 
+    border-radius: 5px;
+    /* FUNDO AMARELO CLARO */
+    background-color: #fff8e1; 
+    font-style: italic;
+    transition: background-color 0.3s;
+}
+/* FIM ALTERAÇÃO */
         
-        /* 1. ANIMAÇÕES DE NAVEGAÇÃO */
-        .page-out-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-        .page-out-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-        .page-in-right, .page-in-left {
-            opacity: 0;
-        }
-        .book-container {
-            opacity: 1;
-            transform: translateX(0);
-            transition: opacity 0.3s ease-in, transform 0.3s ease-in;
-        }
-        .page-in-right {
-            animation: fadeInRight 0.3s forwards;
-        }
-        .page-in-left {
-            animation: fadeInLeft 0.3s forwards;
-        }
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+/* 1. ANIMAÇÕES DE NAVEGAÇÃO */
+.page-out-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.page-out-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.page-in-right, .page-in-left {
+    opacity: 0;
+}
+.book-container {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+}
+.page-in-right {
+    animation: fadeInRight 0.3s forwards;
+}
+.page-in-left {
+    animation: fadeInLeft 0.3s forwards;
+}
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
 
-        /* NOVO: Estilo para as bandeiras em imagem */
-        .lang-flag {
-            width: 20px; 
-            height: auto;
-            margin-right: 8px;
-            vertical-align: middle;
-            border: 1px solid #ccc;
-            border-radius: 2px;
-        }
-        /* FIM NOVO */
+/* NOVO: Estilo para as bandeiras em imagem */
+.lang-flag {
+    width: 20px; 
+    height: auto;
+    margin-right: 8px;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+/* FIM NOVO */
 
-        /* 2. NAVEGAÇÃO E UTILS (Ajustado para Mobile) */
-        .top-utils {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap; 
-            gap: 15px; 
-        }
+/* 2. NAVEGAÇÃO E UTILS (Ajustado para Mobile) */
+.top-utils {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap; 
+    gap: 15px; 
+}
 
-        /* NOVO: Seletor de Idioma Dropdown */
-        .language-selector-wrapper {
-            position: relative;
-            display: inline-block;
-            z-index: 10; 
-        }
-        
-        #langSelectButton {
-            background-color: #f0f0f0;
-            color: #4b0082;
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            font-size: 0.9em;
-            display: flex; 
-            align-items: center;
-        }
+/* NOVO: Seletor de Idioma Dropdown */
+.language-selector-wrapper {
+    position: relative;
+    display: inline-block;
+    z-index: 10; 
+}
 
-        #langSelectButton:hover {
-            background-color: #e0e0e0;
-        }
+#langSelectButton {
+    background-color: #f0f0f0;
+    color: #4b0082;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    font-size: 0.9em;
+    display: flex; 
+    align-items: center;
+}
 
-        .lang-dropdown-content {
-            display: none; 
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            padding: 5px 0;
-            border-radius: 8px;
-            margin-top: 5px;
-        }
+#langSelectButton:hover {
+    background-color: #e0e0e0;
+}
 
-        .lang-dropdown-content button {
-            color: #333;
-            padding: 8px 16px;
-            text-decoration: none;
-            display: flex; 
-            align-items: center;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-size: 1em;
-            font-weight: bold;
-        }
+.lang-dropdown-content {
+    display: none; 
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 5px 0;
+    border-radius: 8px;
+    margin-top: 5px;
+}
 
-        .lang-dropdown-content button:hover,
-        .lang-dropdown-content button.active {
-            background-color: #ddd;
-        }
-        /* FIM: NOVO Seletor de Idioma Dropdown */
-        
-        #themeToggle {
-            background: none;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            color: #333;
-            transition: all 0.2s;
-            margin-left: auto; 
-            white-space: nowrap; 
-        }
+.lang-dropdown-content button {
+    color: #333;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: flex; 
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 1em;
+    font-weight: bold;
+}
 
-        #navigationControls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .nav-button {
-            background-color: #4b0082;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .nav-button:hover:not(:disabled) {
-            background-color: #6a0dad;
-        }
-        .nav-button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+.lang-dropdown-content button:hover,
+.lang-dropdown-content button.active {
+    background-color: #ddd;
+}
+/* FIM: NOVO Seletor de Idioma Dropdown */
 
-        /* 3. CHECKBOX DE CONCLUÍDO */
-        .completion-status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #e6f7ff;
-            border: 1px solid #b3e0ff;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .completion-status label {
-            margin-left: 10px;
-            font-weight: bold;
-            color: #1e8449;
-            cursor: pointer;
-        }
-        .completion-status input[type="checkbox"] {
-            transform: scale(1.3);
-            cursor: pointer;
-        }
+#themeToggle {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #333;
+    transition: all 0.2s;
+    margin-left: auto; 
+    white-space: nowrap; 
+}
 
-        /* 4. RODAPÉ */
-        footer {
-            margin-top: 20px;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.8em;
-            color: #777;
-            width: 90%;
-            max-width: 650px;
-        }
-        footer a {
-            color: #4b0082;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-        
-        /* 5. MEDIA QUERIES (Ajustes para dispositivos menores) */
-        @media (max-width: 700px) {
-            .book-container {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 1.5em;
-            }
-            h2 {
-                font-size: 1.3em;
-            }
-            .nav-button {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-            .top-utils {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            #themeToggle {
-                margin-left: 0;
-                margin-top: 10px;
-            }
-        }
-        
-        /* 6. DARK THEME (Tema Escuro) */
-        .dark-theme {
-            background-color: #121212;
-            color: #f4f4f4;
-        }
-        .dark-theme .book-container {
-            background: #1e1e1e;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            border-color: #333;
-        }
-        .dark-theme h1, .dark-theme h2 {
-            color: #bb86fc; /* Púrpura */
-            border-bottom-color: #333;
-        }
-        .dark-theme h2 {
-            color: #03dac6; /* Ciano/Verde */
-        }
-        .dark-theme .subtitle {
-            color: #aaa;
-        }
-        .dark-theme .versiculos {
-            background-color: #2c2c2c;
-            border-left-color: #bb86fc;
-        }
-        .dark-theme .oracao-final {
-            background-color: #252525;
-            border-color: #444;
-        }
-        .dark-theme .completion-status {
-            background-color: #2c2c2c;
-            border-color: #444;
-        }
-        .dark-theme .completion-status label {
-            color: #03dac6;
-        }
-        .dark-theme .nav-button {
-            background-color: #bb86fc;
-        }
-        .dark-theme .nav-button:hover:not(:disabled) {
-            background-color: #c79bfd;
-        }
-        .dark-theme footer a {
-            color: #bb86fc;
-        }
-        .dark-theme #themeToggle {
-            color: #f4f4f4;
-            border-color: #555;
-            background: #1e1e1e;
-        }
+#navigationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+.nav-button {
+    background-color: #4b0082;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.nav-button:hover:not(:disabled) {
+    background-color: #6a0dad;
+}
+.nav-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
 
-        /* Dark Theme para Seletor de Idioma */
-        .dark-theme #langSelectButton {
-            background-color: #2c2c2c;
-            color: #bb86fc;
-            border-color: #555;
-        }
+/* 3. CHECKBOX DE CONCLUÍDO */
+.completion-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #e6f7ff;
+    border: 1px solid #b3e0ff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.completion-status label {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #1e8449;
+    cursor: pointer;
+}
+.completion-status input[type="checkbox"] {
+    transform: scale(1.3);
+    cursor: pointer;
+}
 
-        .dark-theme #langSelectButton:hover {
-            background-color: #383838;
-        }
+/* 4. RODAPÉ */
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #777;
+    width: 90%;
+    max-width: 650px;
+}
+footer a {
+    color: #4b0082;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
 
-        .dark-theme .lang-dropdown-content {
-            background-color: #1e1e1e;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
-        }
+/* 5. MEDIA QUERIES (Ajustes para dispositivos menores) */
+@media (max-width: 700px) {
+    .book-container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    h2 {
+        font-size: 1.3em;
+    }
+    .nav-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .top-utils {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    #themeToggle {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
 
-        .dark-theme .lang-dropdown-content button {
-            color: #f4f4f4;
-        }
+/* 6. DARK THEME (Tema Escuro) */
+.dark-theme {
+    background-color: #121212;
+    color: #f4f4f4;
+}
+.dark-theme .book-container {
+    background: #1e1e1e;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    border-color: #333;
+}
+.dark-theme h1, .dark-theme h2 {
+    color: #bb86fc; /* Púrpura */
+    border-bottom-color: #333;
+}
+.dark-theme h2 {
+    color: #03dac6; /* Ciano/Verde */
+}
+.dark-theme .subtitle {
+    color: #aaa;
+}
+.dark-theme .versiculos {
+    background-color: #2c2c2c;
+    border-left-color: #bb86fc;
+}
+/* ALTERAÇÃO: ORAÇÃO FINAL - TEMA ESCURO (Adiciona a fita amarela) */
+.dark-theme .oracao-final {
+    background-color: #252525;
+    border-color: #444;
+    border-left: 8px solid #ffc107; /* Fita amarela forte mantida */
+}
+/* FIM ALTERAÇÃO */
+.dark-theme .completion-status {
+    background-color: #2c2c2c;
+    border-color: #444;
+}
+.dark-theme .completion-status label {
+    color: #03dac6;
+}
+.dark-theme .nav-button {
+    background-color: #bb86fc;
+}
+.dark-theme .nav-button:hover:not(:disabled) {
+    background-color: #c79bfd;
+}
+.dark-theme footer a {
+    color: #bb86fc;
+}
+.dark-theme #themeToggle {
+    color: #f4f4f4;
+    border-color: #555;
+    background: #1e1e1e;
+}
 
-        .dark-theme .lang-dropdown-content button:hover,
-        .dark-theme .lang-dropdown-content button.active {
-            background-color: #333;
-        }
-        /* FIM: Dark Theme para Seletor de Idioma */
+/* Dark Theme para Seletor de Idioma */
+.dark-theme #langSelectButton {
+    background-color: #2c2c2c;
+    color: #bb86fc;
+    border-color: #555;
+}
 
-        /* 7. ESTILOS DA BARRA DE PROGRESSO */
-        .progress-bar-wrapper {
-            background-color: #ddd;
-            border-radius: 10px;
-            height: 10px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
+.dark-theme #langSelectButton:hover {
+    background-color: #383838;
+}
 
-        .progress-bar {
-            height: 100%;
-            width: 0%; 
-            background-color: #28a745;
-            border-radius: 10px;
-            transition: width 0.5s ease-in-out;
-        }
+.dark-theme .lang-dropdown-content {
+    background-color: #1e1e1e;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+}
 
-        /* Dark Theme para Progresso */
-        .dark-theme #progressLabel {
-            color: #03dac6;
-        }
+.dark-theme .lang-dropdown-content button {
+    color: #f4f4f4;
+}
 
-        .dark-theme .progress-bar-wrapper {
-            background-color: #333;
-        }
+.dark-theme .lang-dropdown-content button:hover,
+.dark-theme .lang-dropdown-content button.active {
+    background-color: #333;
+}
+/* FIM: Dark Theme para Seletor de Idioma */
 
-        .dark-theme .progress-bar {
-            background-color: #03dac6;
-        }
-        /* FIM: Dark Theme para Progresso */
+/* 7. ESTILOS DA BARRA DE PROGRESSO */
+.progress-bar-wrapper {
+    background-color: #ddd;
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%; 
+    background-color: #28a745;
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Dark Theme para Progresso */
+.dark-theme #progressLabel {
+    color: #03dac6;
+}
+
+.dark-theme .progress-bar-wrapper {
+    background-color: #333;
+}
+
+.dark-theme .progress-bar {
+    background-color: #03dac6;
+}
+/* FIM: Dark Theme para Progresso */
+</style>
     </style>
 </head>
 <body class="light-theme">
@@ -450,7 +466,7 @@
     </div>
 
     <footer>
-        <p>Devocional adaptado e criado por você. Código-fonte disponível sob licença MIT. | <span id="footerText"></span></p>
+        <p>Devocional adaptado e criado por Alex Silva | <span id="footerText"></span></p>
     </footer>
 
     <script>
@@ -573,8 +589,8 @@
                 }
             }
         };
-
-        // Estrutura de conteúdo (Apenas o Dia 1 e 2 como exemplo)
+       
+// Estrutura de conteúdo (Todos os 30 dias devem estar aqui)
         const devotionalContent = {
             1: {
                 pt: {
@@ -635,8 +651,847 @@
                     aplicacion: "Qu'est-ce qui dans votre vie semble encore 'vieux' ou 'charnel' ? Demandez au Saint-Esprit d'opérer la nouvelle naissance plus profondément dans votre esprit et vos attitudes, vous rendant plus conforme à l'image du Christ.",
                     oracao: "Père, je reconnais que j'ai besoin de naître de nouveau chaque jour. Opère en moi Ta volonté, renouvelle mon esprit et aide-moi à croire en Ton Fils pour avoir la vie éternelle. Amen."
                 }
+            },
+            3: {
+                pt: {
+                    h2: "A Soberania na Água Viva (João 4:1-26)",
+                    versiculos: "João 4:14: 'mas quem beber da água que eu lhe der nunca mais terá sede, porque a água que eu lhe der se fará nele uma fonte de água que jorre para a vida eterna.'",
+                    resumo: "O encontro de Jesus com a mulher samaritana mostra que o dom de Deus, a 'água viva', não se limita a raças, costumes ou lugares sagrados. Jesus, soberanamente, oferece a salvação e a adoração 'em espírito e em verdade' a todos que Ele escolhe alcançar. A água viva simboliza o Espírito Santo e a vida eterna.",
+                    aplicacao: "Você tem sede de algo que o mundo oferece? Identifique essa sede e peça a Jesus para saciá-la com o Espírito Santo, focando em adorá-Lo com sinceridade (em espírito) e conforme a verdade da Palavra (em verdade).",
+                    oracao: "Senhor Jesus, eu te agradeço por seres a Água Viva. Perdoa-me por buscar saciedade em cisternas quebradas. Enche-me do Teu Espírito para que a vida eterna jorre de dentro de mim. Amém."
+                },
+                en: {
+                    h2: "Sovereignty in Living Water (John 4:1-26)",
+                    versiculos: "John 4:14: 'but whoever drinks of the water that I will give him will never be thirsty again. The water that I will give him will become in him a spring of water welling up to eternal life.'",
+                    resumo: "Jesus' encounter with the Samaritan woman shows that the gift of God, the 'living water,' is not limited to races, customs, or sacred places. Jesus, sovereignly, offers salvation and worship 'in spirit and truth' to all whom He chooses to reach. Living water symbolizes the Holy Spirit and eternal life.",
+                    aplicacao: "Are you thirsty for something the world offers? Identify that thirst and ask Jesus to satisfy it with the Holy Spirit, focusing on worshiping Him sincerely (in spirit) and according to the truth of the Word (in truth).",
+                    oracao: "Lord Jesus, I thank you for being the Living Water. Forgive me for seeking satisfaction in broken cisterns. Fill me with Your Spirit so that eternal life may spring up from within me. Amen."
+                },
+                es: {
+                    h2: "La Soberanía en el Agua Viva (Juan 4:1-26)",
+                    versiculos: "Juan 4:14: 'mas el que bebiere del agua que yo le daré, no tendrá sed jamás; sino que el agua que yo le daré será en él una fuente de agua que salte para vida eterna.'",
+                    resumo: "El encuentro de Jesús con la mujer samaritana muestra que el don de Dios, el 'agua viva', no se limita a razas, costumbres o lugares sagrados. Jesús, soberanamente, ofrece la salvación y la adoración 'en espíritu y en verdad' a todos los que Él elige alcanzar. El agua viva simboliza el Espíritu Santo y la vida eterna.",
+                    aplicacion: "¿Tienes sed de algo que ofrece el mundo? Identifica esa sed y pídele a Jesús que la sacie con el Espíritu Santo, enfocándote en adorarle con sinceridad (en espíritu) y conforme a la verdad de la Palabra (en verdad).",
+                    oracao: "Señor Jesús, te agradezco por ser el Agua Viva. Perdóname por buscar satisfacción en cisternas rotas. Lléname de Tu Espíritu para que la vida eterna brote de dentro de mí. Amén."
+                },
+                fr: {
+                    h2: "La Souveraineté dans l'Eau Vive (Jean 4:1-26)",
+                    versiculos: "Jean 4:14: 'mais celui qui boira de l'eau que je lui donnerai n'aura jamais soif, et l'eau que je lui donnerai deviendra en lui une source d'eau qui jaillira jusque dans la vie éternelle.'",
+                    resumo: "La rencontre de Jésus avec la femme samaritaine montre que le don de Dieu, l''eau vive', ne se limite pas aux races, aux coutumes ou aux lieux sacrés. Jésus, souverainement, offre le salut et l'adoration 'en esprit et en vérité' à tous ceux qu'il choisit d'atteindre. L'eau vive symbolise le Saint-Esprit et la vie éternelle.",
+                    aplicacao: "Avez-vous soif de quelque chose que le monde offre? Identifiez cette soif et demandez à Jésus de la satisfaire avec le Saint-Esprit, en vous concentrant sur l'adoration sincère (en esprit) et selon la vérité de la Parole (en vérité).",
+                    oracao: "Seigneur Jésus, je te remercie d'être l'Eau Vive. Pardonne-moi de chercher satisfaction dans des citernes brisées. Remplis-moi de Ton Esprit pour que la vie éternelle jaillisse de moi. Amen."
+                }
+            },
+            4: {
+                pt: {
+                    h2: "A Autoridade da Palavra (João 4:46-54)",
+                    versiculos: "João 4:50: 'Disse-lhe Jesus: Vai, o teu filho vive. E o homem creu na palavra que Jesus lhe dissera, e foi-se.'",
+                    resumo: "Este milagre mostra a soberania de Jesus sobre a distância e o tempo. O oficial do rei não precisou que Jesus fosse fisicamente até seu filho. Ele simplesmente creu na Palavra de Jesus, e isso foi suficiente. A fé aqui é crer no que Jesus diz, mesmo sem ver a evidência imediata. A soberania de Jesus é manifestada na autoridade de Sua Palavra.",
+                    aplicacao: "Existe alguma situação de saúde, financeira ou familiar onde você está esperando ver para crer? Pratique a fé do oficial do rei: creia na Palavra de Jesus hoje, mesmo que a evidência só apareça amanhã.",
+                    oracao: "Senhor, aumenta a minha fé na autoridade da Tua Palavra. Que eu possa ir 'pela fé e não pela vista'. Que a Tua Palavra se manifeste como verdade e poder em todas as áreas da minha vida. Amém."
+                },
+                en: {
+                    h2: "The Authority of the Word (John 4:46-54)",
+                    versiculos: "John 4:50: 'Jesus said to him, “Go; your son will live.” The man believed the word that Jesus spoke to him and went on his way.'",
+                    resumo: "This miracle shows Jesus' sovereignty over distance and time. The royal official did not need Jesus to physically go to his son. He simply believed Jesus' word, and that was enough. Faith here is believing what Jesus says, even without seeing the immediate evidence. Jesus' sovereignty is manifested in the authority of His Word.",
+                    aplicacao: "Is there any health, financial, or family situation where you are waiting to see in order to believe? Practice the faith of the royal official: believe in Jesus' Word today, even if the evidence only appears tomorrow.",
+                    oracao: "Lord, increase my faith in the authority of Your Word. May I walk 'by faith and not by sight'. May Your Word manifest as truth and power in all areas of my life. Amen."
+                },
+                es: {
+                    h2: "La Autoridad de la Palabra (Juan 4:46-54)",
+                    versiculos: "Juan 4:50: 'Jesús le dijo: Ve, tu hijo vive. Y el hombre creyó la palabra que Jesús le dijo, y se fue.'",
+                    resumo: "Este milagro muestra la soberanía de Jesús sobre la distancia y el tiempo. El oficial del rey no necesitó que Jesús fuera físicamente hasta su hijo. Simplemente creyó la Palabra de Jesús, y eso fue suficiente. La fe aquí es creer lo que Jesús dice, incluso sin ver la evidencia inmediata. La soberanía de Jesús se manifiesta en la autoridad de Su Palabra.",
+                    aplicacao: "¿Hay alguna situación de salud, financiera o familiar donde estás esperando ver para creer? Practica la fe del oficial del rey: cree en la Palabra de Jesús hoy, incluso si la evidencia solo aparece mañana.",
+                    oracao: "Señor, aumenta mi fe en la autoridad de Tu Palabra. Que pueda ir 'por fe y no por vista'. Que Tu Palabra se manifieste como verdad y poder en todas las áreas de mi vida. Amén."
+                },
+                fr: {
+                    h2: "L'Autorité de la Parole (Jean 4:46-54)",
+                    versiculos: "Jean 4:50: 'Jésus lui dit: Va, ton fils vit. Et cet homme crut à la parole que Jésus lui avait dite, et il s'en alla.'",
+                    resumo: "Ce miracle montre la souveraineté de Jésus sur la distance et le temps. L'officier du roi n'a pas eu besoin que Jésus se rende physiquement auprès de son fils. Il a simplement cru à la Parole de Jésus, et cela a suffi. La foi ici est de croire ce que Jésus dit, même sans voir la preuve immédiate. La souveraineté de Jésus se manifeste dans l'autorité de Sa Parole.",
+                    aplicacao: "Y a-t-il une situation de santé, financière ou familiale où vous attendez de voir pour croire? Pratiquez la foi de l'officier du roi: croyez à la Parole de Jésus aujourd'hui, même si la preuve n'apparaît que demain.",
+                    oracao: "Seigneur, augmente ma foi en l'autorité de Ta Parole. Que je puisse marcher 'par la foi et non par la vue'. Que Ta Parole se manifeste comme vérité et puissance dans tous les domaines de ma vie. Amen."
+                }
+            },
+            5: {
+                pt: {
+                    h2: "Soberania sobre o Tempo (João 5:1-18)",
+                    versiculos: "João 5:8: 'Disse-lhe Jesus: Levanta-te, toma o teu leito, e anda.'",
+                    resumo: "A cura do paralítico em Betesda demonstra a soberania de Jesus sobre as leis e o tempo. O homem estava paralítico por 38 anos, mas a Palavra de Jesus o curou instantaneamente. Isso gerou conflito com os líderes religiosos, pois ocorreu no sábado. Jesus afirma que Ele é igual a Deus, tendo a mesma autoridade e o direito de trabalhar soberanamente a qualquer momento.",
+                    aplicacao: "Você tem alguma área 'paralisada' em sua vida por muito tempo? Peça a Jesus para trazer Sua Palavra e Sua autoridade sobre essa situação, independentemente das 'leis' ou costumes que a prendem. Creia na cura instantânea e soberana.",
+                    oracao: "Jesus, Tu és o Senhor do tempo e da lei. Que a Tua voz poderosa chegue àquilo que está estagnado em mim por anos. Eu me levanto e tomo o meu leito, crendo que a Tua soberania opera em mim hoje. Amém."
+                },
+                en: {
+                    h2: "Sovereignty over Time (John 5:1-18)",
+                    versiculos: "John 5:8: 'Jesus said to him, “Get up, take up your bed, and walk.”'",
+                    resumo: "The healing of the paralytic at Bethesda demonstrates Jesus' sovereignty over laws and time. The man had been paralyzed for 38 years, but Jesus' Word healed him instantly. This generated conflict with the religious leaders because it occurred on the Sabbath. Jesus affirms that He is equal to God, having the same authority and the right to work sovereignly at any time.",
+                    aplicacao: "Do you have any area 'paralyzed' in your life for a long time? Ask Jesus to bring His Word and His authority over that situation, regardless of the 'laws' or customs that bind it. Believe in instant and sovereign healing.",
+                    oracao: "Jesus, You are the Lord of time and the law. May Your powerful voice reach what has been stagnant in me for years. I get up and take up my bed, believing that Your sovereignty operates in me today. Amen."
+                },
+                es: {
+                    h2: "Soberanía sobre el Tiempo (Juan 5:1-18)",
+                    versiculos: "Juan 5:8: 'Jesús le dijo: Levántate, toma tu lecho, y anda.'",
+                    resumo: "La curación del paralítico en Betesda demuestra la soberanía de Jesús sobre las leyes y el tiempo. El hombre había estado paralizado durante 38 años, pero la Palabra de Jesús lo sanó instantáneamente. Esto generó conflicto con los líderes religiosos porque ocurrió en sábado. Jesús afirma que Él es igual a Dios, teniendo la misma autoridad y el derecho de trabajar soberanamente en cualquier momento.",
+                    aplicacion: "¿Tienes alguna área 'paralizada' en tu vida por mucho tiempo? Pídele a Jesús que traiga Su Palabra y Su autoridad sobre esa situación, independientemente de las 'leyes' o costumbres que la atan. Cree en la curación instantánea y soberana.",
+                    oracao: "Jesús, Tú eres el Señor del tiempo y de la ley. Que Tu voz poderosa llegue a lo que ha estado estancado en mí durante años. Me levanto y tomo mi lecho, creyendo que Tu soberanía opera en mí hoy. Amén."
+                },
+                fr: {
+                    h2: "Souveraineté sur le Temps (Jean 5:1-18)",
+                    versiculos: "Jean 5:8: 'Jésus lui dit: Lève-toi, prends ton lit, et marche.'",
+                    resumo: "La guérison du paralytique à Bethesda démontre la souveraineté de Jésus sur les lois et le temps. L'homme était paralysé depuis 38 ans, mais la Parole de Jésus l'a guéri instantanément. Cela a généré un conflit avec les chefs religieux car cela s'est produit le jour du sabbat. Jésus affirme qu'il est égal à Dieu, ayant la même autorité et le droit de travailler souverainement à tout moment.",
+                    aplicacao: "Avez-vous un domaine 'paralysé' dans votre vie depuis longtemps? Demandez à Jésus d'apporter Sa Parole et Son autorité sur cette situation, indépendamment des 'lois' ou coutumes qui la retiennent. Croyez en la guérison instantanée et souveraine.",
+                    oracao: "Jésus, Tu es le Seigneur du temps et de la loi. Que Ta voix puissante atteigne ce qui est stagnant en moi depuis des années. Je me lève et prends mon lit, croyant que Ta souveraineté opère en moi aujourd'hui. Amen."
+                }
+            },
+            6: {
+                pt: {
+                    h2: "A Soberania da Ressurreição (João 5:19-30)",
+                    versiculos: "João 5:21: 'Pois, assim como o Pai ressuscita os mortos e lhes dá vida, assim também o Filho dá vida a quem ele quer.'",
+                    resumo: "Jesus continua Sua defesa afirmando que Ele tem a mesma autoridade do Pai, especialmente no que tange à vida e ao julgamento. A soberania de Jesus se manifesta em Seu poder de ressuscitar os mortos (física e espiritualmente) e em julgar a humanidade. A vida eterna é um dom soberano concedido pelo Filho 'a quem ele quer'.",
+                    aplicacao: "O poder de Jesus sobre a morte é absoluto. Reflita sobre a sua vida espiritual: ela está viva pelo dom de Cristo? Peça a Ele que ressuscite qualquer área de incredulidade ou desânimo em sua jornada de fé.",
+                    oracao: "Deus Pai, agradeço porque o Senhor delegou toda a autoridade a Jesus. Peço que o poder que ressuscitou os mortos opere em mim, dando-me vida abundante e fortalecendo-me para viver sob o julgamento e a autoridade do Filho. Amém."
+                },
+                en: {
+                    h2: "The Sovereignty of Resurrection (John 5:19-30)",
+                    versiculos: "John 5:21: 'For as the Father raises the dead and gives them life, so also the Son gives life to whom he will.'",
+                    resumo: "Jesus continues His defense by asserting that He has the same authority as the Father, especially regarding life and judgment. Jesus' sovereignty is manifested in His power to raise the dead (physically and spiritually) and to judge humanity. Eternal life is a sovereign gift granted by the Son 'to whom he will'.",
+                    aplicacao: "Jesus' power over death is absolute. Reflect on your spiritual life: is it alive through the gift of Christ? Ask Him to resurrect any area of unbelief or discouragement in your journey of faith.",
+                    oracao: "God the Father, I thank you that You have delegated all authority to Jesus. I ask that the power that raised the dead may operate in me, giving me abundant life and strengthening me to live under the judgment and authority of the Son. Amen."
+                },
+                es: {
+                    h2: "La Soberanía de la Resurrección (Juan 5:19-30)",
+                    versiculos: "Juan 5:21: 'Porque como el Padre levanta a los muertos, y les da vida, así también el Hijo a los que quiere da vida.'",
+                    resumo: "Jesús continúa Su defensa afirmando que Él tiene la misma autoridad del Padre, especialmente en lo que respecta a la vida y el juicio. La soberanía de Jesús se manifiesta en Su poder de resucitar a los muertos (física y espiritualmente) y de juzgar a la humanidad. La vida eterna es un don soberano concedido por el Hijo 'a quien Él quiere'.",
+                    aplicacion: "El poder de Jesús sobre la muerte es absoluto. Reflexiona sobre tu vida espiritual: ¿está viva por el don de Cristo? Pídele que resucite cualquier área de incredulidad o desánimo en tu camino de fe.",
+                    oracao: "Dios Padre, Te agradezco porque has delegado toda la autoridad a Jesús. Pido que el poder que resucitó a los muertos opere en mí, dándome vida abundante y fortaleciéndome para vivir bajo el juicio y la autoridad del Hijo. Amén."
+                },
+                fr: {
+                    h2: "La Souveraineté de la Résurrection (Jean 5:19-30)",
+                    versiculos: "Jean 5:21: 'Car, comme le Père ressuscite les morts et donne la vie, de même le Fils donne la vie à qui il veut.'",
+                    resumo: "Jésus poursuit Sa défense en affirmant qu'il a la même autorité que le Père, notamment en ce qui concerne la vie et le jugement. La souveraineté de Jésus se manifeste dans Son pouvoir de ressusciter les morts (physiquement et spirituellement) et de juger l'humanité. La vie éternelle est un don souverain accordé par le Fils 'à qui il veut'.",
+                    aplicacion: "Le pouvoir de Jésus sur la mort est absolu. Réfléchissez à votre vie spirituelle: est-elle vivante par le don du Christ? Demandez-Lui de ressusciter tout domaine d'incrédulité ou de découragement dans votre chemin de foi.",
+                    oracao: "Dieu le Père, je te remercie de ce que Tu as délégué toute autorité à Jésus. Je demande que la puissance qui a ressuscité les morts opère en moi, me donnant une vie abondante et me fortifiant pour vivre sous le jugement et l'autorité du Fils. Amen."
+                }
+            },
+            7: {
+                pt: {
+                    h2: "A Multiplicação Soberana (João 6:1-15)",
+                    versiculos: "João 6:11: 'Jesus tomou os pães e, havendo dado graças, distribuiu-os pelos que estavam assentados; e igualmente também os peixes, quanto eles queriam.'",
+                    resumo: "O milagre da multiplicação dos pães e peixes demonstra a soberania de Jesus sobre a criação e a provisão. Ele não apenas criou do nada, mas usou o que era pouco (cinco pães e dois peixes) para satisfazer a necessidade de milhares. Isso é um sinal de que Ele é o Messias e a fonte inesgotável de provisão de Deus.",
+                    aplicacao: "Olhe para os 'cinco pães e dois peixes' em sua vida – os seus recursos limitados, talentos, ou tempo. Entregue-os nas mãos de Jesus. Creia que Sua soberania e provisão são suficientes para multiplicar o pouco que você tem e suprir suas maiores necessidades.",
+                    oracao: "Jesus, reconheço que Tu és o meu Provedor soberano. Entrego-Te o meu pouco e peço que o Senhor o multiplique para que eu e outros sejamos saciados. Que eu não confie em meus recursos, mas em Tua inesgotável provisão. Amém."
+                },
+                en: {
+                    h2: "The Sovereign Multiplication (John 6:1-15)",
+                    versiculos: "John 6:11: 'Jesus then took the loaves, and when he had given thanks, he distributed them to those who were seated; so also the fish, as much as they wanted.'",
+                    resumo: "The miracle of the multiplication of the loaves and fish demonstrates Jesus' sovereignty over creation and provision. He not only created out of nothing but used what was little (five loaves and two fish) to satisfy the needs of thousands. This is a sign that He is the Messiah and the inexhaustible source of God's provision.",
+                    aplicacao: "Look at the 'five loaves and two fish' in your life – your limited resources, talents, or time. Give them into Jesus' hands. Believe that His sovereignty and provision are enough to multiply the little you have and meet your greatest needs.",
+                    oracao: "Jesus, I acknowledge that You are my sovereign Provider. I surrender my little to You and ask that You multiply it so that I and others may be satisfied. May I not rely on my resources, but on Your inexhaustible provision. Amen."
+                },
+                es: {
+                    h2: "La Multiplicación Soberana (Juan 6:1-15)",
+                    versiculos: "Juan 6:11: 'Y tomó Jesús aquellos panes, y habiendo dado gracias, los repartió entre los discípulos, y los discípulos entre los que estaban recostados; asimismo de los peces, cuanto querían.'",
+                    resumo: "El milagro de la multiplicación de los panes y los peces demuestra la soberanía de Jesús sobre la creación y la provisión. No solo creó de la nada, sino que usó lo poco que había (cinco panes y dos peces) para satisfacer la necesidad de miles. Esto es una señal de que Él es el Mesías y la fuente inagotable de la provisión de Dios.",
+                    aplicacao: "Mira los 'cinco panes y dos peces' en tu vida – tus recursos limitados, talentos o tiempo. Entrégaselos a Jesús. Cree que Su soberanía y provisión son suficientes para multiplicar lo poco que tienes y suplir tus mayores necesidades.",
+                    oracao: "Jesús, reconozco que Tú eres mi Proveedor soberano. Te entrego mi poco y pido que lo multipliques para que yo y otros seamos saciados. Que no confíe en mis recursos, sino en Tu provisión inagotable. Amén."
+                },
+                fr: {
+                    h2: "La Multiplication Souveraine (Jean 6:1-15)",
+                    versiculos: "Jean 6:11: 'Jésus prit les pains, et, après avoir rendu grâces, les distribua aux disciples, et les disciples à ceux qui étaient assis; il leur donna de même des poissons, autant qu'ils en voulurent.'",
+                    resumo: "Le miracle de la multiplication des pains et des poissons démontre la souveraineté de Jésus sur la création et la provision. Il n'a pas seulement créé à partir de rien, mais a utilisé ce qui était peu (cinq pains et deux poissons) pour satisfaire le besoin de milliers. C'est un signe qu'il est le Messie et la source inépuisable de la provision de Dieu.",
+                    aplicacao: "Regardez les 'cinq pains et deux poissons' dans votre vie – vos ressources limitées, talents ou temps. Donnez-les entre les mains de Jésus. Croyez que Sa souveraineté et Sa provision sont suffisantes pour multiplier le peu que vous avez et combler vos plus grands besoins.",
+                    oracao: "Jésus, je reconnais que Tu es mon Pourvoyeur souverain. Je Te remets mon peu et je demande que Tu le multiplies afin que moi et d'autres soyons rassasiés. Que je ne compte pas sur mes ressources, mais sur Ta provision inépuisable. Amen."
+                }
+            },
+            8: {
+                pt: {
+                    h2: "O Pão da Vida (João 6:25-59)",
+                    versiculos: "João 6:35: 'Declarou-lhes Jesus: Eu sou o pão da vida; quem vem a mim jamais terá fome, e quem crê em mim jamais terá sede.'",
+                    resumo: "Jesus se revela como o Pão da Vida, superior ao maná que Moisés deu no deserto. Este pão não apenas sustenta a vida física, mas oferece vida eterna. A soberania de Deus é evidente, pois *ninguém pode ir a Jesus se o Pai não o trouxer* (Jo 6:44). A fé em Jesus, comer a Sua carne e beber o Seu sangue, é o único meio para a vida eterna.",
+                    aplicacao: "O que tem sido o seu 'alimento' espiritual diário? Abandone o 'maná' passageiro (as coisas do mundo) e se alimente de Jesus, o Pão da Vida. Busque a Palavra e a comunhão como alimento essencial para a vida eterna.",
+                    oracao: "Pão da Vida, perdoa-me por buscar nutrição onde não há. Eu venho a Ti hoje, crendo que Tu és o meu sustento. Alimenta a minha alma com a Tua Palavra e concede-me o dom soberano da fé para que eu jamais tenha fome. Amém."
+                },
+                en: {
+                    h2: "The Bread of Life (John 6:25-59)",
+                    versiculos: "John 6:35: 'Jesus said to them, “I am the bread of life; whoever comes to me shall not hunger, and whoever believes in me shall never thirst.”'",
+                    resumo: "Jesus reveals Himself as the Bread of Life, superior to the manna that Moses gave in the wilderness. This bread not only sustains physical life but offers eternal life. God's sovereignty is evident, for *no one can come to Jesus unless the Father draws him* (John 6:44). Faith in Jesus, eating His flesh and drinking His blood, is the only means to eternal life.",
+                    aplicacao: "What has been your daily spiritual 'food'? Abandon the passing 'manna' (the things of the world) and feed on Jesus, the Bread of Life. Seek the Word and communion as essential food for eternal life.",
+                    oracao: "Bread of Life, forgive me for seeking nourishment where there is none. I come to You today, believing that You are my sustenance. Feed my soul with Your Word and grant me the sovereign gift of faith so that I may never hunger. Amen."
+                },
+                es: {
+                    h2: "El Pan de Vida (Juan 6:25-59)",
+                    versiculos: "Juan 6:35: 'Jesús les dijo: Yo soy el pan de vida; el que a mí viene, nunca tendrá hambre; y el que en mí cree, no tendrá sed jamás.'",
+                    resumo: "Jesús se revela como el Pan de Vida, superior al maná que Moisés dio en el desierto. Este pan no solo sostiene la vida física, sino que ofrece vida eterna. La soberanía de Dios es evidente, porque *nadie puede venir a Jesús si el Padre no lo trae* (Juan 6:44). La fe en Jesús, comer Su carne y beber Su sangre, es el único medio para la vida eterna.",
+                    aplicacion: "¿Cuál ha sido tu 'alimento' espiritual diario? Abandona el 'maná' pasajero (las cosas del mundo) y aliméntate de Jesús, el Pan de Vida. Busca la Palabra y la comunión como alimento esencial para la vida eterna.",
+                    oracao: "Pan de Vida, perdóname por buscar nutrición donde no hay. Vengo a Ti hoy, creyendo que Tú eres mi sustento. Alimenta mi alma con Tu Palabra y concédeme el don soberano de la fe para que nunca tenga hambre. Amén."
+                },
+                fr: {
+                    h2: "Le Pain de Vie (Jean 6:25-59)",
+                    versiculos: "Jean 6:35: 'Jésus leur dit: Je suis le pain de vie. Celui qui vient à moi n'aura jamais faim, et celui qui croit en moi n'aura jamais soif.'",
+                    resumo: "Jésus se révèle comme le Pain de Vie, supérieur à la manne que Moïse a donnée dans le désert. Ce pain ne soutient pas seulement la vie physique, mais offre la vie éternelle. La souveraineté de Dieu est évidente, car *nul ne peut venir à Jésus si le Père ne l'attire* (Jean 6:44). La foi en Jésus, manger Sa chair et boire Son sang, est le seul moyen pour la vie éternelle.",
+                    aplicacao: "Quelle a été votre 'nourriture' spirituelle quotidienne? Abandonnez la 'manne' passagère (les choses du monde) et nourrissez-vous de Jésus, le Pain de Vie. Cherchez la Parole et la communion comme nourriture essentielle pour la vie éternelle.",
+                    oracao: "Pain de Vie, pardonne-moi de chercher nourriture là où il n'y en a pas. Je viens à Toi aujourd'hui, croyant que Tu es ma subsistance. Nourris mon âme de Ta Parole et accorde-moi le don souverain de la foi pour que je n'aie jamais faim. Amen."
+                }
+            },
+            9: {
+                pt: {
+                    h2: "A Soberania da Eleição (João 6:60-71)",
+                    versiculos: "João 6:65: 'E dizia: Por isso eu vos disse que ninguém pode vir a mim, se por meu Pai não lhe for concedido.'",
+                    resumo: "Muitos discípulos abandonaram Jesus após Suas declarações sobre ser o Pão da Vida. A verdade é difícil: o evangelho requer fé no dom soberano de Deus. Jesus reafirma a soberania de Deus: a fé não é um mérito humano, mas uma concessão do Pai. Ele, soberanamente, escolheu Seus discípulos, embora soubesse que um deles (Judas) O trairia.",
+                    aplicacao: "A sua fé se apoia em seu próprio esforço ou na concessão soberana de Deus? Peça a Deus para renovar a sua gratidão por ter sido escolhido e chamado por Ele. Confie na Sua soberania, mesmo nas dificuldades da jornada.",
+                    oracao: "Pai Soberano, agradeço-Te por teres me concedido a fé para crer em Jesus. Fortalece o meu coração contra as tentações de abandonar a verdade, e ajuda-me a permanecer fiel como Pedro, reconhecendo que só Jesus tem as palavras de vida eterna. Amém."
+                },
+                en: {
+                    h2: "The Sovereignty of Election (John 6:60-71)",
+                    versiculos: "John 6:65: 'And he said, 'This is why I told you that no one can come to me unless it is granted him by the Father.'",
+                    resumo: "Many disciples abandoned Jesus after His statements about being the Bread of Life. The truth is difficult: the gospel requires faith in God's sovereign gift. Jesus reaffirms God's sovereignty: faith is not a human merit, but a grant from the Father. He sovereignly chose His disciples, even though He knew one of them (Judas) would betray Him.",
+                    aplicacao: "Does your faith rely on your own effort or on God's sovereign grant? Ask God to renew your gratitude for having been chosen and called by Him. Trust in His sovereignty, even in the difficulties of the journey.",
+                    oracao: "Sovereign Father, I thank You for granting me the faith to believe in Jesus. Strengthen my heart against the temptations to abandon the truth, and help me to remain faithful like Peter, recognizing that only Jesus has the words of eternal life. Amen."
+                },
+                es: {
+                    h2: "La Soberanía de la Elección (Juan 6:60-71)",
+                    versiculos: "Juan 6:65: 'Y dijo: Por esto os he dicho que ninguno puede venir a mí, si no le fuere dado del Padre.'",
+                    resumo: "Muchos discípulos abandonaron a Jesús después de Sus declaraciones sobre ser el Pan de Vida. La verdad es difícil: el evangelio requiere fe en el don soberano de Dios. Jesús reafirma la soberanía de Dios: la fe no es un mérito humano, sino una concesión del Padre. Él, soberanamente, escogió a Sus discípulos, aunque sabía que uno de ellos (Judas) Lo traicionaría.",
+                    aplicacao: "¿Tu fe se apoya en tu propio esfuerzo o en la concesión soberana de Dios? Pídele a Dios que renueve tu gratitud por haber sido elegido y llamado por Él. Confía en Su soberanía, incluso en las dificultades del camino.",
+                    oracao: "Padre Soberano, Te agradezco por haberme concedido la fe para creer en Jesús. Fortalece mi corazón contra las tentaciones de abandonar la verdad, y ayúdame a permanecer fiel como Pedro, reconociendo que solo Jesús tiene las palabras de vida eterna. Amén."
+                },
+                fr: {
+                    h2: "La Souveraineté de l'Élection (Jean 6:60-71)",
+                    versiculos: "Jean 6:65: 'Et il ajouta: C'est pourquoi je vous ai dit que nul ne peut venir à moi, si cela ne lui est donné par le Père.'",
+                    resumo: "Beaucoup de disciples abandonnèrent Jésus après Ses déclarations sur le fait d'être le Pain de Vie. La vérité est difficile: l'évangile exige la foi dans le don souverain de Dieu. Jésus réaffirme la souveraineté de Dieu: la foi n'est pas un mérite humain, mais une concession du Père. Il a souverainement choisi Ses disciples, même s'il savait que l'un d'eux (Judas) Le trahirait.",
+                    aplicacao: "Votre foi repose-t-elle sur votre propre effort ou sur la concession souveraine de Dieu? Demandez à Dieu de renouveler votre gratitude pour avoir été choisi et appelé par Lui. Faites confiance à Sa souveraineté, même dans les difficultés du chemin.",
+                    oracao: "Père Souverain, je Te remercie de m'avoir accordé la foi pour croire en Jésus. Fortifie mon cœur contre les tentations d'abandonner la vérité, et aide-moi à rester fidèle comme Pierre, reconnaissant que seul Jésus a les paroles de la vie éternelle. Amen."
+                }
+            },
+            10: {
+                pt: {
+                    h2: "A Luz Soberana do Mundo (João 8:12-30)",
+                    versiculos: "João 8:12: 'Falou-lhes, pois, Jesus outra vez, dizendo: Eu sou a luz do mundo; quem me segue não andará em trevas, mas terá a luz da vida.'",
+                    resumo: "Em contraste com as trevas do mundo, Jesus se declara a Luz. Ele é a revelação de Deus, e a única forma de evitar o tropeço espiritual e moral é segui-Lo. Mesmo sendo contestado, Jesus afirma que Seu testemunho é verdadeiro porque Ele não está sozinho; o Pai, que O enviou, está com Ele. Sua soberania é inquestionável: Ele sabe de onde veio e para onde vai.",
+                    aplicacao: "Onde há trevas em sua vida (dúvidas, vícios, maus hábitos)? Convide Jesus, a Luz, para entrar e iluminar. Seguir a Ele implica obedecer à Sua Palavra e confiar em Seu testemunho soberano sobre Si mesmo.",
+                    oracao: "Luz do Mundo, eu Te sigo. Não me deixes andar em trevas. Ilumina as áreas obscuras do meu coração e da minha mente, para que eu possa andar na plenitude da vida que só a Tua luz oferece. Amém."
+                },
+                en: {
+                    h2: "The Sovereign Light of the World (John 8:12-30)",
+                    versiculos: "John 8:12: 'Again Jesus spoke to them, saying, 'I am the light of the world. Whoever follows me will not walk in darkness, but will have the light of life.'",
+                    resumo: "In contrast to the darkness of the world, Jesus declares Himself the Light. He is the revelation of God, and the only way to avoid spiritual and moral stumbling is to follow Him. Even when contested, Jesus affirms that His testimony is true because He is not alone; the Father, who sent Him, is with Him. His sovereignty is unquestionable: He knows where He came from and where He is going.",
+                    aplicacao: "Where is there darkness in your life (doubts, addictions, bad habits)? Invite Jesus, the Light, to come in and illuminate. Following Him implies obeying His Word and trusting in His sovereign testimony about Himself.",
+                    oracao: "Light of the World, I follow You. Do not let me walk in darkness. Illuminate the dark areas of my heart and mind, so that I may walk in the fullness of the life that only Your light offers. Amen."
+                },
+                es: {
+                    h2: "La Luz Soberana del Mundo (Juan 8:12-30)",
+                    versiculos: "Juan 8:12: 'Otra vez Jesús les habló, diciendo: Yo soy la luz del mundo; el que me sigue, no andará en tinieblas, sino que tendrá la luz de la vida.'",
+                    resumo: "En contraste con las tinieblas del mundo, Jesús se declara la Luz. Él es la revelación de Dios, y la única forma de evitar el tropiezo espiritual y moral es seguirlo. Incluso siendo contestado, Jesús afirma que Su testimonio es verdadero porque Él no está solo; el Padre, que Lo envió, está con Él. Su soberanía es incuestionable: Él sabe de dónde vino y a dónde va.",
+                    aplicacao: "¿Dónde hay tinieblas en tu vida (dudas, adicciones, malos hábitos)? Invita a Jesús, la Luz, a entrar e iluminar. Seguirlo implica obedecer Su Palabra y confiar en Su testimonio soberano sobre Sí mismo.",
+                    oracao: "Luz del Mundo, te sigo. No me dejes andar en tinieblas. Ilumina las áreas oscuras de mi corazón y de mi mente, para que pueda andar en la plenitud de la vida que solo Tu luz ofrece. Amén."
+                },
+                fr: {
+                    h2: "La Lumière Souveraine du Monde (Jean 8:12-30)",
+                    versiculos: "Jean 8:12: 'Jésus leur parla de nouveau, et dit: Je suis la lumière du monde; celui qui me suit ne marchera point dans les ténèbres, mais il aura la lumière de la vie.'",
+                    resumo: "En contraste avec les ténèbres du monde, Jésus se déclare la Lumière. Il est la révélation de Dieu, et la seule façon d'éviter le trébuchement spirituel et moral est de Le suivre. Même contesté, Jésus affirme que Son témoignage est vrai parce qu'il n'est pas seul; le Père, qui L'a envoyé, est avec Lui. Sa souveraineté est incontestable: Il sait d'où Il vient et où Il va.",
+                    aplicacao: "Où y a-t-il des ténèbres dans votre vie (doutes, dépendances, mauvaises habitudes)? Invitez Jésus, la Lumière, à entrer et à éclairer. Le suivre implique d'obéir à Sa Parole et de faire confiance à Son témoignage souverain sur Lui-même.",
+                    oracao: "Lumière du Monde, je Te suis. Ne me laisse pas marcher dans les ténèbres. Illumine les zones obscures de mon cœur et de mon esprit, afin que je puisse marcher dans la plénitude de la vie que seule Ta lumière offre. Amen."
+                }
+            },
+            11: {
+                pt: {
+                    h2: "A Verdade que Liberta (João 8:31-59)",
+                    versiculos: "João 8:32: 'e conhecereis a verdade, e a verdade vos libertará.'",
+                    resumo: "Jesus fala aos judeus que nEle creram sobre a verdadeira liberdade. Eles se consideravam livres por serem descendentes de Abraão, mas Jesus afirma que a verdadeira escravidão é o pecado. O único que pode libertar é o Filho. A soberania de Jesus se manifesta no fato de Ele ser anterior a Abraão (Eu Sou), sendo Deus, e na Sua autoridade para oferecer a libertação final do pecado.",
+                    aplicacao: "Qual pecado ainda o escraviza ou o faz se sentir 'preso'? Confesse-o e aproprie-se da verdade de que, como discípulo de Jesus, o Filho o libertou. Peça ao Espírito Santo para viver a plenitude dessa liberdade em obediência à Palavra.",
+                    oracao: "Senhor Jesus, eu me aproprio da Tua promessa: se o Filho me libertar, verdadeiramente serei livre. Perdoa-me por me deixar escravizar pelo pecado. Ajuda-me a permanecer em Tua Palavra para que o conhecimento da verdade me liberte a cada dia. Amém."
+                },
+                en: {
+                    h2: "The Truth that Sets Free (John 8:31-59)",
+                    versiculos: "John 8:32: 'and you will know the truth, and the truth will set you free.'",
+                    resumo: "Jesus speaks to the Jews who believed in Him about true freedom. They considered themselves free because they were descendants of Abraham, but Jesus states that true slavery is sin. The only one who can set free is the Son. Jesus' sovereignty is manifested in the fact that He is before Abraham (I Am), being God, and in His authority to offer final deliverance from sin.",
+                    aplicacao: "What sin still enslaves you or makes you feel 'trapped'? Confess it and appropriate the truth that, as a disciple of Jesus, the Son has set you free. Ask the Holy Spirit to live the fullness of that freedom in obedience to the Word.",
+                    oracao: "Lord Jesus, I appropriate Your promise: if the Son sets me free, I will be free indeed. Forgive me for allowing myself to be enslaved by sin. Help me to abide in Your Word so that the knowledge of the truth may set me free every day. Amen."
+                },
+                es: {
+                    h2: "La Verdad que Liberta (Juan 8:31-59)",
+                    versiculos: "Juan 8:32: 'y conoceréis la verdad, y la verdad os hará libres.'",
+                    resumo: "Jesús habla a los judíos que creyeron en Él acerca de la verdadera libertad. Ellos se consideraban libres por ser descendientes de Abraham, pero Jesús afirma que la verdadera esclavitud es el pecado. El único que puede liberar es el Hijo. La soberanía de Jesús se manifiesta en el hecho de que Él es anterior a Abraham (Yo Soy), siendo Dios, y en Su autoridad para ofrecer la liberación final del pecado.",
+                    aplicacion: "¿Qué pecado todavía te esclaviza o te hace sentir 'atrapado'? Confiésalo y apropíate de la verdad de que, como discípulo de Jesús, el Hijo te ha liberado. Pídele al Espíritu Santo que viva la plenitud de esa libertad en obediencia a la Palabra.",
+                    oracao: "Señor Jesús, me apropio de Tu promesa: si el Hijo me liberta, verdaderamente seré libre. Perdóname por dejarme esclavizar por el pecado. Ayúdame a permanecer en Tu Palabra para que el conocimiento de la verdad me libere cada día. Amén."
+                },
+                fr: {
+                    h2: "La Vérité qui Libère (Jean 8:31-59)",
+                    versiculos: "Jean 8:32: 'vous connaîtrez la vérité, et la vérité vous affranchira.'",
+                    resumo: "Jésus parle aux Juifs qui ont cru en Lui de la véritable liberté. Ils se considéraient libres parce qu'ils étaient descendants d'Abraham, mais Jésus déclare que le véritable esclavage est le péché. Le seul qui peut libérer est le Fils. La souveraineté de Jésus se manifeste dans le fait qu'il est antérieur à Abraham (Je Suis), étant Dieu, et dans Son autorité pour offrir la délivrance finale du péché.",
+                    aplicacion: "Quel péché vous asservit encore ou vous fait sentir 'piégé'? Confessez-le et appropriez-vous la vérité que, en tant que disciple de Jésus, le Fils vous a libéré. Demandez au Saint-Esprit de vivre la plénitude de cette liberté dans l'obéissance à la Parole.",
+                    oracao: "Seigneur Jésus, je m'approprie Ta promesse: si le Fils me libère, je serai vraiment libre. Pardonne-moi de m'être laissé asservir par le péché. Aide-moi à demeurer dans Ta Parole afin que la connaissance de la vérité me libère chaque jour. Amen."
+                }
+            },
+            12: {
+                pt: {
+                    h2: "A Soberania sobre a Cegueira (João 9:1-41)",
+                    versiculos: "João 9:3: 'Jesus respondeu: Nem ele pecou, nem seus pais; mas foi assim para que se manifestem nele as obras de Deus.'",
+                    resumo: "A cura do cego de nascença desafia a ideia de que o sofrimento é sempre punição direta pelo pecado. Jesus afirma que Sua soberania está acima dessa lógica humana, pois Ele permitiu a cegueira para que a glória de Deus fosse manifesta. O milagre é um sinal de que Jesus é o Messias e que Ele tem a autoridade para curar a cegueira física e espiritual, trazendo as obras de Deus à luz.",
+                    aplicacao: "Você tem alguma situação difícil ou dolorosa que não consegue entender? Confie que Deus está operando soberanamente. Peça a Ele para que, em meio a essa dificuldade, as 'obras de Deus' – o Seu poder, amor e propósito – sejam manifestas em sua vida.",
+                    oracao: "Pai, creio que o Senhor opera em todas as circunstâncias, até mesmo naquelas que parecem injustas. Abre os meus olhos, tanto os físicos quanto os espirituais, para que eu possa ver e reconhecer as Tuas obras. Ajuda-me a Te adorar como o cego curado, Teu servo e adorador. Amém."
+                },
+                en: {
+                    h2: "Sovereignty over Blindness (John 9:1-41)",
+                    versiculos: "John 9:3: 'Jesus answered, “It was not that this man sinned, or his parents, but that the works of God might be displayed in him.”'",
+                    resumo: "The healing of the man born blind challenges the idea that suffering is always direct punishment for sin. Jesus affirms that His sovereignty is above this human logic, as He allowed the blindness so that the glory of God might be displayed. The miracle is a sign that Jesus is the Messiah and that He has the authority to cure physical and spiritual blindness, bringing the works of God to light.",
+                    aplicacao: "Do you have any difficult or painful situation that you cannot understand? Trust that God is working sovereignly. Ask Him that, amidst this difficulty, the 'works of God' – His power, love, and purpose – may be displayed in your life.",
+                    oracao: "Father, I believe that You work in all circumstances, even those that seem unfair. Open my eyes, both physical and spiritual, so that I may see and recognize Your works. Help me to worship You as the healed blind man, Your servant and worshiper. Amen."
+                },
+                es: {
+                    h2: "Soberanía sobre la Ceguera (Juan 9:1-41)",
+                    versiculos: "Juan 9:3: 'Respondió Jesús: No es que pecó este, ni sus padres, sino para que las obras de Dios se manifiesten en él.'",
+                    resumo: "La curación del ciego de nacimiento desafía la idea de que el sufrimiento es siempre castigo directo por el pecado. Jesús afirma que Su soberanía está por encima de esa lógica humana, ya que Él permitió la ceguera para que la gloria de Dios se manifestara. El milagro es una señal de que Jesús es el Mesías y que Él tiene la autoridad para curar la ceguera física y espiritual, sacando a la luz las obras de Dios.",
+                    aplicacion: "¿Tienes alguna situación difícil o dolorosa que no puedes entender? Confía en que Dios está obrando soberanamente. Pídele que, en medio de esa dificultad, las 'obras de Dios' – Su poder, amor y propósito – se manifiesten en tu vida.",
+                    oracao: "Padre, creo que Tú operas en todas las circunstancias, incluso en aquellas que parecen injustas. Abre mis ojos, tanto físicos como espirituales, para que pueda ver y reconocer Tus obras. Ayúdame a adorarte como el ciego sanado, Tu siervo y adorador. Amén."
+                },
+                fr: {
+                    h2: "Souveraineté sur la Cécité (Jean 9:1-41)",
+                    versiculos: "Jean 9:3: 'Jésus répondit: Ce n'est pas que lui ni ses parents aient péché; mais c'est afin que les œuvres de Dieu soient manifestées en lui.'",
+                    resumo: "La guérison de l'aveugle-né défie l'idée que la souffrance est toujours une punition directe pour le péché. Jésus affirme que Sa souveraineté est au-dessus de cette logique humaine, car il a permis la cécité afin que la gloire de Dieu soit manifestée. Le miracle est un signe que Jésus est le Messie et qu'il a l'autorité de guérir la cécité physique et spirituelle, mettant les œuvres de Dieu en lumière.",
+                    aplicacion: "Avez-vous une situation difficile ou douloureuse que vous ne parvenez pas à comprendre? Faites confiance au fait que Dieu œuvre souverainement. Demandez-Lui que, au milieu de cette difficulté, les 'œuvres de Dieu' – Sa puissance, Son amour et Son but – soient manifestées dans votre vie.",
+                    oracao: "Père, je crois que Tu œuvres en toutes circonstances, même dans celles qui semblent injustes. Ouvre mes yeux, à la fois physiques et spirituels, afin que je puisse voir et reconnaître Tes œuvres. Aide-moi à T'adorer comme l'aveugle guéri, Ton serviteur et adorateur. Amen."
+                }
+            },
+            13: {
+                pt: {
+                    h2: "O Bom Pastor e a Soberania da Segurança (João 10:1-21)",
+                    versiculos: "João 10:14: 'Eu sou o bom Pastor; conheço as minhas ovelhas, e elas me conhecem a mim.'",
+                    resumo: "Jesus se apresenta como o único 'Bom Pastor', em contraste com os falsos líderes. A soberania de Jesus se manifesta em Seu *conhecimento íntimo* das Suas ovelhas e em Sua disposição de *dar a Sua vida* por elas. A verdadeira segurança está em pertencer a Ele, que é o portão e o guardião do rebanho, garantindo vida abundante.",
+                    aplicacao: "Quais vozes você tem escutado em sua vida? Confie apenas na voz do Bom Pastor. Se você é dEle, você está seguro. Descanse na certeza de que Ele conhece você profundamente e já pagou o preço máximo por sua segurança eterna.",
+                    oracao: "Bom Pastor, eu te agradeço porque Tu conheces o meu nome e deste a Tua vida por mim. Ajuda-me a discernir a Tua voz em meio a tantas outras e a seguir-Te fielmente. Que eu encontre em Ti a segurança e a vida abundante. Amém."
+                },
+                en: {
+                    h2: "The Good Shepherd and the Sovereignty of Security (John 10:1-21)",
+                    versiculos: "John 10:14: 'I am the good shepherd. I know my own and my own know me.'",
+                    resumo: "Jesus presents Himself as the only 'Good Shepherd,' in contrast to false leaders. Jesus' sovereignty is manifested in His *intimate knowledge* of His sheep and in His willingness to *lay down His life* for them. True security is in belonging to Him, who is the gate and the guardian of the flock, ensuring abundant life.",
+                    aplicacao: "Whose voices have you been listening to in your life? Trust only the voice of the Good Shepherd. If you are His, you are secure. Rest in the certainty that He knows you deeply and has already paid the ultimate price for your eternal security.",
+                    oracao: "Good Shepherd, I thank You that You know my name and laid down Your life for me. Help me to discern Your voice among so many others and to follow You faithfully. May I find in You security and abundant life. Amen."
+                },
+                es: {
+                    h2: "El Buen Pastor y la Soberanía de la Seguridad (Juan 10:1-21)",
+                    versiculos: "Juan 10:14: 'Yo soy el buen pastor; y conozco mis ovejas, y las mías me conocen.'",
+                    resumo: "Jesús se presenta como el único 'Buen Pastor', en contraste con los falsos líderes. La soberanía de Jesús se manifiesta en Su *conocimiento íntimo* de Sus ovejas y en Su disposición a *dar Su vida* por ellas. La verdadera seguridad está en pertenecer a Él, que es la puerta y el guardián del rebaño, asegurando vida abundante.",
+                    aplicacion: "¿Qué voces has estado escuchando en tu vida? Confía solo en la voz del Buen Pastor. Si eres Suyo, estás seguro. Descansa en la certeza de que Él te conoce profundamente y ya pagó el precio máximo por tu seguridad eterna.",
+                    oracao: "Buen Pastor, te agradezco porque conoces mi nombre y diste Tu vida por mí. Ayúdame a discernir Tu voz en medio de tantas otras y a seguirte fielmente. Que encuentre en Ti la seguridad y la vida abundante. Amén."
+                },
+                fr: {
+                    h2: "Le Bon Berger et la Souveraineté de la Sécurité (Jean 10:1-21)",
+                    versiculos: "Jean 10:14: 'Je suis le bon berger; je connais mes brebis, et mes brebis me connaissent.'",
+                    resumo: "Jésus se présente comme le seul 'Bon Berger', en contraste avec les faux dirigeants. La souveraineté de Jésus se manifeste dans Sa *connaissance intime* de Ses brebis et dans Sa volonté de *donner Sa vie* pour elles. La vraie sécurité est d'appartenir à Lui, qui est la porte et le gardien du troupeau, assurant une vie abondante.",
+                    aplicacion: "Quelles voix avez-vous écoutées dans votre vie? Ne faites confiance qu'à la voix du Bon Berger. Si vous êtes Sien, vous êtes en sécurité. Reposez-vous dans la certitude qu'il vous connaît profondément et a déjà payé le prix ultime pour votre sécurité éternelle.",
+                    oracao: "Bon Berger, je Te remercie de ce que Tu connais mon nom et as donné Ta vie pour moi. Aide-moi à discerner Ta voix parmi tant d'autres et à Te suivre fidèlement. Que je trouve en Toi la sécurité et la vie abondante. Amen."
+                }
+            },
+            14: {
+                pt: {
+                    h2: "A Soberania da Guarda Eterna (João 10:22-42)",
+                    versiculos: "João 10:28: 'Eu lhes dou a vida eterna, e elas jamais perecerão; ninguém as poderá arrancar da minha mão.'",
+                    resumo: "A declaração mais clara sobre a segurança eterna está aqui. Jesus afirma que a vida eterna é um presente, e que Sua soberania garante que *ninguém* pode anular o dom de Deus. Sua mão e a mão do Pai são uma só, e Seu poder é maior que tudo. A segurança do crente depende da soberania de Jesus, não do seu próprio poder de se manter fiel.",
+                    aplicacao: "Você tem lutado contra a insegurança da salvação? Medite nesta promessa. Sua perseverança é mantida pelo poder soberano de Cristo. Descanse na absoluta segurança de que Suas mãos (e as do Pai) o seguram firmemente.",
+                    oracao: "Jesus, meu Guardião soberano, eu Te agradeço pela promessa inabalável da vida eterna. Perdoa-me pela minha falta de fé. Ajuda-me a descansar na verdade de que a Tua mão me segura, e a nada nem ninguém poderá me roubar de Ti. Amém."
+                },
+                en: {
+                    h2: "The Sovereignty of Eternal Security (John 10:22-42)",
+                    versiculos: "John 10:28: 'I give them eternal life, and they will never perish, and no one will snatch them out of my hand.'",
+                    resumo: "The clearest declaration of eternal security is here. Jesus states that eternal life is a gift, and His sovereignty ensures that *no one* can nullify God's gift. His hand and the Father's hand are one, and His power is greater than all. The believer's security depends on Jesus' sovereignty, not on their own power to remain faithful.",
+                    aplicacao: "Have you struggled with the insecurity of salvation? Meditate on this promise. Your perseverance is maintained by Christ's sovereign power. Rest in the absolute certainty that His hands (and the Father's) hold you firmly.",
+                    oracao: "Jesus, my sovereign Guardian, I thank You for the unwavering promise of eternal life. Forgive me for my lack of faith. Help me to rest in the truth that Your hand holds me, and nothing and no one can snatch me away from You. Amen."
+                },
+                es: {
+                    h2: "La Soberanía de la Guarda Eterna (Juan 10:22-42)",
+                    versiculos: "Juan 10:28: 'y yo les doy vida eterna; y no perecerán jamás, ni nadie las arrebatará de mi mano.'",
+                    resumo: "La declaración más clara sobre la seguridad eterna está aquí. Jesús afirma que la vida eterna es un regalo, y que Su soberanía garantiza que *nadie* puede anular el don de Dios. Su mano y la mano del Padre son una sola, y Su poder es mayor que todo. La seguridad del creyente depende de la soberanía de Jesús, no de su propio poder para mantenerse fiel.",
+                    aplicacao: "¿Has luchado contra la inseguridad de la salvación? Medita en esta promesa. Tu perseverancia es mantenida por el poder soberano de Cristo. Descansa en la certeza absoluta de que Sus manos (y las del Padre) te sostienen firmemente.",
+                    oracao: "Jesús, mi Guardián soberano, Te agradezco por la promesa inquebrantable de la vida eterna. Perdóname por mi falta de fe. Ayúdame a descansar en la verdad de que Tu mano me sostiene, y nadie ni nada podrá arrebatarme de Ti. Amén."
+                },
+                fr: {
+                    h2: "La Souveraineté de la Garde Éternelle (Jean 10:22-42)",
+                    versiculos: "Jean 10:28: 'Je leur donne la vie éternelle; et elles ne périront jamais, et personne ne les ravira de ma main.'",
+                    resumo: "La déclaration la plus claire sur la sécurité éternelle est ici. Jésus affirme que la vie éternelle est un don, et que Sa souveraineté garantit que *personne* ne peut annuler le don de Dieu. Sa main et la main du Père ne font qu'un, et Sa puissance est plus grande que tout. La sécurité du croyant dépend de la souveraineté de Jésus, et non de son propre pouvoir de rester fidèle.",
+                    aplicacao: "Avez-vous lutté contre l'insécurité du salut? Méditez sur cette promesse. Votre persévérance est maintenue par la puissance souveraine du Christ. Reposez-vous dans la certitude absolue que Ses mains (et celles du Père) vous tiennent fermement.",
+                    oracao: "Jésus, mon Gardien souverain, je Te remercie pour la promesse inébranlable de la vie éternelle. Pardonne-moi mon manque de foi. Aide-moi à me reposer dans la vérité que Ta main me tient, et que rien ni personne ne pourra me ravir de Toi. Amen."
+                }
+            },
+            15: {
+                pt: {
+                    h2: "O Propósito Soberano da Doença (João 11:1-16)",
+                    versiculos: "João 11:4: 'Jesus, porém, ouvindo isto, disse: Esta enfermidade não é para a morte, mas para a glória de Deus, para que o Filho de Deus seja glorificado por ela.'",
+                    resumo: "A doença e morte de Lázaro não foram por acaso. Jesus, em Sua soberania, permitiu que a situação piorasse para que um propósito maior fosse alcançado: a glória de Deus e a manifestação do poder do Filho. O plano de Jesus era maior do que a cura imediata que Seus discípulos e Maria esperavam. A fé é testada pelo tempo de Deus.",
+                    aplicacao: "Existe alguma dor, perda ou crise em sua vida que o está fazendo questionar o propósito de Deus? Lembre-se: 'Esta enfermidade não é para a morte, mas para a glória de Deus'. Confie que o propósito soberano de Cristo é maior e mais glorioso do que a sua dor imediata.",
+                    oracao: "Pai, eu confio no Teu propósito soberano. Ajuda-me a ver a glória de Deus manifestada, mesmo em meio às lágrimas e à dor. Eu entrego esta situação a Ti, crendo que o tempo do Senhor é perfeito e que a Tua glória será revelada. Amém."
+                },
+                en: {
+                    h2: "The Sovereign Purpose of Illness (John 11:1-16)",
+                    versiculos: "John 11:4: 'But when Jesus heard it, he said, “This illness does not lead to death, but to God's glory, so that the Son of God may be glorified through it.”'",
+                    resumo: "Lazarus' illness and death were not random. Jesus, in His sovereignty, allowed the situation to worsen so that a greater purpose might be achieved: the glory of God and the manifestation of the Son's power. Jesus' plan was greater than the immediate healing His disciples and Mary expected. Faith is tested by God's timing.",
+                    aplicacao: "Is there any pain, loss, or crisis in your life that is making you question God's purpose? Remember: 'This illness does not lead to death, but to God's glory'. Trust that Christ's sovereign purpose is greater and more glorious than your immediate pain.",
+                    oracao: "Father, I trust in Your sovereign purpose. Help me to see the glory of God manifested, even amidst tears and pain. I surrender this situation to You, believing that Your timing is perfect and that Your glory will be revealed. Amen."
+                },
+                es: {
+                    h2: "El Propósito Soberano de la Enfermedad (Juan 11:1-16)",
+                    versiculos: "Juan 11:4: 'Oyéndolo Jesús, dijo: Esta enfermedad no es para muerte, sino para la gloria de Dios, para que el Hijo de Dios sea glorificado por ella.'",
+                    resumo: "La enfermedad y muerte de Lázaro no fueron casuales. Jesús, en Su soberanía, permitió que la situación empeorara para que se lograra un propósito mayor: la gloria de Dios y la manifestación del poder del Hijo. El plan de Jesús era más grande que la curación inmediata que Sus discípulos y María esperaban. La fe es probada por el tiempo de Dios.",
+                    aplicacao: "¿Hay algún dolor, pérdida o crisis en tu vida que te esté haciendo cuestionar el propósito de Dios? Recuerda: 'Esta enfermedad no es para muerte, sino para la gloria de Dios'. Confía en que el propósito soberano de Cristo es más grande y glorioso que tu dolor inmediato.",
+                    oracao: "Padre, confío en Tu propósito soberano. Ayúdame a ver la gloria de Dios manifestada, incluso en medio de las lágrimas y el dolor. Te entrego esta situación, creyendo que el tiempo del Señor es perfecto y que Tu gloria será revelada. Amén."
+                },
+                fr: {
+                    h2: "Le But Souverain de la Maladie (Jean 11:1-16)",
+                    versiculos: "Jean 11:4: 'Après avoir entendu cela, Jésus dit: Cette maladie n'est point à la mort, mais elle est pour la gloire de Dieu, afin que le Fils de Dieu soit glorifié par elle.'",
+                    resumo: "La maladie et la mort de Lazare n'étaient pas aléatoires. Jésus, dans Sa souveraineté, a permis que la situation empire afin qu'un but plus grand soit atteint: la gloire de Dieu et la manifestation de la puissance du Fils. Le plan de Jésus était plus grand que la guérison immédiate que Ses disciples et Marie attendaient. La foi est testée par le moment de Dieu.",
+                    aplicacao: "Y a-t-il une douleur, une perte ou une crise dans votre vie qui vous fait remettre en question le but de Dieu? Rappelez-vous: 'Cette maladie n'est point à la mort, mais elle est pour la gloire de Dieu'. Croyez que le but souverain du Christ est plus grand et plus glorieux que votre douleur immédiate.",
+                    oracao: "Père, je fais confiance à Ton but souverain. Aide-moi à voir la gloire de Dieu manifestée, même au milieu des larmes et de la douleur. Je Te remets cette situation, croyant que Ton moment est parfait et que Ta gloire sera révélée. Amen."
+                }
+            },
+            16: {
+                pt: {
+                    h2: "Eu Sou a Ressurreição e a Vida (João 11:17-44)",
+                    versiculos: "João 11:25: 'Disse-lhe Jesus: Eu sou a ressurreição e a vida; quem crê em mim, ainda que esteja morto, viverá.'",
+                    resumo: "Diante da dor de Marta, Jesus faz a terceira das sete declarações de 'Eu Sou'. Ele afirma que a vida eterna não está em um evento futuro (a ressurreição no último dia), mas nEle mesmo. Jesus, soberanamente, *é* a fonte da ressurreição e da vida. Ele prova Sua divindade e soberania sobre a morte chamando Lázaro de volta à vida, manifestando a glória de Deus de forma inegável.",
+                    aplicacao: "O que está 'morto' em sua vida: um sonho, um relacionamento, a esperança? Entregue essa situação a Jesus. Creia que Ele não apenas trará vida nova no futuro, mas que Ele *é* a vida e a ressurreição agora. Peça-Lhe para chamar à vida aquilo que pereceu.",
+                    oracao: "Jesus, Tu és a Ressurreição e a Vida. Que o Teu poder opere em mim e através de mim hoje. Que eu creia em Ti, mesmo quando a situação for de morte, para que a Tua glória seja manifesta. Amém."
+                },
+                en: {
+                    h2: "I Am the Resurrection and the Life (John 11:17-44)",
+                    versiculos: "John 11:25: 'Jesus said to her, “I am the resurrection and the life. Whoever believes in me, though he die, yet shall he live.'",
+                    resumo: "In the face of Martha's pain, Jesus makes the third of the seven 'I Am' declarations. He states that eternal life is not in a future event (the resurrection on the last day), but in Himself. Jesus, sovereignly, *is* the source of resurrection and life. He proves His divinity and sovereignty over death by calling Lazarus back to life, undeniably manifesting God's glory.",
+                    aplicacao: "What is 'dead' in your life: a dream, a relationship, hope? Surrender this situation to Jesus. Believe that He will not only bring new life in the future, but that He *is* the life and the resurrection now. Ask Him to call back to life what has perished.",
+                    oracao: "Jesus, You are the Resurrection and the Life. May Your power operate in me and through me today. May I believe in You, even when the situation is one of death, so that Your glory may be manifested. Amen."
+                },
+                es: {
+                    h2: "Yo Soy la Resurrección y la Vida (Juan 11:17-44)",
+                    versiculos: "Juan 11:25: 'Le dijo Jesús: Yo soy la resurrección y la vida; el que cree en mí, aunque esté muerto, vivirá.'",
+                    resumo: "Ante el dolor de Marta, Jesús hace la tercera de las siete declaraciones de 'Yo Soy'. Él afirma que la vida eterna no está en un evento futuro (la resurrección en el último día), sino en Él mismo. Jesús, soberanamente, *es* la fuente de la resurrección y la vida. Él prueba Su divinidad y soberanía sobre la muerte llamando a Lázaro de vuelta a la vida, manifestando la gloria de Dios de forma innegable.",
+                    aplicacao: "¿Qué está 'muerto' en tu vida: un sueño, una relación, la esperanza? Entrega esa situación a Jesús. Cree que Él no solo traerá vida nueva en el futuro, sino que Él *es* la vida y la resurrección ahora. Pídele que llame a la vida aquello que pereció.",
+                    oracao: "Jesús, Tú eres la Resurrección y la Vida. Que Tu poder opere en mí y a través de mí hoy. Que yo crea en Ti, incluso cuando la situación sea de muerte, para que Tu gloria sea manifestada. Amén."
+                },
+                fr: {
+                    h2: "Je Suis la Résurrection et la Vie (Jean 11:17-44)",
+                    versiculos: "Jean 11:25: 'Jésus lui dit: Je suis la résurrection et la vie. Celui qui croit en moi vivra, même s'il meurt.'",
+                    resumo: "Face à la douleur de Marthe, Jésus fait la troisième des sept déclarations de 'Je Suis'. Il affirme que la vie éternelle n'est pas dans un événement futur (la résurrection au dernier jour), mais en Lui-même. Jésus, souverainement, *est* la source de la résurrection e de la vie. Il prouve Sa divinité et Sa souveraineté sur la mort en rappelant Lazare à la vie, manifestant la gloire de Dieu de manière indéniable.",
+                    aplicacao: "Qu'est-ce qui est 'mort' dans votre vie: un rêve, une relation, l'espoir? Abandonnez cette situation à Jésus. Croyez qu'il n'apportera pas seulement une nouvelle vie à l'avenir, mais qu'il *est* la vie et la résurrection maintenant. Demandez-Lui de rappeler à la vie ce qui a péri.",
+                    oracao: "Jésus, Tu es la Résurrection et la Vie. Que Ta puissance opère en moi et à travers moi aujourd'hui. Que je croie en Toi, même lorsque la situation est celle de la mort, afin que Ta gloire soit manifestée. Amen."
+                }
+            },
+            17: {
+                pt: {
+                    h2: "O Caminho, a Verdade e a Vida (João 14:1-14)",
+                    versiculos: "João 14:6: 'Disse-lhe Jesus: Eu sou o caminho, e a verdade, e a vida; ninguém vem ao Pai senão por mim.'",
+                    resumo: "Em um dos Seus ensinamentos mais essenciais, Jesus faz a quarta declaração de 'Eu Sou'. Ele é o único caminho para Deus (o Pai), a única fonte de verdade absoluta e a única fonte de vida eterna. Esta declaração sublinha a Sua soberania exclusiva sobre o acesso ao Reino de Deus. A fé deve estar Nele, e não em métodos ou filosofias.",
+                    aplicacao: "Você tem buscado 'caminhos alternativos' para encontrar satisfação, verdade ou paz? Entregue seu desejo de auto-suficiência a Cristo. Lembre-se que Ele é o Caminho exclusivo. Confie Nele para guiar sua vida e para que você possa fazer as Suas obras.",
+                    oracao: "Senhor Jesus, o único Caminho. Perdoa-me por buscar atalhos ou verdades humanas. Eu Te entrego a minha vida e a minha jornada. Ajuda-me a andar em Tua Palavra, sabendo que só por Ti chego ao Pai. Amém."
+                },
+                en: {
+                    h2: "The Way, the Truth, and the Life (John 14:1-14)",
+                    versiculos: "John 14:6: 'Jesus said to him, “I am the way, and the truth, and the life. No one comes to the Father except through me.”'",
+                    resumo: "In one of His most essential teachings, Jesus makes the fourth 'I Am' declaration. He is the only way to God (the Father), the only source of absolute truth, and the only source of eternal life. This statement underscores His exclusive sovereignty over access to the Kingdom of God. Faith must be in Him, not in methods or philosophies.",
+                    aplicacao: "Have you been seeking 'alternative paths' to find satisfaction, truth, or peace? Surrender your desire for self-sufficiency to Christ. Remember that He is the exclusive Way. Trust Him to guide your life and to enable you to do His works.",
+                    oracao: "Lord Jesus, the only Way. Forgive me for seeking shortcuts or human truths. I surrender my life and my journey to You. Help me to walk in Your Word, knowing that only through You do I come to the Father. Amen."
+                },
+                es: {
+                    h2: "El Camino, la Verdad y la Vida (Juan 14:1-14)",
+                    versiculos: "Juan 14:6: 'Jesús le dijo: Yo soy el camino, y la verdad, y la vida; nadie viene al Padre, sino por mí.'",
+                    resumo: "En una de Sus enseñanzas más esenciales, Jesús hace la cuarta declaración de 'Yo Soy'. Él es el único camino hacia Dios (el Padre), la única fuente de verdad absoluta y la única fuente de vida eterna. Esta declaración subraya Su soberanía exclusiva sobre el acceso al Reino de Dios. La fe debe estar en Él, y no en métodos o filosofías.",
+                    aplicacion: "¿Has estado buscando 'caminos alternativos' para encontrar satisfacción, verdad o paz? Entrega tu deseo de autosuficiencia a Cristo. Recuerda que Él es el Camino exclusivo. Confía en Él para guiar tu vida y para que puedas hacer Sus obras.",
+                    oracao: "Señor Jesús, el único Camino. Perdóname por buscar atajos o verdades humanas. Te entrego mi vida y mi camino. Ayúdame a andar en Tu Palabra, sabiendo que solo por Ti llego al Padre. Amén."
+                },
+                fr: {
+                    h2: "Le Chemin, la Vérité et la Vie (Jean 14:1-14)",
+                    versiculos: "Jean 14:6: 'Jésus lui dit: Je suis le chemin, la vérité, et la vie. Nul ne vient au Père que par moi.'",
+                    resumo: "Dans l'un de Ses enseignements les plus essentiels, Jésus fait la quatrième déclaration de 'Je Suis'. Il est le seul chemin vers Dieu (le Père), la seule source de vérité absolue et la seule source de vie éternelle. Cette déclaration souligne Sa souveraineté exclusive sur l'accès au Royaume de Dieu. La foi doit être en Lui, et non dans des méthodes ou des philosophies.",
+                    aplicacao: "Avez-vous cherché des 'chemins alternatifs' pour trouver satisfaction, vérité ou paix? Abandonnez votre désir d'autosuffisance au Christ. Rappelez-vous qu'il est le Chemin exclusif. Faites-Lui confiance pour guider votre vie et pour que vous puissiez faire Ses œuvres.",
+                    oracao: "Seigneur Jésus, le seul Chemin. Pardonne-moi de chercher des raccourcis ou des vérités humaines. Je Te remets ma vie et mon chemin. Aide-moi à marcher dans Ta Parole, sachant que ce n'est que par Toi que j'arrive au Père. Amen."
+                }
+            },
+            18: {
+                pt: {
+                    h2: "O Consolador Soberano (João 14:15-31)",
+                    versiculos: "João 14:26: 'Mas o Consolador, o Espírito Santo, que o Pai enviará em meu nome, esse vos ensinará todas as coisas, e vos fará lembrar de tudo quanto vos tenho dito.'",
+                    resumo: "Jesus promete que Sua ausência física seria suprida pelo envio soberano do Espírito Santo, o Consolador (Parácleto). O Espírito é o agente da verdade e do ensino, que habita nos crentes. A condição para receber e experimentar essa presença é a obediência aos mandamentos de Jesus. O Pai e o Filho farão Sua morada no obediente.",
+                    aplicacao: "Como está sua obediência aos mandamentos de Cristo? Se você tem lutado com o pecado, peça ao Espírito Santo para consolá-lo e ensiná-lo, dando-lhe poder para viver em obediência, manifestando a presença soberana de Deus em sua vida.",
+                    oracao: "Espírito Santo Consolador, eu Te agradeço por seres o dom soberano de Jesus. Ajuda-me a guardar os mandamentos do Mestre e a viver em obediência, para que o Pai e o Filho façam morada em mim. Amém."
+                },
+                en: {
+                    h2: "The Sovereign Comforter (John 14:15-31)",
+                    versiculos: "John 14:26: 'But the Helper, the Holy Spirit, whom the Father will send in my name, he will teach you all things and bring to your remembrance all that I have said to you.'",
+                    resumo: "Jesus promises that His physical absence would be supplied by the sovereign sending of the Holy Spirit, the Comforter (Paraclete). The Spirit is the agent of truth and teaching, who dwells in believers. The condition for receiving and experiencing this presence is obedience to Jesus' commandments. The Father and the Son will make Their home in the obedient.",
+                    aplicacao: "How is your obedience to Christ's commandments? If you have struggled with sin, ask the Holy Spirit to comfort and teach you, empowering you to live in obedience, manifesting God's sovereign presence in your life.",
+                    oracao: "Holy Spirit Comforter, I thank You for being Jesus' sovereign gift. Help me to keep the Master's commandments and to live in obedience, so that the Father and the Son may make their home in me. Amen."
+                },
+                es: {
+                    h2: "El Consolador Soberano (Juan 14:15-31)",
+                    versiculos: "Juan 14:26: 'Mas el Consolador, el Espíritu Santo, a quien el Padre enviará en mi nombre, él os enseñará todas las cosas, y os recordará todo lo que yo os he dicho.'",
+                    resumo: "Jesús promete que Su ausencia física sería suplida por el envío soberano del Espíritu Santo, el Consolador (Paráclito). El Espíritu es el agente de la verdad y de la enseñanza, que habita en los creyentes. La condición para recibir y experimentar esta presencia es la obediencia a los mandamientos de Jesús. El Padre y el Hijo harán Su morada en el obediente.",
+                    aplicacao: "¿Cómo está tu obediencia a los mandamientos de Cristo? Si has luchado contra el pecado, pídele al Espíritu Santo que te consuele y te enseñe, dándote poder para vivir en obediencia, manifestando la presencia soberana de Dios en tu vida.",
+                    oracao: "Espíritu Santo Consolador, Te agradezco por ser el don soberano de Jesús. Ayúdame a guardar los mandamientos del Maestro y a vivir en obediencia, para que el Padre y el Hijo hagan morada en mí. Amén."
+                },
+                fr: {
+                    h2: "Le Consolateur Souverain (Jean 14:15-31)",
+                    versiculos: "Jean 14:26: 'Mais le Consolateur, l'Esprit Saint, que le Père enverra en mon nom, vous enseignera toutes choses, et vous rappellera tout ce que je vous ai dit.'",
+                    resumo: "Jésus promet que Son absence physique serait suppléée par l'envoi souverain du Saint-Esprit, le Consolateur (Paraclet). L'Esprit est l'agent de la vérité et de l'enseignement, qui habite chez les croyants. La condition pour recevoir et expérimenter cette présence est l'obéissance aux commandements de Jésus. Le Père et le Fils feront Leur demeure chez l'obéissant.",
+                    aplicacao: "Comment est votre obéissance aux commandements du Christ? Si vous avez lutté contre le péché, demandez au Saint-Esprit de vous consoler et de vous enseigner, vous donnant le pouvoir de vivre dans l'obéissance, manifestant la présence souveraine de Dieu dans votre vie.",
+                    oracao: "Saint-Esprit Consolateur, je Te remercie d'être le don souverain de Jésus. Aide-moi à garder les commandements du Maître et à vivre dans l'obéissance, afin que le Père et le Fils fassent leur demeure en moi. Amen."
+                }
+            },
+            19: {
+                pt: {
+                    h2: "A Videira Verdadeira e a Soberania do Fruto (João 15:1-17)",
+                    versiculos: "João 15:5: 'Eu sou a videira, vós as varas; quem está em mim, e eu nele, esse dá muito fruto; porque sem mim nada podeis fazer.'",
+                    resumo: "Jesus, na quinta declaração de 'Eu Sou', enfatiza a importância da união com Ele para a vida espiritual e a frutificação. A soberania de Deus (o Agricultor) poda e limpa a fim de produzir mais fruto. O foco está em *permanecer* em Jesus pela fé e obediência. A frutificação não é opcional, mas o resultado natural da vida de Cristo fluindo através do crente.",
+                    aplicacao: "Onde há 'ramos secos' em sua vida que precisam ser podados pelo Pai? Entregue sua vontade a Deus para que Ele faça a poda necessária. Peça a graça de permanecer em Cristo, vivendo em obediência para dar o fruto que glorifica o Pai.",
+                    oracao: "Jesus, Tu és a Videira Verdadeira. Reconheço que sem Ti nada posso fazer. Permanece em mim para que eu dê muito fruto, e que a minha vida glorifique o Pai pela Tua soberania. Amém."
+                },
+                en: {
+                    h2: "The True Vine and the Sovereignty of Fruit (John 15:1-17)",
+                    versiculos: "John 15:5: 'I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing.'",
+                    resumo: "Jesus, in the fifth 'I Am' declaration, emphasizes the importance of union with Him for spiritual life and fruitfulness. God's sovereignty (the Vinedresser) prunes and cleans in order to produce more fruit. The focus is on *abiding* in Jesus through faith and obedience. Fruitfulness is not optional, but the natural result of Christ's life flowing through the believer.",
+                    aplicacao: "Where are there 'dry branches' in your life that need to be pruned by the Father? Surrender your will to God so that He may do the necessary pruning. Ask for the grace to abide in Christ, living in obedience to bear the fruit that glorifies the Father.",
+                    oracao: "Jesus, You are the True Vine. I acknowledge that apart from You I can do nothing. Abide in me so that I may bear much fruit, and may my life glorify the Father through Your sovereignty. Amen."
+                },
+                es: {
+                    h2: "La Vid Verdadera y la Soberanía del Fruto (Juan 15:1-17)",
+                    versiculos: "Juan 15:5: 'Yo soy la vid, vosotros los pámpanos; el que permanece en mí, y yo en él, éste lleva mucho fruto; porque separados de mí nada podéis hacer.'",
+                    resumo: "Jesús, en la quinta declaración de 'Yo Soy', enfatiza la importancia de la unión con Él para la vida espiritual y la fructificación. La soberanía de Dios (el Labrador) poda y limpia para producir más fruto. El enfoque está en *permanecer* en Jesús por la fe y la obediencia. La fructificación no es opcional, sino el resultado natural de la vida de Cristo fluyendo a través del creyente.",
+                    aplicacion: "¿Dónde hay 'pámpanos secos' en tu vida que necesitan ser podados por el Padre? Entrega tu voluntad a Dios para que Él haga la poda necesaria. Pide la gracia de permanecer en Cristo, viviendo en obediencia para dar el fruto que glorifica al Padre.",
+                    oracao: "Jesús, Tú eres la Vid Verdadera. Reconozco que sin Ti nada puedo hacer. Permanece en mí para que yo dé mucho fruto, y que mi vida glorifique al Padre por Tu soberanía. Amén."
+                },
+                fr: {
+                    h2: "Le Vrai Cep et la Souveraineté du Fruit (Jean 15:1-17)",
+                    versiculos: "Jean 15:5: 'Je suis le cep, vous êtes les sarments. Celui qui demeure en moi et en qui je demeure porte beaucoup de fruit, car sans moi vous ne pouvez rien faire.'",
+                    resumo: "Jésus, dans la cinquième déclaration de 'Je Suis', souligne l'importance de l'union avec Lui pour la vie spirituelle et la fructification. La souveraineté de Dieu (le Cultivateur) taille et nettoie afin de produire plus de fruit. L'accent est mis sur le fait de *demeurer* en Jésus par la foi et l'obéissance. La fructification n'est pas facultative, mais le résultat naturel de la vie du Christ circulant à travers le croyant.",
+                    aplicacao: "Où y a-t-il des 'sarments secs' dans votre vie qui ont besoin d'être taillés par le Père? Abandonnez votre volonté à Dieu afin qu'il fasse la taille nécessaire. Demandez la grâce de demeurer en Christ, vivant dans l'obéissance pour porter le fruit qui glorifie le Père.",
+                    oracao: "Jésus, Tu es le Vrai Cep. Je reconnais que sans Toi, je ne peux rien faire. Demeure en moi afin que je porte beaucoup de fruit, et que ma vie glorifie le Père par Ta souveraineté. Amen."
+                }
+            },
+            20: {
+                pt: {
+                    h2: "O Mundo Odeia a Soberania (João 15:18-16:4)",
+                    versiculos: "João 15:19: 'Se vós fôsseis do mundo, o mundo amaria o que era seu; mas, porque não sois do mundo, antes eu vos escolhi do mundo, por isso é que o mundo vos odeia.'",
+                    resumo: "Jesus prepara Seus discípulos para a inevitabilidade da perseguição, pois eles não pertencem ao mundo, mas foram soberanamente *escolhidos* por Ele. O ódio do mundo é direcionado a Jesus e ao Pai. A fé deve estar firmada na verdade de que a rejeição é uma prova de que Deus os separou e os chamou para um propósito maior.",
+                    aplicacao: "Você tem se sentido desconfortável ou rejeitado por causa da sua fé? Lembre-se: é um sinal de que você foi escolhido por Cristo. Peça a Deus coragem para suportar a perseguição e para não se conformar com as práticas do mundo, vivendo em santidade.",
+                    oracao: "Pai, ajuda-me a aceitar que o mundo me odiará por causa do Teu nome. Fortalece a minha fé e a minha coragem para não tropeçar, mas para suportar a perseguição, sabendo que Tu és soberano sobre o ódio do mundo. Amém."
+                },
+                en: {
+                    h2: "The World Hates Sovereignty (John 15:18-16:4)",
+                    versiculos: "John 15:19: 'If you were of the world, the world would love its own; but because you are not of the world, but I chose you out of the world, therefore the world hates you.'",
+                    resumo: "Jesus prepares His disciples for the inevitability of persecution, for they do not belong to the world, but were sovereignly *chosen* by Him. The world's hatred is directed at Jesus and the Father. Faith must be grounded in the truth that rejection is proof that God has separated them and called them to a higher purpose.",
+                    aplicacao: "Have you felt uncomfortable or rejected because of your faith? Remember: it is a sign that you have been chosen by Christ. Ask God for courage to endure persecution and not to conform to the ways of the world, living in holiness.",
+                    oracao: "Father, help me to accept that the world will hate me because of Your name. Strengthen my faith and my courage not to stumble, but to endure persecution, knowing that You are sovereign over the world's hatred. Amen."
+                },
+                es: {
+                    h2: "El Mundo Odia la Soberanía (Juan 15:18-16:4)",
+                    versiculos: "Juan 15:19: 'Si fuerais del mundo, el mundo amaría lo suyo; pero porque no sois del mundo, antes yo os elegí del mundo, por eso el mundo os aborrece.'",
+                    resumo: "Jesús prepara a Sus discípulos para la inevitabilidad de la persecución, ya que no pertenecen al mundo, sino que fueron soberanamente *elegidos* por Él. El odio del mundo está dirigido a Jesús y al Padre. La fe debe estar fundamentada en la verdad de que el rechazo es una prueba de que Dios los ha separado y los ha llamado a un propósito mayor.",
+                    aplicacao: "¿Te has sentido incómodo o rechazado a causa de tu fe? Recuerda: es una señal de que has sido elegido por Cristo. Pídele a Dios coraje para soportar la persecución y para no conformarte a las prácticas del mundo, viviendo en santidad.",
+                    oracao: "Padre, ayúdame a aceptar que el mundo me odiará por causa de Tu nombre. Fortalece mi fe y mi coraje para no tropezar, sino para soportar la persecución, sabiendo que Tú eres soberano sobre el odio del mundo. Amén."
+                },
+                fr: {
+                    h2: "Le Monde Haït la Souveraineté (Jean 15:18-16:4)",
+                    versiculos: "Jean 15:19: 'Si vous étiez du monde, le monde aimerait ce qui est à lui; mais parce que vous n'êtes pas du monde, et que je vous ai choisis du milieu du monde, à cause de cela le monde vous hait.'",
+                    resumo: "Jésus prépare Ses disciples à l'inévitabilité de la persécution, car ils n'appartiennent pas au monde, mais ont été souverainement *choisis* par Lui. La haine du monde est dirigée contre Jésus et le Père. La foi doit être fondée sur la vérité que le rejet est la preuve que Dieu les a séparés et les a appelés à un but plus grand.",
+                    aplicacao: "Vous êtes-vous senti mal à l'aise ou rejeté à cause de votre foi? Rappelez-vous: c'est un signe que vous avez été choisi par le Christ. Demandez à Dieu le courage d'endurer la persécution et de ne pas vous conformer aux pratiques du monde, en vivant dans la sainteté.",
+                    oracao: "Père, aide-moi à accepter que le monde me haïra à cause de Ton nom. Fortifie ma foi et mon courage pour ne pas trébucher, mais pour supporter la persécution, sachant que Tu es souverain sur la haine du monde. Amen."
+                }
+            },
+            21: {
+                pt: {
+                    h2: "O Espírito Guia à Verdade Soberana (João 16:5-15)",
+                    versiculos: "João 16:13: 'Quando vier, porém, o Espírito da verdade, ele vos guiará a toda a verdade; porque não falará de si mesmo, mas dirá tudo o que tiver ouvido, e vos anunciará o que há de vir.'",
+                    resumo: "A partida de Jesus é essencial para que o Espírito Santo venha, o que é para o nosso *benefício*. O Espírito da Verdade tem a função soberana de convencer o mundo do pecado, da justiça e do juízo. Para o crente, Ele guia a toda a verdade, garantindo que o conhecimento de Cristo e Sua obra seja compreendido. O Espírito glorifica Jesus.",
+                    aplicacao: "Você está buscando a verdade em outras fontes além da Palavra? Peça ao Espírito Santo para guiá-lo. Peça a Ele para convencê-lo de qualquer pecado oculto e para revelar a justiça de Jesus para que você viva em santidade.",
+                    oracao: "Espírito da Verdade, agradeço-Te por vires para me guiar. Convença-me do meu pecado e revela-me a glória de Jesus. Que a minha vida seja um reflexo do Filho, enquanto o Senhor me mostra as coisas que hão de vir. Amém."
+                },
+                en: {
+                    h2: "The Spirit Guides to Sovereign Truth (John 16:5-15)",
+                    versiculos: "John 16:13: 'When the Spirit of truth comes, he will guide you into all the truth, for he will not speak on his own authority, but whatever he hears he will speak, and he will declare to you the things that are to come.'",
+                    resumo: "Jesus' departure is essential for the Holy Spirit to come, which is for our *benefit*. The Spirit of Truth has the sovereign function of convicting the world of sin, righteousness, and judgment. For the believer, He guides into all truth, ensuring that the knowledge of Christ and His work is understood. The Spirit glorifies Jesus.",
+                    aplicacao: "Are you seeking truth in sources other than the Word? Ask the Holy Spirit to guide you. Ask Him to convict you of any hidden sin and to reveal Jesus' righteousness so that you may live in holiness.",
+                    oracao: "Spirit of Truth, I thank You for coming to guide me. Convict me of my sin and reveal Jesus' glory to me. May my life be a reflection of the Son, as You show me the things that are to come. Amen."
+                },
+                es: {
+                    h2: "El Espíritu Guía a la Verdad Soberana (Juan 16:5-15)",
+                    versiculos: "Juan 16:13: 'Pero cuando venga el Espíritu de verdad, él os guiará a toda la verdad; porque no hablará por su propia cuenta, sino que hablará todo lo que oyere, y os hará saber las cosas que habrán de venir.'",
+                    resumo: "La partida de Jesús es esencial para que venga el Espíritu Santo, lo cual es para nuestro *beneficio*. El Espíritu de Verdad tiene la función soberana de convencer al mundo de pecado, de justicia y de juicio. Para el creyente, Él guía a toda la verdad, asegurando que se comprenda el conocimiento de Cristo y Su obra. El Espíritu glorifica a Jesús.",
+                    aplicacao: "¿Estás buscando la verdad en otras fuentes además de la Palabra? Pídele al Espíritu Santo que te guíe. Pídele que te convenza de cualquier pecado oculto y que te revele la justicia de Jesús para que vivas en santidad.",
+                    oracao: "Espíritu de Verdad, Te agradezco por venir a guiarme. Convénceme de mi pecado y revélame la gloria de Jesús. Que mi vida sea un reflejo del Hijo, mientras Tú me muestras las cosas que han de venir. Amén."
+                },
+                fr: {
+                    h2: "L'Esprit Guide vers la Vérité Souveraine (Jean 16:5-15)",
+                    versiculos: "Jean 16:13: 'Quand le consolateur sera venu, l'Esprit de vérité, il vous guidera dans toute la vérité; car il ne parlera pas de lui-même, mais il dira tout ce qu'il aura entendu, et il vous annoncera les choses à venir.'",
+                    resumo: "Le départ de Jésus est essentiel pour que le Saint-Esprit vienne, ce qui est pour notre *bénéfice*. L'Esprit de Vérité a la fonction souveraine de convaincre le monde du péché, de la justice et du jugement. Pour le croyant, Il guide dans toute la vérité, assurant que la connaissance du Christ et de Son œuvre soit comprise. L'Esprit glorifie Jésus.",
+                    aplicacao: "Cherchez-vous la vérité dans d'autres sources que la Parole? Demandez au Saint-Esprit de vous guider. Demandez-Lui de vous convaincre de tout péché caché et de vous révéler la justice de Jésus afin que vous viviez dans la sainteté.",
+                    oracao: "Esprit de Vérité, je Te remercie d'être venu pour me guider. Convaincs-moi de mon péché et révèle-moi la gloire de Jésus. Que ma vie soit un reflet du Fils, pendant que Tu me montres les choses à venir. Amén."
+                }
+            },
+            22: {
+                pt: {
+                    h2: "A Transformação da Tristeza (João 16:16-33)",
+                    versiculos: "João 16:33: 'Tenho-vos dito isto, para que em mim tenhais paz; no mundo tereis aflições, mas tende bom ânimo, eu venci o mundo.'",
+                    resumo: "Jesus prepara Seus discípulos para a tristeza iminente (Sua crucificação), prometendo que essa tristeza seria transformada em alegria duradoura, como a dor do parto que se torna alegria pela nova vida. Esta é a soberania de Deus: Ele usa a aflição e o sofrimento para um propósito eterno. A paz não é a ausência de problemas, mas a convicção de que Jesus *venceu o mundo*.",
+                    aplicacao: "Você está enfrentando uma 'aflição' neste momento? Receba a paz de Jesus. Entregue a Ele sua tristeza, crendo que Ele é soberano sobre suas circunstâncias e que essa dor será transformada em alegria. Tenha bom ânimo!",
+                    oracao: "Senhor, reconheço que a tristeza desta vida será transformada em alegria inabalável quando eu Te vir. Ajuda-me a viver com fé e esperança, lançando sobre Ti as minhas preocupações, pois Tu venceste o mundo. Amém."
+                },
+                en: {
+                    h2: "The Transformation of Sorrow (John 16:16-33)",
+                    versiculos: "John 16:33: 'I have said these things to you, that in me you may have peace. In the world you will have tribulation. But take heart; I have overcome the world.'",
+                    resumo: "Jesus prepares His disciples for imminent sorrow (His crucifixion), promising that this sorrow would be turned into lasting joy, like the pain of childbirth turning into joy at the new life. This is God's sovereignty: He uses affliction and suffering for an eternal purpose. Peace is not the absence of problems, but the conviction that Jesus *has overcome the world*.",
+                    aplicacao: "Are you facing a 'tribulation' right now? Receive Jesus' peace. Surrender your sorrow to Him, believing that He is sovereign over your circumstances and that this pain will be transformed into joy. Take heart!",
+                    oracao: "Lord, I recognize that the sorrow of this life will be turned into unshakeable joy when I see You. Help me to live with faith and hope, casting my worries upon You, for You have overcome the world. Amen."
+                },
+                es: {
+                    h2: "La Transformación de la Tristeza (Juan 16:16-33)",
+                    versiculos: "Juan 16:33: 'Estas cosas os he hablado para que en mí tengáis paz. En el mundo tendréis aflicción; pero confiad, yo he vencido al mundo.'",
+                    resumo: "Jesús prepara a Sus discípulos para la tristeza inminente (Su crucifixión), prometiendo que esa tristeza se transformaría en alegría duradera, como el dolor del parto que se convierte en alegría por la nueva vida. Esta es la soberanía de Dios: Él usa la aflicción y el sufrimiento para un propósito eterno. La paz no es la ausencia de problemas, sino la convicción de que Jesús *ha vencido al mundo*.",
+                    aplicacao: "¿Estás enfrentando una 'aflicción' en este momento? Recibe la paz de Jesús. Entrégale tu tristeza, creyendo que Él es soberano sobre tus circunstancias y que este dolor se transformará en alegría. ¡Ten buen ánimo!",
+                    oracao: "Señor, reconozco que la tristeza de esta vida se transformará en alegría inquebrantable cuando Te vea. Ayúdame a vivir con fe y esperanza, echando sobre Ti mis preocupaciones, porque Tú has vencido al mundo. Amén."
+                },
+                fr: {
+                    h2: "La Transformation de la Tristesse (Jean 16:16-33)",
+                    versiculos: "Jean 16:33: 'Je vous ai dit ces choses, afin que vous ayez la paix en moi. Vous aurez des tribulations dans le monde; mais prenez courage, j'ai vaincu le monde.'",
+                    resumo: "Jésus prépare Ses disciples à la tristesse imminente (Sa crucifixion), promettant que cette tristesse se transformerait en joie durable, comme la douleur de l'enfantement qui se transforme en joie pour la nouvelle vie. C'est la souveraineté de Dieu: Il utilise l'affliction et la souffrance dans un but éternel. La paix n'est pas l'absence de problèmes, mais la conviction que Jésus *a vaincu le monde*.",
+                    aplicacao: "Êtes-vous confronté à une 'tribulation' en ce moment? Recevez la paix de Jésus. Abandonnez-Lui votre tristesse, croyant qu'il est souverain sur vos circonstances et que cette douleur sera transformée en joie. Prenez courage!",
+                    oracao: "Seigneur, je reconnais que la tristesse de cette vie sera transformée en joie inébranlable quand je Te verrai. Aide-moi à vivre avec foi et espérance, jetant mes soucis sur Toi, car Tu as vaincu le monde. Amen."
+                }
+            },
+            23: {
+                pt: {
+                    h2: "A Oração Sacerdotal Pela Unidade (João 17:1-19)",
+                    versiculos: "João 17:17: 'Santifica-os na tua verdade; a tua palavra é a verdade.'",
+                    resumo: "A oração de Jesus por Seus discípulos mostra a Sua soberania e Seu desejo de que eles sejam *guardados* do Maligno e *santificados* na verdade. Ele ora pela unidade deles, para que a glória de Deus se manifeste. A santificação (separação para Deus) é um ato soberano realizado por meio da Palavra, que é a própria Verdade.",
+                    aplicacao: "Você tem se exposto à Palavra de Deus diariamente para ser santificado? O que tem ameaçado sua unidade com outros crentes? Ore a Palavra de Jesus: peça a Deus para guardá-lo e santificá-lo, para que a unidade da igreja seja um testemunho ao mundo.",
+                    oracao: "Jesus, Sacerdote Soberano, eu Te agradeço porque oraste por mim. Ajuda-me a viver a Tua santificação por meio da Tua Palavra e a buscar a unidade com meus irmãos, para que o mundo creia. Amém."
+                },
+                en: {
+                    h2: "The High Priestly Prayer for Unity (John 17:1-19)",
+                    versiculos: "John 17:17: 'Sanctify them in the truth; your word is truth.'",
+                    resumo: "Jesus' prayer for His disciples shows His sovereignty and His desire that they be *kept* from the Evil One and *sanctified* in the truth. He prays for their unity, so that the glory of God may be manifested. Sanctification (separation unto God) is a sovereign act performed through the Word, which is Truth itself.",
+                    aplicacao: "Have you been exposing yourself to God's Word daily to be sanctified? What has threatened your unity with other believers? Pray Jesus' Word: ask God to keep you and sanctify you, so that the unity of the church may be a testimony to the world.",
+                    oracao: "Jesus, Sovereign Priest, I thank You because You prayed for me. Help me to live Your sanctification through Your Word and to seek unity with my brothers, so that the world may believe. Amen."
+                },
+                es: {
+                    h2: "La Oración Sacerdotal Por la Unidad (Juan 17:1-19)",
+                    versiculos: "Juan 17:17: 'Santifícalos en tu verdad; tu palabra es verdad.'",
+                    resumo: "La oración de Jesús por Sus discípulos muestra Su soberanía y Su deseo de que sean *guardados* del Maligno y *santificados* en la verdad. Él ora por su unidad, para que la gloria de Dios se manifieste. La santificación (separación para Dios) es un acto soberano realizado por medio de la Palabra, que es la Verdad misma.",
+                    aplicacion: "¿Te has expuesto a la Palabra de Dios diariamente para ser santificado? ¿Qué ha amenazado tu unidad con otros creyentes? Ora la Palabra de Jesús: pídele a Dios que te guarde y te santifique, para que la unidad de la iglesia sea un testimonio al mundo.",
+                    oracao: "Jesús, Sacerdote Soberano, Te agradezco porque oraste por mí. Ayúdame a vivir Tu santificación por medio de Tu Palabra y a buscar la unidad con mis hermanos, para que el mundo crea. Amén."
+                },
+                fr: {
+                    h2: "La Prière Sacerdotale Pour l'Unité (Jean 17:1-19)",
+                    versiculos: "Jean 17:17: 'Sanctifie-les par ta vérité: ta parole est la vérité.'",
+                    resumo: "La prière de Jésus pour Ses disciples montre Sa souveraineté et Son désir qu'ils soient *gardés* du Malin et *sanctifiés* dans la vérité. Il prie pour leur unité, afin que la gloire de Dieu se manifeste. La sanctification (séparation pour Dieu) est un acte souverain réalisé par le moyen de la Parole, qui est la Vérité elle-même.",
+                    aplicacao: "Vous êtes-vous exposé à la Parole de Dieu quotidiennement pour être sanctifié? Qu'est-ce qui a menacé votre unité avec d'autres croyants? Priez la Parole de Jésus: demandez à Dieu de vous garder et de vous sanctifier, afin que l'unité de l'église soit un témoignage pour le monde.",
+                    oracao: "Jésus, Souverain Prêtre, je Te remercie de ce que Tu as prié pour moi. Aide-moi à vivre Ta sanctification par Ta Parole et à rechercher l'unité avec mes frères, afin que le monde croie. Amen."
+                }
+            },
+            24: {
+                pt: {
+                    h2: "A Oração Sacerdotal Pela Glória (João 17:20-26)",
+                    versiculos: "João 17:22: 'E eu lhes dei a glória que a mim me deste, para que sejam um, como nós somos um.'",
+                    resumo: "Jesus ora não só pelos discípulos presentes, mas por todos os que creriam nEle. O cerne desta oração é que a glória de Deus se manifesta na **unidade perfeita** dos crentes, a fim de que o mundo saiba que o Pai O enviou. A glória que Jesus recebeu é compartilhada com Seus seguidores por um ato soberano de amor, garantindo que Seu amor permaneça neles.",
+                    aplicacao: "Como a unidade da sua vida com outros crentes reflete a glória de Cristo? Peça a Deus para remover todo o egoísmo e partidarismo, para que a unidade no Espírito seja um testemunho poderoso do amor soberano de Deus ao mundo.",
+                    oracao: "Pai, eu Te agradeço pela glória que deste ao Teu Filho e pelo dom de tê-la compartilhado comigo. Que o Teu amor permaneça em mim e que a unidade que Tu tens com Jesus seja manifesta em minha vida. Amém."
+                },
+                en: {
+                    h2: "The High Priestly Prayer for Glory (John 17:20-26)",
+                    versiculos: "John 17:22: 'The glory that you have given me I have given to them, that they may be one even as we are one.'",
+                    resumo: "Jesus prays not only for the disciples present, but for all who would believe in Him. The core of this prayer is that God's glory is manifested in the **perfect unity** of believers, so that the world may know that the Father sent Him. The glory Jesus received is shared with His followers by a sovereign act of love, ensuring that His love remains in them.",
+                    aplicacao: "How does the unity of your life with other believers reflect the glory of Christ? Ask God to remove all selfishness and partisanship, so that unity in the Spirit may be a powerful testimony of God's sovereign love to the world.",
+                    oracao: "Father, I thank You for the glory You gave to Your Son and for the gift of sharing it with me. May Your love remain in me and may the unity You have with Jesus be manifested in my life. Amen."
+                },
+                es: {
+                    h2: "La Oración Sacerdotal Por la Gloria (Juan 17:20-26)",
+                    versiculos: "Juan 17:22: 'La gloria que me diste, yo les he dado, para que sean uno, así como nosotros somos uno.'",
+                    resumo: "Jesús ora no solo por los discípulos presentes, sino por todos los que creerían en Él. El núcleo de esta oración es que la gloria de Dios se manifiesta en la **unidad perfecta** de los creyentes, a fin de que el mundo sepa que el Padre Lo envió. La gloria que Jesús recibió es compartida con Sus seguidores por un acto soberano de amor, asegurando que Su amor permanezca en ellos.",
+                    aplicacao: "¿Cómo refleja la unidad de tu vida con otros creyentes la gloria de Cristo? Pídele a Dios que elimine todo egoísmo y partidismo, para que la unidad en el Espíritu sea un testimonio poderoso del amor soberano de Dios al mundo.",
+                    oracao: "Padre, Te agradezco por la gloria que diste a Tu Hijo y por el don de haberla compartido conmigo. Que Tu amor permanezca en mí y que la unidad que Tú tienes con Jesús se manifieste en mi vida. Amén."
+                },
+                fr: {
+                    h2: "La Prière Sacerdotale Pour la Gloire (Jean 17:20-26)",
+                    versiculos: "Jean 17:22: 'Je leur ai donné la gloire que tu m'as donnée, afin qu'ils soient un, comme nous sommes un.'",
+                    resumo: "Jésus prie non seulement pour les disciples présents, mais pour tous ceux qui croiraient en Lui. Le cœur de cette prière est que la gloire de Dieu se manifeste dans l'**unité parfaite** des croyants, afin que le monde sache que le Père L'a envoyé. La gloire que Jésus a reçue est partagée avec Ses disciples par un acte souverain d'amour, assurant que Son amour demeure en eux.",
+                    aplicacao: "Comment l'unité de votre vie avec d'autres croyants reflète-t-elle la gloire du Christ? Demandez à Dieu d'éliminer tout égoïsme et tout esprit de parti, afin que l'unité dans l'Esprit soit un témoignage puissant de l'amour souverain de Dieu au monde.",
+                    oracao: "Père, je Te remercie pour la gloire que Tu as donnée à Ton Fils et pour le don de l'avoir partagée avec moi. Que Ton amour demeure en moi et que l'unité que Tu as avec Jésus se manifeste dans ma vie. Amen."
+                }
+            },
+            25: {
+                pt: {
+                    h2: "A Soberania da Prisão (João 18:1-27)",
+                    versiculos: "João 18:11: 'Jesus, porém, disse a Pedro: Mete a tua espada na bainha; não beberei eu o cálice que o Pai me deu?'",
+                    resumo: "A prisão de Jesus revela Sua soberania sobre os eventos. Ele não foi vítima, mas se *entregou voluntariamente*, cumprindo o plano do Pai. Ele repreende Pedro por tentar resistir, reafirmando que a Sua paixão era um cálice dado pelo Pai. A soberania de Deus garantiu que tudo acontecesse segundo a Sua vontade, e não pela força humana.",
+                    aplicacao: "Você tem tentado usar sua 'espada' (força, argumentos, manipulação) para evitar o sofrimento que Deus permitiu em sua vida? Entregue esse 'cálice' nas mãos do Pai, crendo na Sua soberania. Peça a Deus coragem para cumprir a Sua vontade sem resistência.",
+                    oracao: "Senhor, ajuda-me a ser corajoso e firme, como Jesus diante da prisão. Que eu não negue a minha fé por medo, mas que eu esteja pronto para cumprir a Tua vontade, crendo que tudo está sob o Teu soberano controle. Amém."
+                },
+                en: {
+                    h2: "The Sovereignty of Arrest (John 18:1-27)",
+                    versiculos: "John 18:11: 'So Jesus said to Peter, “Put your sword into its sheath; shall I not drink the cup that the Father has given me?”'",
+                    resumo: "Jesus' arrest reveals His sovereignty over events. He was not a victim, but *voluntarily surrendered Himself*, fulfilling the Father's plan. He rebukes Peter for trying to resist, reaffirming that His passion was a cup given by the Father. God's sovereignty ensured that everything happened according to His will, not by human force.",
+                    aplicacao: "Have you been trying to use your 'sword' (force, arguments, manipulation) to avoid suffering that God has permitted in your life? Surrender this 'cup' into the Father's hands, believing in His sovereignty. Ask God for courage to fulfill His will without resistance.",
+                    oracao: "Lord, help me to be brave and firm, like Jesus before the arrest. May I not deny my faith out of fear, but may I be ready to fulfill Your will, believing that everything is under Your sovereign control. Amen."
+                },
+                es: {
+                    h2: "La Soberanía de la Prisión (Juan 18:1-27)",
+                    versiculos: "Juan 18:11: 'Jesús entonces dijo a Pedro: Mete tu espada en la vaina; la copa que el Padre me ha dado, ¿no la he de beber?'",
+                    resumo: "La prisión de Jesús revela Su soberanía sobre los eventos. Él no fue víctima, sino que se *entregó voluntariamente*, cumpliendo el plan del Padre. Él reprende a Pedro por intentar resistir, reafirmando que Su pasión era una copa dada por el Padre. La soberanía de Dios aseguró que todo sucediera según Su voluntad, y no por la fuerza humana.",
+                    aplicacao: "¿Has intentado usar tu 'espada' (fuerza, argumentos, manipulación) para evitar el sufrimiento que Dios ha permitido en tu vida? Entrega esa 'copa' en las manos del Padre, creyendo en Su soberanía. Pídele a Dios coraje para cumplir Su voluntad sin resistencia.",
+                    oracao: "Señor, ayúdame a ser valiente y firme, como Jesús ante la prisión. Que no niegue mi fe por miedo, sino que esté listo para cumplir Tu voluntad, creyendo que todo está bajo Tu soberano control. Amén."
+                },
+                fr: {
+                    h2: "La Souveraineté de l'Arrestation (Jean 18:1-27)",
+                    versiculos: "Jean 18:11: 'Jésus dit à Pierre: Remets ton épée dans le fourreau. La coupe que le Père m'a donnée, ne la boirai-je pas?'",
+                    resumo: "L'arrestation de Jésus révèle Sa souveraineté sur les événements. Il n'a pas été une victime, mais s'*est livré volontairement*, accomplissant le plan du Père. Il réprimande Pierre pour avoir tenté de résister, réaffirmant que Sa passion était une coupe donnée par le Père. La souveraineté de Dieu a assuré que tout se passe selon Sa volonté, et non par la force humaine.",
+                    aplicacao: "Avez-vous essayé d'utiliser votre 'épée' (force, arguments, manipulation) pour éviter la souffrance que Dieu a permise dans votre vie? Remettez cette 'coupe' entre les mains du Père, croyant en Sa souveraineté. Demandez à Dieu le courage d'accomplir Sa volonté sans résistance.",
+                    oracao: "Seigneur, aide-moi à être courageux et ferme, comme Jésus devant l'arrestation. Que je ne renie pas ma foi par peur, mais que je sois prêt à accomplir Ta volonté, croyant que tout est sous Ton contrôle souverain. Amen."
+                }
+            },
+            26: {
+                pt: {
+                    h2: "A Soberania do Reino (João 18:28-40)",
+                    versiculos: "João 18:36: 'Respondeu Jesus: O meu reino não é deste mundo; se o meu reino fosse deste mundo, os meus ministros se empenhariam por mim, para que eu não fosse entregue aos judeus; mas agora o meu reino não é daqui.'",
+                    resumo: "Diante de Pilatos, Jesus afirma que Seu reino é de natureza soberana e espiritual, não dependente de poder militar ou político. Sua missão era dar testemunho da verdade. Pilatos não tinha autoridade real sobre Jesus, que estava no controle soberano da situação. A soberania de Jesus se manifesta na Sua disposição de ser julgado para cumprir o propósito eterno.",
+                    aplicacao: "Sua esperança de transformação no mundo está em sistemas humanos ou no Reino soberano de Cristo? Proclame a verdade do Evangelho em sua vida e palavras, lembrando que seu verdadeiro Reino não é terreno. Viva de forma a dar testemunho da verdade de Jesus.",
+                    oracao: "Jesus, Rei Soberano, eu Te agradeço por teres vindo dar testemunho da verdade. Ajuda-me a não me contaminar com o mundo e a proclamar o Teu Reino, sabendo que Ele não é deste mundo, mas tem autoridade sobre ele. Amém."
+                },
+                en: {
+                    h2: "The Sovereignty of the Kingdom (John 18:28-40)",
+                    versiculos: "John 18:36: 'Jesus answered, “My kingdom is not of this world. If my kingdom were of this world, my servants would have been fighting, that I might not be delivered over to the Jews. But my kingdom is not from the world.”'",
+                    resumo: "Before Pilate, Jesus states that His kingdom is of a sovereign and spiritual nature, not dependent on military or political power. His mission was to bear witness to the truth. Pilate had no real authority over Jesus, who was in sovereign control of the situation. Jesus' sovereignty is manifested in His willingness to be judged to fulfill the eternal purpose.",
+                    aplicacao: "Is your hope for transformation in the world placed in human systems or in Christ's sovereign Kingdom? Proclaim the truth of the Gospel in your life and words, remembering that your true Kingdom is not earthly. Live so as to bear witness to the truth of Jesus.",
+                    oracao: "Jesus, Sovereign King, I thank You for coming to bear witness to the truth. Help me not to be defiled by the world and to proclaim Your Kingdom, knowing that it is not of this world, but has authority over it. Amen."
+                },
+                es: {
+                    h2: "La Soberanía del Reino (Juan 18:28-40)",
+                    versiculos: "Juan 18:36: 'Respondió Jesús: Mi reino no es de este mundo; si mi reino fuera de este mundo, mis servidores pelearían para que yo no fuera entregado a los judíos; pero mi reino no es de aquí.'",
+                    resumo: "Ante Pilato, Jesús afirma que Su reino es de naturaleza soberana y espiritual, no dependiente de poder militar o político. Su misión era dar testimonio de la verdad. Pilato no tenía autoridad real sobre Jesús, quien estaba en control soberano de la situación. La soberanía de Jesús se manifiesta en Su disposición a ser juzgado para cumplir el propósito eterno.",
+                    aplicacao: "¿Tu esperanza de transformación en el mundo está en sistemas humanos o en el Reino soberano de Cristo? Proclama la verdad del Evangelio en tu vida y palabras, recordando que tu verdadero Reino no es terrenal. Vive de tal manera que des testimonio de la verdad de Jesús.",
+                    oracao: "Jesús, Rey Soberano, Te agradezco por haber venido a dar testimonio de la verdad. Ayúdame a no contaminarme con el mundo y a proclamar Tu Reino, sabiendo que no es de este mundo, pero tiene autoridad sobre él. Amén."
+                },
+                fr: {
+                    h2: "La Souveraineté du Royaume (Jean 18:28-40)",
+                    versiculos: "Jean 18:36: 'Jésus répondit: Mon royaume n'est pas de ce monde; si mon royaume était de ce monde, mes serviteurs auraient combattu pour que je ne fusse pas livré aux Juifs; mais maintenant mon royaume n'est point d'ici.'",
+                    resumo: "Devant Pilate, Jésus affirme que Son royaume est de nature souveraine et spirituelle, ne dépendant pas du pouvoir militaire ou politique. Sa mission était de rendre témoignage à la vérité. Pilate n'avait pas d'autorité réelle sur Jésus, qui était en contrôle souverain de la situation. La souveraineté de Jésus se manifeste dans Sa volonté d'être jugé pour accomplir le dessein éternel.",
+                    aplicacao: "Votre espoir de transformation dans le monde est-il placé dans des systèmes humains ou dans le Royaume souverain du Christ? Proclamez la vérité de l'Évangile dans votre vie et vos paroles, en vous souvenant que votre vrai Royaume n'est pas terrestre. Vivez de manière à rendre témoignage à la vérité de Jésus.",
+                    oracao: "Jésus, Roi Souverain, je Te remercie d'être venu rendre témoignage à la vérité. Aide-moi à ne pas me souiller par le monde et à proclamer Ton Royaume, sachant qu'il n'est pas de ce monde, mais qu'il a autorité sur lui. Amen."
+                }
+            },
+            27: {
+                pt: {
+                    h2: "A Soberania da Cruz (João 19:1-16)",
+                    versiculos: "João 19:11: 'Respondeu Jesus: Nenhuma autoridade terias sobre mim, se de cima não te fosse dada; por isso, quem me entregou a ti, maior pecado tem.'",
+                    resumo: "O clímax do julgamento mostra que Pilatos não tinha poder inerente sobre Jesus. Jesus deixa claro que *toda a autoridade* sobre Ele foi dada soberanamente por Deus (de cima). A crucificação não foi um acidente, mas o cumprimento do plano de Deus. A fé deve reconhecer que até mesmo os eventos mais injustos estão sob a soberania divina, para a redenção da humanidade.",
+                    aplicacao: "O que em sua vida lhe dá a sensação de que está fora do controle de Deus? Lembre-se: Jesus foi submetido a Pilatos sob a autoridade de Deus. Confie que Sua vida está segura nas mãos do Pai, e que tudo coopera para o bem daqueles que O amam.",
+                    oracao: "Pai, agradeço pelo sacrifício de Jesus. Ele assumiu o juízo que era meu. Ajuda-me a carregar a minha cruz com fé, em obediência à Tua soberana vontade, sabendo que tudo o que acontece está sob o Teu controle. Amém."
+                },
+                en: {
+                    h2: "The Sovereignty of the Cross (John 19:1-16)",
+                    versiculos: "John 19:11: 'Jesus answered him, “You would have no authority over me at all unless it had been given you from above. Therefore he who delivered me over to you has the greater sin.”'",
+                    resumo: "The climax of the trial shows that Pilate had no inherent power over Jesus. Jesus makes it clear that *all authority* over Him was sovereignly given by God (from above). The crucifixion was not an accident, but the fulfillment of God's plan. Faith must recognize that even the most unjust events are under divine sovereignty, for the redemption of humanity.",
+                    aplicacao: "What in your life makes you feel it is outside of God's control? Remember: Jesus was subjected to Pilate under God's authority. Trust that your life is secure in the Father's hands, and that everything works together for the good of those who love Him.",
+                    oracao: "Father, I thank You for Jesus' sacrifice. He took the judgment that was mine. Help me to carry my cross with faith, in obedience to Your sovereign will, knowing that everything that happens is under Your control. Amen."
+                },
+                es: {
+                    h2: "La Soberanía de la Cruz (Juan 19:1-16)",
+                    versiculos: "Juan 19:11: 'Respondió Jesús: Ninguna autoridad tendrías contra mí, si no te fuese dada de arriba; por tanto, el que a ti me ha entregado, mayor pecado tiene.'",
+                    resumo: "El clímax del juicio muestra que Pilato no tenía poder inherente sobre Jesús. Jesús deja claro que *toda la autoridad* sobre Él le fue dada soberanamente por Dios (de arriba). La crucifixión no fue un accidente, sino el cumplimiento del plan de Dios. La fe debe reconocer que incluso los eventos más injustos están bajo la soberanía divina, para la redención de la humanidad.",
+                    aplicacao: "¿Qué en tu vida te da la sensación de que está fuera del control de Dios? Recuerda: Jesús fue sometido a Pilato bajo la autoridad de Dios. Confía en que tu vida está segura en las manos del Padre, y que todo coopera para el bien de aquellos que Lo aman.",
+                    oracao: "Padre, agradezco por el sacrificio de Jesús. Él asumió el juicio que era mío. Ayúdame a cargar mi cruz con fe, en obediencia a Tu soberana voluntad, sabiendo que todo lo que sucede está bajo Tu control. Amén."
+                },
+                fr: {
+                    h2: "La Souveraineté de la Croix (Jean 19:1-16)",
+                    versiculos: "Jean 19:11: 'Jésus répondit: Tu n'aurais aucun pouvoir sur moi, s'il ne t'avait été donné d'en haut. C'est pourquoi celui qui me livre à toi est coupable d'un plus grand péché.'",
+                    resumo: "Le point culminant du procès montre que Pilate n'avait aucun pouvoir inhérent sur Jésus. Jésus précise que *toute autorité* sur Lui a été donnée souverainement par Dieu (d'en haut). La crucifixion n'était pas un accident, mais l'accomplissement du plan de Dieu. La foi doit reconnaître que même les événements les plus injustes sont sous la souveraineté divine, pour la rédemption de l'humanité.",
+                    aplicacao: "Qu'est-ce qui dans votre vie vous donne le sentiment d'être hors du contrôle de Dieu? Rappelez-vous: Jésus a été soumis à Pilate sous l'autorité de Dieu. Croyez que votre vie est en sécurité entre les mains du Père, et que tout concourt au bien de ceux qui L'aiment.",
+                    oracao: "Père, je Te remercie pour le sacrifice de Jésus. Il a pris le jugement qui était le mien. Aide-moi à porter ma croix avec foi, dans l'obéissance à Ta volonté souveraine, sachant que tout ce qui arrive est sous Ton contrôle. Amen."
+                }
+            },
+            28: {
+                pt: {
+                    h2: "O Triunfo do 'Está Consumado' (João 19:17-30)",
+                    versiculos: "João 19:30: 'E, quando Jesus tomou o vinagre, disse: Está consumado! E, inclinando a cabeça, entregou o espírito.'",
+                    resumo: "A palavra final de Jesus na cruz, *'Tetelestai'* (Está Consumado), é a maior declaração de soberania no Evangelho. Não é um grito de derrota, mas um brado de triunfo: a obra de redenção, a expiação pelos pecados e o cumprimento das profecias estavam **completos**. A fé descansa na certeza de que o preço foi pago integralmente por Jesus.",
+                    aplicacao: "Você tem tentado pagar a dívida do seu pecado com suas boas obras ou penitências? Lembre-se: está consumado. Confie no trabalho perfeito e soberano de Cristo na cruz. Viva a partir do perdão, e não para alcançá-lo.",
+                    oracao: "Jesus, Salvador Soberano, eu Te adoro! Obrigado porque o preço da minha redenção foi pago por inteiro na cruz. Ajuda-me a viver a liberdade do 'Está Consumado', sem as amarras do pecado e da culpa. Amém."
+                },
+                en: {
+                    h2: "The Triumph of 'It Is Finished' (John 19:17-30)",
+                    versiculos: "John 19:30: 'When Jesus had received the sour wine, he said, “It is finished,” and he bowed his head and gave up his spirit.'",
+                    resumo: "Jesus' final word on the cross, *'Tetelestai'* (It is finished), is the greatest declaration of sovereignty in the Gospel. It is not a cry of defeat, but a shout of triumph: the work of redemption, the atonement for sins, and the fulfillment of prophecies were **complete**. Faith rests in the certainty that the price was fully paid by Jesus.",
+                    aplicacao: "Have you been trying to pay the debt of your sin with your good works or penances? Remember: it is finished. Trust in Christ's perfect and sovereign work on the cross. Live from forgiveness, not to achieve it.",
+                    oracao: "Jesus, Sovereign Savior, I worship You! Thank You because the price of my redemption was fully paid on the cross. Help me to live the freedom of 'It is finished,' without the chains of sin and guilt. Amen."
+                },
+                es: {
+                    h2: "El Triunfo del 'Consumado Es' (Juan 19:17-30)",
+                    versiculos: "Juan 19:30: 'Cuando Jesús hubo tomado el vinagre, dijo: Consumado es. E inclinando la cabeza, entregó el espíritu.'",
+                    resumo: "La palabra final de Jesús en la cruz, *'Tetelestai'* (Consumado es), es la mayor declaración de soberanía en el Evangelio. No es un grito de derrota, sino un grito de triunfo: la obra de redención, la expiación por los pecados y el cumplimiento de las profecías estaban **completos**. La fe descansa en la certeza de que el precio fue pagado integralmente por Jesús.",
+                    aplicacao: "¿Has intentado pagar la deuda de tu pecado con tus buenas obras o penitencias? Recuerda: consumado es. Confía en el trabajo perfecto y soberano de Cristo en la cruz. Vive a partir del perdón, y no para alcanzarlo.",
+                    oracao: "Jesús, Salvador Soberano, ¡Te adoro! Gracias porque el precio de mi redención fue pagado por completo en la cruz. Ayúdame a vivir la libertad del 'Consumado es', sin las ataduras del pecado y la culpa. Amén."
+                },
+                fr: {
+                    h2: "Le Triomphe du 'Tout Est Accomplí' (Jean 19:17-30)",
+                    versiculos: "Jean 19:30: 'Quand Jésus eut pris le vinaigre, il dit: Tout est accompli. Et, inclinant la tête, il rendit l'esprit.'",
+                    resumo: "Le dernier mot de Jésus sur la croix, *'Tetelestai'* (Tout est accompli), est la plus grande déclaration de souveraineté dans l'Évangile. Ce n'est pas un cri de défaite, mais un cri de triomphe: l'œuvre de la rédemption, l'expiation des péchés et l'accomplissement des prophéties étaient **achevés**. La foi repose sur la certitude que le prix a été entièrement payé par Jésus.",
+                    aplicacao: "Avez-vous essayé de payer la dette de votre péché avec vos bonnes œuvres ou vos pénitences? Rappelez-vous: tout est accompli. Faites confiance à l'œuvre parfaite et souveraine du Christ sur la croix. Vivez à partir du pardon, et non pour l'atteindre.",
+                    oracao: "Jésus, Sauveur Souverain, je T'adore! Merci parce que le prix de ma rédemption a été entièrement payé sur la croix. Aide-moi à vivre la liberté du 'Tout est accompli', sans les chaînes du péché et de la culpabilité. Amen."
+                }
+            },
+            29: {
+                pt: {
+                    h2: "O Sepultamento Soberano (João 19:31-42)",
+                    versiculos: "João 19:41: 'Ora, no lugar onde fora crucificado, havia um horto, e nesse horto um sepulcro novo, em que ainda ninguém havia sido posto.'",
+                    resumo: "O sepultamento de Jesus, feito por José de Arimateia e Nicodemos (membros do Sinédrio que se tornaram Seus seguidores secretos), mostra o cumprimento soberano das Escrituras e a provisão inesperada de Deus. O corpo de Jesus foi colocado em um sepulcro novo, garantindo que não houvesse confusão com qualquer outra ressurreição. A fé opera mesmo no silêncio do sepulcro.",
+                    aplicacao: "O que em sua vida parece 'silencioso' ou 'morto' agora? Confie que Deus está operando Seu propósito mesmo no silêncio. Como José e Nicodemos, esteja disposto a manifestar sua fé e serviço a Cristo abertamente, mesmo que isso custe sua reputação.",
+                    oracao: "Senhor, que a morte e o sepultamento de Jesus me lembrem da realidade do sacrifício e da Tua soberania. Que a minha vida seja marcada pela adoração silenciosa e pela gratidão, como a de José de Arimateia e Nicodemos. Amém."
+                },
+                en: {
+                    h2: "The Sovereign Burial (John 19:31-42)",
+                    versiculos: "John 19:41: 'Now in the place where he was crucified there was a garden, and in the garden a new tomb in which no one had yet been laid.'",
+                    resumo: "Jesus' burial, carried out by Joseph of Arimathea and Nicodemus (members of the Sanhedrin who became His secret followers), shows the sovereign fulfillment of the Scriptures and God's unexpected provision. Jesus' body was placed in a new tomb, ensuring there would be no confusion with any other resurrection. Faith operates even in the silence of the tomb.",
+                    aplicacao: "What in your life seems 'silent' or 'dead' right now? Trust that God is working His purpose even in the silence. Like Joseph and Nicodemus, be willing to openly display your faith and service to Christ, even if it costs your reputation.",
+                    oracao: "Lord, may Jesus' death and burial remind me of the reality of the sacrifice and Your sovereignty. May my life be marked by silent worship and gratitude, like that of Joseph of Arimathea and Nicodemus. Amen."
+                },
+                es: {
+                    h2: "El Sepelio Soberano (Juan 19:31-42)",
+                    versiculos: "Juan 19:41: 'Y había en el lugar donde había sido crucificado un huerto, y en el huerto un sepulcro nuevo, en el cual aún no había sido puesto nadie.'",
+                    resumo: "El sepelio de Jesús, realizado por José de Arimatea y Nicodemo (miembros del Sanedrín que se convirtieron en Sus seguidores secretos), muestra el cumplimiento soberano de las Escrituras y la provisión inesperada de Dios. El cuerpo de Jesús fue colocado en un sepulcro nuevo, asegurando que no hubiera confusión con ninguna otra resurrección. La fe opera incluso en el silencio del sepulcro.",
+                    aplicacao: "¿Qué en tu vida parece 'silencioso' o 'muerto' ahora? Confía en que Dios está obrando Su propósito incluso en el silencio. Como José y Nicodemo, estate dispuesto a manifestar tu fe y servicio a Cristo abiertamente, incluso si eso cuesta tu reputación.",
+                    oracao: "Señor, que la muerte y el sepelio de Jesús me recuerden la realidad del sacrificio y Tu soberanía. Que mi vida esté marcada por la adoración silenciosa y por la gratitud, como la de José de Arimatea y Nicodemo. Amén."
+                },
+                fr: {
+                    h2: "L'Ensevelissement Souverain (Jean 19:31-42)",
+                    versiculos: "Jean 19:41: 'Or, il y avait dans le lieu où il avait été crucifié un jardin, et dans ce jardin un sépulcre neuf, où personne n'avait encore été mis.'",
+                    resumo: "L'ensevelissement de Jésus, effectué par Joseph d'Arimathie et Nicodème (membres du Sanhédrin devenus Ses partisans secrets), montre l'accomplissement souverain des Écritures et la provision inattendue de Dieu. Le corps de Jésus fut placé dans un sépulcre neuf, garantissant qu'il n'y aurait pas de confusion avec une autre résurrection. La foi opère même dans le silence du sépulcre.",
+                    aplicacao: "Qu'est-ce qui dans votre vie semble 'silencieux' ou 'mort' en ce moment? Croyez que Dieu œuvre Son but même dans le silence. Comme Joseph et Nicodème, soyez prêt à manifester ouvertement votre foi et votre service au Christ, même si cela coûte votre réputation.",
+                    oracao: "Seigneur, que la mort et l'ensevelissement de Jésus me rappellent la réalité du sacrifice et Ta souveraineté. Que ma vie soit marquée par l'adoration silencieuse et par la gratitude, comme celle de Joseph d'Arimathie et de Nicodème. Amen."
+                }
+            },
+            30: {
+                pt: {
+                    h2: "A Fé que Vê e Crê (João 20:24-31)",
+                    versiculos: "João 20:29: 'Disse-lhe Jesus: Porque me viste, Tomé, creste; bem-aventurados os que não viram e creram.'",
+                    resumo: "O Evangelho de João conclui com a aparição de Jesus a Tomé, que precisou ver para crer, contrastando com a **fé baseada no testemunho da Palavra**, e não só na experiência sensorial. A fé do crente, que crê na Palavra sem ter visto fisicamente, é a forma de fé mais **bendita e soberana** ante Deus. O propósito de João é que, crendo, tenhamos a vida eterna no nome de Jesus.",
+                    aplicacao: "Revisa estes 30 dias de meditação e reafirma teu compromisso de andar pela **fé na Palavra escrita**, e não por vista. Tua fé em Jesus, o Cristo e Filho de Deus, é a chave para a vida eterna e a bem-aventurança.",
+                    oracao: "Jesus, meu Senhor e meu Deus, eu Te adoro. Ajuda-me a viver como bem-aventurado, crendo na Tua Palavra mesmo sem ver. Que a minha fé seja forte e baseada no testemunho do Evangelho, para que eu tenha a vida eterna que Tu prometeste. Amém."
+                },
+                en: {
+                    h2: "The Faith That Sees and Believes (John 20:24-31)",
+                    versiculos: "John 20:29: 'Jesus said to him, “Have you believed because you have seen me? Blessed are those who have not seen and yet have believed.”'",
+                    resumo: "The Gospel of John concludes with Jesus' appearance to Thomas, who needed to see in order to believe, contrasting with **faith based on the testimony of the Word**, and not just on sensory experience. The believer's faith, who believes the Word without having physically seen, is the most **blessed and sovereign** form of faith before God. John's purpose is that, by believing, we may have eternal life in the name of Jesus.",
+                    aplicacao: "Review these 30 days of meditation and reaffirm your commitment to walk by **faith in the written Word**, and not by sight. Your faith in Jesus, the Christ and Son of God, is the key to eternal life and blessedness.",
+                    oracao: "Jesus, my Lord and my God, I worship You. Help me to live as blessed, believing in Your Word even without seeing. May my faith be strong and based on the testimony of the Gospel, so that I may have the eternal life You promised. Amen."
+                },
+                es: {
+                    h2: "La Fe que Ve y Cree (Juan 20:24-31)",
+                    versiculos: "Juan 20:29: 'Jesús le dijo: Porque me has visto, Tomás, creíste; bienaventurados los que no vieron, y creyeron.'",
+                    resumo: "El Evangelio de Juan concluye con la aparición de Jesús a Tomás, quien necesitó ver para creer, contrastando con la **fe basada en el testimonio de la Palabra**, y no solo en la experiencia sensorial. La fe del creyente, que cree en la Palabra sin haber visto físicamente, es la forma de fe más **bendecida y soberana** ante Dios. El propósito de Juan es que, creyendo, tengamos vida eterna en el nombre de Jesús.",
+                    aplicacao: "Revisa estos 30 días de meditación y reafirma tu compromiso de andar por la **fe en la Palabra escrita**, y no por vista. Tu fe en Jesús, el Cristo y Hijo de Dios, es la clave para la vida eterna y la bienaventuranza.",
+                    oracao: "Jesús, mi Señor y mi Dios, Te adoro. Ayúdame a vivir como bienaventurado, creyendo en Tu Palabra incluso sin ver. Que mi fe sea fuerte y basada en el testimonio del Evangelio, para que tenga la vida eterna que prometiste. Amén."
+                },
+                fr: {
+                    h2: "La Foi qui Voit et Croit (Jean 20:24-31)",
+                    versiculos: "Jean 20:29: 'Jésus lui dit: Parce que tu m'as vu, tu as cru; heureux ceux qui n'ont point vu, et qui ont cru!'",
+                    resumo: "La conclusion de l'Évangile valide la **foi basée sur le témoignage de la Parole**, et non seulement sur l'expérience sensorielle. La foi du croyant, qui croit à la Parole sans avoir vu physiquement, est la forme de foi la plus **bénie et souveraine** devant Dieu. Le but de Jean est que, en croyant, nous ayons la vie éternelle dans le nom de Jésus.",
+                    aplicacao: "Passez en revue ces 30 jours de méditation et réaffirmez votre engagement à marcher par la **foi dans la Parole écrite**, et non par la vue. Votre foi en Jésus, le Christ et Fils de Dieu, est la clé de la vie éternelle et de la béatitude.",
+                    oracao: "Jésus, mon Seigneur et mon Dieu, je T'adore. Aide-moi à vivre comme bienheureux, croyant en Ta Parole même sans voir. Que ma foi soit forte et basée sur le témoignage de l'Évangile, afin que j'aie la vie éternelle que Tu as promise. Amen."
+                }
             }
-            // ... Adicionar dias 3 a 30 aqui ...
         };
 
 
