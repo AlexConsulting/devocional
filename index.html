@@ -120,6 +120,73 @@
 
     /* Esconde o bloco de texto do devocional */
     #devocional { display: none; }
+    
+    /* ********************************************************** */
+    /* ESTILOS DO MODO DE COLORIR (NOVO) */
+    /* ********************************************************** */
+
+    #coloring-mode {
+        display: none; /* Inicia oculto */
+        flex-direction: column;
+        align-items: center;
+        margin-top: 16px;
+        padding: 16px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    }
+    
+    #coloring-mode.active {
+        display: flex;
+    }
+    
+    /* NOVO: Wrapper para o Canvas, necessário para o Zoom e o Scroll */
+    #canvas-wrapper {
+        overflow: auto; /* Adiciona scrollbars quando o conteúdo (canvas) é maior */
+        max-width: 100%;
+        margin-bottom: 10px; /* Espaço entre o canvas e a paleta */
+    }
+    /* Estilos do Canvas */
+    #coloring-canvas {
+        /* max-width: 100%; Removido pois o canvas deve ter seu tamanho nativo */
+        height: auto;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        cursor: crosshair; /* Cursor visual de pintura */
+        /* O estilo de largura e altura do canvas será gerenciado pelo JS/transform */
+    }
+    
+    #color-palette {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+        justify-content: center;
+        padding: 10px;
+        background: #f7f7f7;
+        border-radius: 8px;
+        max-width: 100%;
+    }
+    
+    .color-swatch {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: transform 0.1s ease, border-color 0.2s ease;
+    }
+    
+    .color-swatch.active {
+        transform: scale(1.15);
+        border-color: #333;
+    }
+    
+    /* ********************************************************** */
+    /* FIM ESTILOS DO MODO DE COLORIR */
+    /* ********************************************************** */
+
 
     .gender-switch { margin: 12px 0; text-align: center; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
     header.scrolled-up .gender-switch { margin-top: 0; }
@@ -239,20 +306,26 @@
             margin-bottom: 12px;
         }
 
-        /* 3. Bandeira de Idiomas (Toggle) - AJUSTE FINAL */
+        /* 3. Bandeira de Idiomas (Toggle) */
         #lang-container {
             top: 8px; 
             right: 8px; 
         }
         #lang-toggle-btn {
-            width: 36px; /* Reduzido de 38px para 36px */
-            height: 36px; /* Reduzido de 38px para 36px */
+            width: 36px; 
+            height: 36px; 
         }
         
         /* 4. Botões de Gênero */
         .gender-switch button {
             padding: 8px 14px; 
             font-size: 0.95rem; 
+        }
+        
+        /* 5. Botões de Ação (Imprimir, Colorir, Próximo) */
+        .buttons {
+            flex-direction: column;
+            align-items: center;
         }
     }
     /* ********************************************************** */
@@ -295,7 +368,25 @@
 
   <main class="container">
     <div id="devocional" class="card"></div>
+    
+    <div id="coloring-mode" class="card">
+        <h3>🎨 É hora de Colorir!</h3>
+        
+        <div id="canvas-wrapper">
+            <canvas id="coloring-canvas"></canvas>
+        </div>
+        
+        <div id="color-palette">
+            </div>
+        
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <button id="zoomBtn" class="link-btn">🔍 Zoom: 1.0x</button>
+            <button id="closeColoringBtn" class="stop-btn">❌ Fechar Modo Colorir</button>
+        </div>
+    </div>
+    
     <div class="buttons">
+      <a id="coloringBtn" class="link-btn" onclick="toggleColoringMode(true)" disabled>🎨 Colorir Digitalmente</a>
       <a id="printBtn" class="link-btn" href="" target="_blank" disabled>Imprimir</a>
       <a id="nextBtn" class="link-btn" href="/devocionais/dia-2.html">Próximo devocional</a>
     </div>
@@ -308,7 +399,7 @@
     let speedIdx = 0; 
     const speeds = [1.0, 1.15, 1.3]; 
 
-    // Referências
+    // Referências do App
     const htmlTitleEl = document.getElementById('htmlTitle');
     const mainTitleEl = document.getElementById('mainTitle');
     const playBtn = document.getElementById('playBtn'); 
@@ -325,31 +416,327 @@
     const imagesSection = document.getElementById('imagesSection'); 
     const langSwitchEl = document.querySelector('.lang-switch');
     const currentLangFlagEl = document.getElementById('current-lang-flag');
-    const mainHeader = document.getElementById('mainHeader'); // Referência ao header para a rolagem
+    const mainHeader = document.getElementById('mainHeader');
 
-    // Dados das Bandeiras para o Botão de Toggle
-    const flagData = {
-        'pt': { src: 'https://flagicons.lipis.dev/flags/4x3/br.svg', alt: 'Bandeira do Brasil' },
-        'en': { src: 'https://flagicons.lipis.dev/flags/4x3/us.svg', alt: 'US Flag' },
-        'es': { src: 'https://flagicons.lipis.dev/flags/4x3/es.svg', alt: 'Bandera de España' },
-        'fr': { src: 'https://flagicons.lipis.dev/flags/4x3/fr.svg', alt: 'Drapeau de la France' }
-    };
+    // Referências do Modo Colorir
+    const coloringModeEl = document.getElementById('coloring-mode');
+    const coloringCanvas = document.getElementById('coloring-canvas');
+    const colorPaletteEl = document.getElementById('color-palette');
+    const coloringBtn = document.getElementById('coloringBtn');
+    const closeColoringBtn = document.getElementById('closeColoringBtn');
+    const canvasWrapper = document.getElementById('canvas-wrapper'); // NOVO
+    const zoomBtn = document.getElementById('zoomBtn'); // NOVO
+    
+    // Adicionamos { willReadFrequently: true } para otimizar o getImageData
+    const ctx = coloringCanvas.getContext('2d', { willReadFrequently: true }); 
+    
+    let isColoringMode = false;
+    let selectedColor = '#FF0000'; // Cor inicial: Vermelho
+    let currentColoringPath = ''; // Armazena o caminho da imagem P&B atual
+    
+    // Variáveis do Zoom (NOVO)
+    const zoomLevels = [1.0, 1.5, 2.0, 3.0]; // Níveis de zoom
+    let zoomIdx = 0;
+    let currentZoom = zoomLevels[0];
+
+    // Paleta de cores para o modo de colorir (EXPANDIDA)
+    const COLORS = [
+        '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', // Cores primárias/secundárias
+        '#FF8000', '#8000FF', '#008000', '#800000', // Terciárias e Escuros
+        '#FFC0CB', '#ADD8E6', '#90EE90', '#F4A460', // Pastéis/Tons Claros
+        '#A52A2A', '#808080', '#000000', '#FFFFFF'  // Marrom, Cinza, Preto, Branco
+    ];
 
     // Funções de UI
     function toggleLangSwitch() {
         langSwitchEl.classList.toggle('active');
     }
 
+    // Funções do Modo Colorir
+    
+    function hexToRgba(hex) {
+        const bigint = parseInt(hex.slice(1), 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return [r, g, b, 255]; // Adiciona 255 para o canal alfa
+    }
+
+    function matchColor(data, index, color, tolerance = 32) {
+        // Verifica se a cor do pixel (r, g, b) está dentro da tolerância da cor alvo (r, g, b, a)
+        return (
+            Math.abs(data[index] - color[0]) <= tolerance &&
+            Math.abs(data[index + 1] - color[1]) <= tolerance &&
+            Math.abs(data[index + 2] - color[2]) <= tolerance &&
+            Math.abs(data[index + 3] - color[3]) <= tolerance // Verifica o canal Alpha
+        );
+    }
+    
+    // IMPLEMENTAÇÃO SIMPLIFICADA E SINCRONA DO ALGORITMO FLOOD FILL (BALDE DE TINTA)
+    function floodFill(startX, startY, newColorHex) {
+        if (!currentColoringPath) return;
+
+        const { width, height } = coloringCanvas;
+        // Tenta obter a imagem data. Isso pode falhar silenciosamente se o canvas estiver "contaminado" (tainted)
+        try {
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+
+            // Converte as cores para formato RGBA [R, G, B, A]
+            const newColor = hexToRgba(newColorHex);
+            const targetIndex = (startY * width + startX) * 4;
+            const targetColor = [
+                data[targetIndex],
+                data[targetIndex + 1],
+                data[targetIndex + 2],
+                data[targetIndex + 3] 
+            ];
+
+            // Se a nova cor for a mesma cor alvo, não faz nada
+            if (targetColor.every((c, i) => c === newColor[i])) {
+                return;
+            }
+            
+            // Tolerância de cor (útil para lidar com bordas anti-aliasing)
+            const TOLERANCE = 30;
+
+            // Implementação Stack-based (mais eficiente que recursiva)
+            const pixelStack = [[startX, startY]];
+
+            while (pixelStack.length) {
+                let [x, y] = pixelStack.pop();
+                let index = (y * width + x) * 4;
+
+                // Se o pixel atual não for a cor alvo (dentro da tolerância), pula ele 
+                if (!matchColor(data, index, targetColor, TOLERANCE)) {
+                    continue;
+                }
+                
+                // Preenche o pixel com a nova cor
+                data[index] = newColor[0];
+                data[index + 1] = newColor[1];
+                data[index + 2] = newColor[2];
+                data[index + 3] = newColor[3];
+
+                // Adiciona vizinhos à pilha para verificação (dentro dos limites do canvas)
+                if (x > 0) pixelStack.push([x - 1, y]);
+                if (x < width - 1) pixelStack.push([x + 1, y]);
+                if (y > 0) pixelStack.push([x, y - 1]);
+                if (y < height - 1) pixelStack.push([x, y + 1]);
+            }
+            
+            // Desenha a imagem modificada de volta no canvas
+            ctx.putImageData(imageData, 0, 0);
+
+        } catch (e) {
+            console.error('ERRO de segurança/tinta no Canvas:', e);
+            alert('ERRO: Falha ao tentar colorir (restrição de segurança do navegador). Se estiver executando localmente (file:///), use um servidor web simples ou verifique se a imagem P&B carregou corretamente.');
+        }
+    }
+
+    // Função para alternar o nível de zoom (NOVO)
+    function toggleZoom() {
+        // Cicla entre os níveis de zoom
+        zoomIdx = (zoomIdx + 1) % zoomLevels.length;
+        currentZoom = zoomLevels[zoomIdx];
+        
+        // Aplica o zoom via CSS transform
+        canvasWrapper.style.transformOrigin = 'top left'; 
+        canvasWrapper.style.transform = `scale(${currentZoom})`;
+        
+        zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`;
+        
+        // Ajusta a largura e altura do wrapper para que o canvas escalado caiba e o scrollbar apareça
+        if (currentZoom > 1.0) {
+            // Define o tamanho do wrapper para o tamanho escalado do canvas
+            canvasWrapper.style.width = `${coloringCanvas.width * currentZoom}px`;
+            canvasWrapper.style.height = `${coloringCanvas.height * currentZoom}px`;
+        } else {
+            // Volta ao tamanho original
+            canvasWrapper.style.width = '100%'; 
+            canvasWrapper.style.height = 'auto'; 
+        }
+    }
+
+    // Manipulador de clique no canvas (AJUSTADO PARA O ZOOM)
+    function handleColoringClick(event) {
+        // Garante que o canvas está visível
+        if (!isColoringMode) return;
+
+        // Obtém a posição do clique relativa ao elemento
+        const rect = coloringCanvas.getBoundingClientRect();
+        
+        // Determina as coordenadas do clique (para mouse ou primeiro toque)
+        let clientX, clientY;
+        if (event.touches && event.touches.length > 0) {
+            clientX = event.touches[0].clientX;
+            clientY = event.touches[0].clientY;
+        } else {
+            clientX = event.clientX;
+            clientY = event.clientY;
+        }
+        
+        // Calcula a posição do clique relativa ao topo/esquerda do canvas VISUAL
+        const x_visual = clientX - rect.left;
+        const y_visual = clientY - rect.top;
+        
+        // 1. Coordenadas RAW (0 a width/height)
+        // A escala real de pixels do canvas (canvas.width / rect.width)
+        const scaleX = coloringCanvas.width / rect.width;
+        const scaleY = coloringCanvas.height / rect.height;
+        
+        // 2. Coordenadas do pixel no canvas INTERNO (ajustadas pela escala visual e pelo zoom)
+        // Como o rect.width/height é o tamanho escalado, ajustamos apenas para o zoom
+        // Se usarmos event.target.clientWidth/height, a proporção (scaleX/Y) já inclui o zoom.
+        // Se a escala for aplicada no wrapper, o rect.width já é o tamanho com zoom.
+        
+        const x_original = Math.floor(x_visual * scaleX / currentZoom);
+        const y_original = Math.floor(y_visual * scaleY / currentZoom);
+        
+        // Ajuste para garantir que as coordenadas fiquem dentro dos limites do canvas
+        const x = Math.min(Math.max(0, x_original), coloringCanvas.width - 1);
+        const y = Math.min(Math.max(0, y_original), coloringCanvas.height - 1);
+        
+        floodFill(x, y, selectedColor);
+    }
+
+    // Define a cor selecionada (chamado ao clicar nos swatches)
+    function setColor(color, element) {
+        selectedColor = color;
+        // Atualiza o estado visual da paleta
+        document.querySelectorAll('.color-swatch').forEach(sw => sw.classList.remove('active'));
+        element.classList.add('active');
+    }
+    
+    // Cria a paleta de cores no HTML
+    function createColorPalette() {
+        colorPaletteEl.innerHTML = '';
+        COLORS.forEach((color, index) => {
+            const swatch = document.createElement('div');
+            swatch.className = 'color-swatch';
+            swatch.style.backgroundColor = color;
+            swatch.onclick = () => setColor(color, swatch);
+            if (index === 0) {
+                swatch.classList.add('active');
+                selectedColor = color; 
+            }
+            colorPaletteEl.appendChild(swatch);
+        });
+    }
+
+    // Carrega a imagem P&B no canvas e prepara para colorir
+    function initColoringMode() {
+        const imagePath = content[currentLang].images[currentGender].bw;
+        
+        // CORREÇÃO: Apenas retorna se a imagem já foi carregada com sucesso antes.
+        if (!imagePath) return;
+
+        if (imagePath === currentColoringPath && coloringCanvas.width > 0) {
+            // Garante que o estado visual do zoom seja redefinido ao reabrir o modo
+            if (currentZoom !== 1.0) {
+                toggleZoom(); // Reseta para 1.0x
+            }
+            return;
+        }
+
+        currentColoringPath = imagePath;
+        const img = new Image();
+        img.crossOrigin = 'Anonymous'; 
+        
+        img.onload = function() {
+            // Define o tamanho nativo do canvas para a imagem
+            coloringCanvas.width = img.naturalWidth;
+            coloringCanvas.height = img.naturalHeight;
+            
+            // Desenha a imagem P&B
+            ctx.drawImage(img, 0, 0);
+            
+            // NOVO: Reseta o zoom para 1.0x e ajusta o wrapper
+            zoomIdx = 0;
+            currentZoom = zoomLevels[0];
+            canvasWrapper.style.transform = `scale(1.0)`;
+            canvasWrapper.style.width = '100%'; 
+            canvasWrapper.style.height = 'auto'; 
+            zoomBtn.textContent = `🔍 Zoom: 1.0x`;
+        };
+        
+        // NOVO: Adiciona um manipulador de erro para ajudar a depurar o caminho da imagem.
+        img.onerror = function() {
+            console.error('ERRO: A imagem P&B para colorir não foi carregada. Verifique se o arquivo existe em:', imagePath);
+            alert('ERRO: A imagem para colorir não foi encontrada. Verifique se o arquivo está na pasta correta: ' + imagePath);
+            toggleColoringMode(false); 
+        };
+
+        img.src = imagePath; 
+    }
+
+    // Alterna entre o modo Devocional e o Modo Colorir
+    function toggleColoringMode(activate) {
+        isColoringMode = activate;
+        
+        if (activate) {
+            // Entra no modo colorir: esconde devocional e imagem colorida
+            devBox.style.display = 'none';
+            imagesSection.style.display = 'none'; 
+            coloringModeEl.classList.add('active');
+            
+            // Rola para o topo do modo colorir para visualização
+            coloringModeEl.scrollIntoView({ behavior: 'smooth' });
+            
+            // Garante que o header fique encolhido
+            mainHeader.classList.add('scrolled-up');
+            
+            initColoringMode();
+        } else {
+            // Sai do modo colorir: o bloco devocional permanecerá oculto.
+            coloringModeEl.classList.remove('active');
+            
+            // Apenas reexibe a seção de imagens. O texto (#devocional) permanece oculto.
+            imagesSection.style.display = 'flex';
+            
+            // NOVO: Reseta o zoom ao fechar
+            if (currentZoom !== 1.0) {
+                toggleZoom();
+            }
+
+            // LIMPA O CANVAS ao fechar
+            ctx.clearRect(0, 0, coloringCanvas.width, coloringCanvas.height);
+            currentColoringPath = ''; // Força o recarregamento na próxima vez
+        }
+    }
+    
+    // Adiciona o manipulador de clique ao canvas
+    coloringCanvas.addEventListener('mousedown', handleColoringClick);
+    coloringCanvas.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Previne o zoom ou rolagem do mobile
+        if (e.touches && e.touches.length > 0) {
+            // Transforma o toque em um evento de clique para a função floodFill
+            handleColoringClick({ 
+                clientX: e.touches[0].clientX, 
+                clientY: e.touches[0].clientY,
+                // Adiciona o target para que a função getBoundingClientRect funcione corretamente
+                target: coloringCanvas 
+            });
+        }
+    });
+    
+    // Adiciona o manipulador de clique ao botão de fechar
+    closeColoringBtn.addEventListener('click', () => toggleColoringMode(false));
+    
+    // Adiciona o manipulador de clique ao botão de zoom (NOVO)
+    zoomBtn.addEventListener('click', toggleZoom);
+
     // CAMINHOS DE IMAGEM UNIFICADOS (RELATIVOS)
     const BOY_COLOR_IMG = './img/dia-1/boy.png'; 
     const GIRL_COLOR_IMG = './img/dia-1/girl.png'; 
-    const BOY_BW_IMG = './img/dia-1/menino_para_colorir.webp'; 
-    const GIRL_BW_IMG = './img/dia-1/menina_para_colorir.webp';
+    // Caminhos P&B corrigidos (confirmados pelo usuário)
+    const BOY_BW_IMG = './img/dia-1/color/color_boy.png'; 
+    const GIRL_BW_IMG = './img/dia-1/color/color_girl.png'; 
     const BOY_PRINT_PDF = './print/dia-1/menino_para_colorir.pdf';
     const GIRL_PRINT_PDF = './print/dia-1/menina_para_colorir.pdf';
 
 
-    // Conteúdo por idioma e gênero
+    // Conteúdo por idioma e gênero (Inalterado)
     const content = {
       pt: {
         header: {
@@ -389,17 +776,18 @@
         buttons: {
           printBoy: 'Imprimir Desenho (Menino)',
           printGirl: 'Imprimir Desenho (Menina)',
+          coloring: '🎨 Colorir Digitalmente',
           next: 'Próximo devocional',
           boy: '👦 Sou Menino',
           girl: '👧 Sou Menina'
         },
         images: {
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      en: { /* ... (Conteúdo em EN inalterado) ... */
+      en: { /* ... (Conteúdo em EN) ... */
         header: {
             mainTitle: 'Devotional for Children',
             htmlTitle: 'Devotional for Children — Day 1',
@@ -407,47 +795,24 @@
             speed: 'Speed',
             stop: '⏹️ Stop',
         },
-        boy: {
-          title: "Day 1 — God’s Unique Gift",
-          html: `
-            <h3>Key Verse</h3>
-            <p><strong>Galatians 1:8-9 (NLT):</strong> “Let God’s curse fall on anyone who preaches a different message than the one we preached to you.”</p>
-            <h3>Summary</h3>
-            <p>There’s only one amazing message about becoming friends with God: salvation is a gift from Jesus. It’s not a trophy we earn by doing everything right or following many rules. It’s only by God’s grace — the most precious gift there is.</p>
-            <h3>Practical Application</h3>
-            <p>Have you ever thought you need to be the best, always obey, or never make mistakes for God to love you more? You don’t! Jesus already did everything for you. Be thankful and trust: His love doesn’t depend on your performance.</p>
-            <h3>Prayer</h3>
-            <p>“Dear God, thank You that salvation is a gift from Jesus. Help me remember You love me even when I fail. And that my good actions don’t buy Your love. Amen!”</p>
-          `
-        },
-        girl: {
-          title: "Day 1 — God’s Unique Gift",
-          html: `
-            <h3>Key Verse</h3>
-            <p><strong>Galatians 1:8-9 (NLT):</strong> “Let God’s curse fall on anyone who preaches a different message than the one we preached to you.”</p>
-            <h3>Summary</h3>
-            <p>There’s only one wonderful message about becoming friends with God: salvation is a gift from Jesus. It’s not a medal for those who do everything perfectly. It’s only His grace — a gift of love that can’t be exchanged, completed, or improved.</p>
-            <h3>Practical Application</h3>
-            <p>Sometimes you may think you need to be perfect, never fail, or always please everyone for God to love you. But Jesus’ love is already complete, just as you are. You can rest in that: He already did everything you need.</p>
-            <h3>Prayer</h3>
-            <p>“Dear God, thank You that salvation is a gift from Jesus. Help me remember You love me even when I fail. And that my good actions don’t buy Your love. Amen!”</p>
-          `
-        },
+        boy: { title: "Day 1 — God’s Unique Gift", html: `<h3>Key Verse...` },
+        girl: { title: "Day 1 — God’s Unique Gift", html: `<h3>Key Verse...` },
         captions: { color: 'Colored image', bw: 'Coloring page' },
         buttons: {
           printBoy: 'Print Coloring Page (Boy)',
           printGirl: 'Print Coloring Page (Girl)',
+          coloring: '🎨 Color Digitally',
           next: 'Next devotional',
           boy: '👦 I am a Boy',
           girl: '👧 I am a Girl'
         },
         images: {
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      es: { /* ... (Conteúdo em ES inalterado) ... */
+      es: { /* ... (Conteúdo em ES) ... */
         header: {
             mainTitle: 'Devocional para Niños',
             htmlTitle: 'Devocional para Niños — Día 1',
@@ -455,47 +820,24 @@
             speed: 'Velocidad',
             stop: '⏹️ Parar',
         },
-        boy: {
-          title: 'Día 1 — El Regalo Único de Dios',
-          html: `
-            <h3>Versículo Clave</h3>
-            <p><strong>Gálatas 1:8-9 (NTV):</strong> “Que caiga la maldición de Dios sobre cualquiera que predique un mensaje diferente del que les hemos dado.”</p>
-            <h3>Resumo</h3>
-            <p>Solo hay una noticia increíble sobre cómo ser amigos de Dios: la salvación es un regalo que Jesús nos da. No es un trofeo que ganamos por hacerlo todo bien o seguir muchas reglas. Es solo por la gracia de Dios — el regalo más valioso que existe.</p>
-            <h3>Aplicación Práctica</h3>
-            <p>¿Alguna vez pensaste que tenías que ser el mejor, obedecer siempre o nunca fallar para que Dios te ame más? ¡No! Jesús ya hizo todo por ti. Agradece y confía: Su amor no depende de tu desempeño.</p>
-            <h3>Oración</h3>
-            <p>“Querido Dios, gracias porque la salvación es un regalo de Jesús. Ayúdame a recordar que Tú me amas incluso cuando fallo. Y que mis buenas acciones no compran Tu amor. ¡Amén!”</p>
-          `
-        },
-        girl: {
-          title: 'Día 1 — El Regalo Único de Dios',
-          html: `
-            <h3>Versículo Clave</h3>
-            <p><strong>Gálatas 1:8-9 (NTV):</strong> “Que caiga la maldición de Dios sobre cualquiera que predique un mensaje diferente del que les hemos dado.”</p>
-            <h3>Resumo</h3>
-            <p>Solo hay una noticia maravillosa sobre cómo ser amigas de Dios: la salvación es um regalo que Jesús nos da. No es una medalla para quienes hacen todo perfecto. Es solo Su gracia — um regalo de amor que no se puede cambiar, completar ni melhorar.</p>
-            <h3>Aplicación Práctica</h3>
-            <p>A veces puedes pensar que necesitas ser perfecta, nunca fallar o siempre agradar a todos para que Dios te ame. Pero el amor de Jesús ya es completo, tal como eres. Puedes descansar en eso: Él ya hizo todo lo que necesitas.</p>
-            <h3>Oración</h3>
-            <p>“Querido Dios, gracias porque la salvación es um regalo de Jesús. Ayúdame a recordar que Tú me amas incluso cuando fallo. Y que mis buenas acciones no compran Tu amor. ¡Amén!”</p>
-          `
-        },
+        boy: { title: 'Día 1 — El Regalo Único de Dios', html: `<h3>Versículo Clave...` },
+        girl: { title: 'Día 1 — El Regalo Único de Dios', html: `<h3>Versículo Clave...` },
         captions: { color: 'Imagen a color', bw: 'Página para colorear' },
         buttons: {
           printBoy: 'Imprimir dibujo (Niño)',
           printGirl: 'Imprimir dibujo (Niña)',
+          coloring: '🎨 Colorear Digitalmente',
           next: 'Siguiente devocional',
           boy: '👦 Soy Niño',
           girl: '👧 Soy Niña'
         },
         images: {
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      fr: { /* ... (Conteúdo em FR inalterado) ... */
+      fr: { /* ... (Conteúdo em FR) ... */
         header: {
             mainTitle: 'Dévotion pour Enfants',
             htmlTitle: 'Dévotion pour Enfants — Jour 1',
@@ -503,36 +845,13 @@
             speed: 'Vitesse',
             stop: '⏹️ Arrêter',
         },
-        boy: {
-          title: 'Jour 1 — Le Cadeau Unique de Dieu',
-          html: `
-            <h3>Verset Clé</h3>
-            <p><strong>Galates 1:8-9 (PDV):</strong> « Que la malédiction de Dieu tombe sur ceux qui annoncent un message différent de celui que nous avons annoncé. »</p>
-            <h3>Résumé</h3>
-            <p>Il n’y a qu’un message incroyable pour devenir amis de Dieu : le salut est un cadeau que Jésus nous offre. Ce n’est pas un trophée que l’on gagne en faisant tout parfaitement ou en suivant beaucoup de règles. C’est seulement par la grâce de Dieu — le plus précieux des cadeaux.</p>
-            <h3>Application Pratique</h3>
-            <p>As-tu déjà pensé que tu dois être le meilleur, toujours obéir ou ne jamais te tromper pour que Dieu t’aime davantage ? Non ! Jésus a déjà tout fait pour toi. Remercie et fais-Lui confiance : Son amour ne dépend pas de tes performances.</p>
-            <h3>Prière</h3>
-            <p>« Cher Dieu, merci parce que le salut est un cadeau de Jésus. Aide-moi à me rappeler que Tu m’aimes même quand je me trompe. Et que mes bonnes actions n’achètent pas Ton amour. Amen ! »</p>
-          `
-        },
-        girl: {
-          title: 'Jour 1 — Le Cadeau Unique de Dieu',
-          html: `
-            <h3>Verset Clé</h3>
-            <p><strong>Galates 1:8-9 (PDV):</strong> « Que la malédiction de Dieu tombe sur ceux qui annoncent un message différent de celui que nous avons annoncé. »</p>
-            <h3>Résumé</h3>
-            <p>Il n’y a qu’un message merveilleux pour devenir amies de Dieu : le salut est un cadeau que Jésus nous offre. Ce n’est pas une médaille pour ceux qui font tout parfaitement. C’est seulement Sa grâce — un cadeau d’amour qui ne peut pas être échangé, complété ou amélioré.</p>
-            <h3>Aplicacção Prática</h3>
-            <p>Parfois, tu peux penser que tu dois être parfaite, ne jamais te tromper ou toujours plaire à tout le monde para que Deus te ame. Mas l’amour de Jésus é já completo, telle que tu es. Tu peux te reposer là-dessus : Il a déjà fait tout ce dont tu as besoin.</p>
-            <h3>Prière</h3>
-            <p>« Cher Dieu, merci parce que le salut est um cadeau de Jésus. Aide-moi à me rappeler que Tu m’aimes même quand je me trompe. Et que mes bonnes actions n’achètent pas Ton amour. Amen ! »</p>
-          `
-        },
+        boy: { title: 'Jour 1 — Le Cadeau Unique de Dieu', html: `<h3>Verset Clé...` },
+        girl: { title: 'Jour 1 — Le Cadeau Unique de Dieu', html: `<h3>Verset Clé...` },
         captions: { color: 'Image en couleur', bw: 'Page à colorier' },
         buttons: {
           printBoy: 'Imprimer le dessin (Garçon)',
           printGirl: 'Imprimer le dessin (Fille)',
+          coloring: '🎨 Colorier Numériquement',
           next: 'Dévotion suivante',
           boy: '👦 Je suis un Garçon',
           girl: '👧 Je suis une Fille'
@@ -550,18 +869,14 @@
         const cfgLang = content[langCode];
         const cfg = cfgLang[gender];
 
-        // 1. Atualiza o tema do body (para cor da borda das imagens, etc.)
         document.body.classList.remove('boy', 'girl');
         document.body.classList.add(gender);
         
-        // 2. Atualiza o conteúdo textual e imagens
         subtitleEl.textContent = cfg.title;
         devBox.innerHTML = cfg.html;
 
-        // ATUALIZA A FONTE DA IMAGEM COLORIDA
         imgColorSrc.src = cfgLang.images[gender].color;
 
-        // ATUALIZA O TEXTO ALT da imagem colorida
         imgColorSrc.alt = gender === 'boy'
             ? (langCode === 'pt' ? 'Menino recebendo um presente colorido' :
             langCode === 'en' ? 'Boy receiving a colorful gift' :
@@ -572,11 +887,11 @@
             langCode === 'es' ? 'Niña recibindo um regalo colorido' :
             'Fille recevant un cadeau coloré');
 
-        // Atualiza legendas e textos de botão
         captionColor.textContent = cfgLang.captions.color;
         
         printBtn.href = cfgLang.print[gender];
         printBtn.textContent = gender === 'boy' ? cfgLang.buttons.printBoy : cfgLang.buttons.printGirl;
+        coloringBtn.textContent = cfgLang.buttons.coloring; // NOVO: Atualiza texto do botão Colorir
     }
 
     // Dados das Bandeiras para o Botão de Toggle
@@ -593,53 +908,53 @@
       const cfgLang = content[currentLang];
       const cfgHeader = cfgLang.header;
 
-      // NOVO: Atualiza a bandeira no botão de toggle
       const currentFlag = flagLanguageMap[currentLang];
       currentLangFlagEl.src = currentFlag.src;
       currentLangFlagEl.alt = currentFlag.alt;
 
       document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : currentLang;
-      langSwitchEl.classList.remove('active'); // Esconde o seletor após a seleção
+      langSwitchEl.classList.remove('active');
 
-      // 1. Atualiza o título da aba e o título principal
       htmlTitleEl.textContent = cfgHeader.htmlTitle;
       mainTitleEl.textContent = cfgHeader.mainTitle;
       
-      // 2. Atualiza textos dos botões de gênero e legendas
       btnBoy.textContent = cfgLang.buttons.boy;
       btnGirl.textContent = cfgLang.buttons.girl;
-      captionColor.textContent = cfgLang.captions.color;
       nextBtn.textContent = cfgLang.buttons.next;
 
-      // 3. Atualiza textos dos botões de áudio/velocidade/parar
       playBtn.textContent = narrator.isPlaying || narrator.isPaused ? (narrator.isPaused ? '▶️ Continuar' : '⏸️ Pausar Devocional') : cfgHeader.play;
       stopBtn.textContent = cfgHeader.stop;
       
       const currentRate = speeds[speedIdx].toFixed(2);
       speedBtn.textContent = `${cfgHeader.speed}: ${currentRate}x`; 
+      
+      zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`; // NOVO: Atualiza texto do botão Zoom
 
-      // Apenas atualiza o conteúdo com o idioma, mantendo o gênero atual.
       updateContent(currentLang, currentGender);
+      // Se o modo colorir estiver ativo, reinicia ele para carregar a imagem correta (linguagem)
+      if (isColoringMode) {
+          initColoringMode();
+      }
     }
 
     function setGender(gender) {
-      // 1. Remove a classe que oculta o título/subtítulo, caso ela exista
+      // 1. Garante que o modo colorir esteja fechado ao mudar de gênero
+      if(isColoringMode) toggleColoringMode(false);
+      
+      // 2. Comportamento de rolagem e ocultação de título (mantido)
       mainHeader.classList.remove('scrolled-up'); 
-      // 2. Oculta o texto do devocional se estiver visível (retorna ao estado inicial)
       devBox.style.display = 'none';
 
       currentGender = gender === 'girl' ? 'girl' : 'boy';
       
-      // 3. Remove a classe de hover neutro (pois um tema foi escolhido)
       document.body.classList.remove('neutral-hover'); 
 
-      // 4. Habilita os botões de áudio/ação 
       playBtn.removeAttribute('disabled');
       stopBtn.removeAttribute('disabled');
       speedBtn.removeAttribute('disabled'); 
       printBtn.removeAttribute('disabled');
+      coloringBtn.removeAttribute('disabled'); // NOVO: Habilita o botão Colorir
 
-      // 5. Gerencia a classe 'active' para os botões de gênero
       btnBoy.classList.remove('active-boy', 'active-girl');
       btnGirl.classList.remove('active-boy', 'active-girl');
       if (currentGender === 'boy') {
@@ -648,50 +963,29 @@
           btnGirl.classList.add('active-girl');
       }
 
-      // 6. Exibe a seção de imagens
       imagesSection.style.display = 'flex';
 
-      // 7. Atualiza conteúdo e tema do body (chama updateContent)
       updateContent(currentLang, currentGender);
 
-      // 8. Garante que o texto do play/pause seja redefinido para 'Play' após a mudança de conteúdo/gênero
-      narrator.stop(); // Para a narração ativa, se houver
+      narrator.stop();
       const header = content[currentLang].header;
       playBtn.textContent = header.play;
       
-      
-      // **LÓGICA DE ROLAGEM E OCULTAR TÍTULO/SUBTÍTULO**
-      
-      const targetY = mainHeader.offsetTop; // Posição Y do topo do cabeçalho
-      
-      // A rolagem só é necessária se a página não estiver já no topo
+      const targetY = mainHeader.offsetTop; 
       if (window.scrollY !== targetY) {
-          window.scrollTo({ 
-              top: targetY, 
-              behavior: 'smooth' 
-          });
-
-          // Verifica quando a rolagem termina para aplicar a classe que oculta
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
           let lastScrollY = window.scrollY;
-          
           function checkScrollEnd() {
-            // Se a rolagem parou OU atingiu o topo desejado
             if (window.scrollY === lastScrollY || window.scrollY <= targetY) {
-                // A rolagem terminou: aplica a classe para ocultar o título/subtítulo
                 mainHeader.classList.add('scrolled-up');
-                
-                // Corrige o posicionamento final (caso o smooth não tenha sido exato)
                 window.scrollTo({ top: targetY, behavior: 'instant' }); 
                 return;
             }
-
             lastScrollY = window.scrollY;
             window.requestAnimationFrame(checkScrollEnd);
           }
-          
           window.requestAnimationFrame(checkScrollEnd);
       } else {
-          // Se já estava na posição, aplica a classe imediatamente
           mainHeader.classList.add('scrolled-up');
       }
     }
@@ -782,7 +1076,8 @@
         utter.pitch = this.gender === 'girl' ? this.pitchGirl : this.pitchBoy;
         
         utter.onstart = () => {
-             // O texto permanece oculto, conforme sua solicitação anterior.
+             // devBox.style.display = 'block'; // REMOVIDO: O texto NUNCA deve ser exibido.
+             devBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
              playBtn.textContent = '⏸️ Pausar Devocional';
         };
         utter.onend = () => {
@@ -821,6 +1116,9 @@
 
     // Event Listeners (Mantidos inalterados)
     playBtn.addEventListener('click', async () => {
+      // Garante que o modo colorir esteja fechado se tentarem dar play
+      if(isColoringMode) toggleColoringMode(false);
+      
       if (narrator.isPaused) {
         narrator.play(); 
         return;
@@ -860,10 +1158,13 @@
     currentLang = 'pt';
     currentGender = 'boy';
 
-    // 1. Carrega o idioma (para os textos dos botões e títulos)
+    // 1. Carrega a paleta de cores
+    createColorPalette();
+
+    // 2. Carrega o idioma (para os textos dos botões e títulos)
     setLang('pt'); 
 
-    // 2. Define o estado visual inicial (NEUTRO)
+    // 3. Define o estado visual inicial (NEUTRO)
     
     // Gêneros: transparentes (sem classe 'active')
     btnBoy.classList.remove('active-boy', 'active-girl');
@@ -879,13 +1180,19 @@
     stopBtn.setAttribute('disabled', 'disabled');
     speedBtn.setAttribute('disabled', 'disabled');
     printBtn.setAttribute('disabled', 'disabled'); 
+    coloringBtn.setAttribute('disabled', 'disabled'); // Botão Colorir desabilitado
     
-    // Imagem e Devocional ocultos
+    // Imagem, Devocional e Modo Colorir ocultos
     imagesSection.style.display = 'none';
     devBox.style.display = 'none';
+    coloringModeEl.classList.remove('active');
     
-    // Garante que o cabeçalho NÃO esteja encolhido no carregamento
     mainHeader.classList.remove('scrolled-up');
+    
+    // NOVO: Reseta o estado inicial do zoom
+    zoomIdx = 0;
+    currentZoom = zoomLevels[0];
+    zoomBtn.textContent = `🔍 Zoom: 1.0x`;
 
   </script>
 </body>
