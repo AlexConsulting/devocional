@@ -122,7 +122,7 @@
     #devocional { display: none; }
     
     /* ********************************************************** */
-    /* ESTILOS DO MODO DE COLORIR (AJUSTADO) */
+    /* ESTILOS DO MODO DE COLORIR */
     /* ********************************************************** */
 
     #coloring-mode {
@@ -148,10 +148,8 @@
     
     /* Wrapper para o Canvas: Define a área visível e o scroll */
     #canvas-wrapper {
-        /* PROPRIEDADES AJUSTADAS PARA O SCROLL E DIMENSIONAMENTO */
         overflow: auto; 
         max-width: 100%;
-        /* Altura máxima para permitir rolagem vertical (opcional) */
         max-height: 400px; 
         
         margin-bottom: 10px;
@@ -165,13 +163,11 @@
     
     /* Estilos do Canvas */
     #coloring-canvas {
-        /* GARANTE QUE O CANVAS NUNCA EXCEDA O TAMANHO DO PAI ANTES DO ZOOM */
         max-width: 100%; 
         height: auto;
         display: block; 
         cursor: crosshair; 
         
-        /* Reset de transform padrão, a ser controlado pelo JS */
         transform: scale(1);
         transform-origin: top left;
     }
@@ -223,7 +219,14 @@
     .gender-switch button.active-boy { background: #4a90e2; border-color: #4a90e2; color: #fff; }
     .gender-switch button.active-girl { background: #e75480; border-color: #e75480; color: #fff; }
 
-    .audio { display: flex; align-items: center; gap: 12px; justify-content: center; margin: 12px 0 20px; }
+    /* AJUSTE: Removemos o botão de velocidade, mantendo o layout centralizado */
+    .audio { 
+        display: flex; 
+        align-items: center; 
+        gap: 12px; 
+        justify-content: center; 
+        margin: 12px 0 20px; 
+    }
     header.scrolled-up .audio { margin-top: 8px; }
     
     /* Estilo Outline Cinza Escuro para botões de áudio e ação */
@@ -249,11 +252,10 @@
     }
     
     /* Regra 2: Hover neutro (cinza claro) - Estado inicial */
-    /* Garante que o hover neutro se aplique aos botões de ação e áudio no estado inicial */
     .neutral-hover .audio button:hover, 
     .neutral-hover .link-btn:hover,
     .neutral-hover .stop-btn:hover {
-        background: #f0f0f0 !important; /* !important para sobrescrever o estilo do stop-btn */
+        background: #f0f0f0 !important; 
         border-color: #555 !important; 
         color: #2b2b2b !important; 
     }
@@ -278,7 +280,6 @@
 
     /* Centraliza a única imagem */
     #imagesSection { 
-      /* OCULTA no estado neutro (será alterado para 'flex' em setGender) */
       display: none;
       justify-content: center; 
       margin-top: 16px; 
@@ -377,8 +378,7 @@
 
     <div class="audio">
       <button id="playBtn" class="link-btn" disabled>▶️ Ouvir Devocional</button>
-      <button id="speedBtn" disabled>Velocidade: 1.00x</button>
-      <button id="stopBtn" class="stop-btn" disabled>⏹️ Parar</button>
+      <button id="stopBtn" class="stop-btn" disabled>⏹️ Parar Devocional</button>
     </div>
 
     <section id="imagesSection" class="images">
@@ -416,14 +416,13 @@
     // Estado
     let currentLang = 'pt';
     let currentGender = 'boy';
-    let speedIdx = 0; 
-    const speeds = [1.0, 1.15, 1.3]; 
-
+    // Variáveis de velocidade (speedIdx e speeds) removidas
+    
     // Referências do App
     const htmlTitleEl = document.getElementById('htmlTitle');
     const mainTitleEl = document.getElementById('mainTitle');
     const playBtn = document.getElementById('playBtn'); 
-    const speedBtn = document.getElementById('speedBtn');
+    // speedBtn removido
     const stopBtn = document.getElementById('stopBtn');
     const devBox = document.getElementById('devocional');
     const subtitleEl = document.getElementById('subtitle');
@@ -468,16 +467,14 @@
     ];
     
     // **********************************************************
-    // Lógica de Progresso (NOVA)
+    // Lógica de Progresso
     // **********************************************************
     const STORAGE_KEY = 'dev_babys';
-    // Se o arquivo atual é o Dia 1, o próximo dia é o Dia 2.
     const CURRENT_DEVOTIONAL_DAY = 1; 
     const NEXT_DEVOTIONAL_DAY = 2; 
 
     function saveProgress() {
         if (typeof localStorage !== 'undefined') {
-            // Salva o número do próximo dia a ser feito.
             localStorage.setItem(STORAGE_KEY, NEXT_DEVOTIONAL_DAY.toString());
             console.log(`Progresso salvo para ${STORAGE_KEY}: Próximo dia é ${NEXT_DEVOTIONAL_DAY}`);
         }
@@ -487,11 +484,9 @@
         if (typeof localStorage !== 'undefined') {
             const savedDay = parseInt(localStorage.getItem(STORAGE_KEY));
             
-            // Verifica se o progresso indica um dia posterior
-            if (!isNaN(savedDay) && savedDay > CURRENT_DEVOCIONAL_DAY) {
+            if (!isNaN(savedDay) && savedDay > CURRENT_DEVOTIONAL_DAY) {
                 const targetHref = `/devocionais/dia-${savedDay}.html`;
                 
-                // Atualiza o link do botão "Próximo Devocional" para o dia correto.
                 nextBtn.href = targetHref;
                 
                 console.log(`Progresso encontrado: Ajustando link para o Dia ${savedDay} (${targetHref})`);
@@ -521,12 +516,11 @@
     }
 
     function matchColor(data, index, color, tolerance = 32) {
-        // Verifica se a cor do pixel (r, g, b) está dentro da tolerância da cor alvo (r, g, b, a)
         return (
             Math.abs(data[index] - color[0]) <= tolerance &&
             Math.abs(data[index + 1] - color[1]) <= tolerance &&
             Math.abs(data[index + 2] - color[2]) <= tolerance &&
-            Math.abs(data[index + 3] - color[3]) <= tolerance // Verifica o canal Alpha
+            Math.abs(data[index + 3] - color[3]) <= tolerance 
         );
     }
     
@@ -539,7 +533,6 @@
             const imageData = ctx.getImageData(0, 0, width, height);
             const data = imageData.data;
 
-            // Converte as cores para formato RGBA [R, G, B, A]
             const newColor = hexToRgba(newColorHex);
             const targetIndex = (startY * width + startX) * 4;
             const targetColor = [
@@ -549,40 +542,33 @@
                 data[targetIndex + 3] 
             ];
 
-            // Se a nova cor for a mesma cor alvo, não faz nada
             if (targetColor.every((c, i) => c === newColor[i])) {
                 return;
             }
             
-            // Tolerância de cor (útil para lidar com bordas anti-aliasing)
             const TOLERANCE = 30;
 
-            // Implementação Stack-based (mais eficiente que recursiva)
             const pixelStack = [[startX, startY]];
 
             while (pixelStack.length) {
                 let [x, y] = pixelStack.pop();
                 let index = (y * width + x) * 4;
 
-                // Se o pixel atual não for a cor alvo (dentro da tolerância), pula ele 
                 if (!matchColor(data, index, targetColor, TOLERANCE)) {
                     continue;
                 }
                 
-                // Preenche o pixel com a nova cor
                 data[index] = newColor[0];
                 data[index + 1] = newColor[1];
                 data[index + 2] = newColor[2];
                 data[index + 3] = newColor[3];
 
-                // Adiciona vizinhos à pilha para verificação (dentro dos limites do canvas)
                 if (x > 0) pixelStack.push([x - 1, y]);
                 if (x < width - 1) pixelStack.push([x + 1, y]);
                 if (y > 0) pixelStack.push([x, y - 1]);
                 if (y < height - 1) pixelStack.push([x, y + 1]);
             }
             
-            // Desenha a imagem modificada de volta no canvas
             ctx.putImageData(imageData, 0, 0);
 
         } catch (e) {
@@ -591,26 +577,21 @@
         }
     }
 
-    // Função para alternar o nível de zoom (AJUSTADA)
+    // Função para alternar o nível de zoom
     function toggleZoom() {
-        // Cicla entre os níveis de zoom
         zoomIdx = (zoomIdx + 1) % zoomLevels.length;
         currentZoom = zoomLevels[zoomIdx];
         
-        // Aplica o zoom diretamente no CANVAS
         coloringCanvas.style.transformOrigin = 'top left'; 
         coloringCanvas.style.transform = `scale(${currentZoom})`;
         
         zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`;
         
-        // Ajusta o tamanho do wrapper para o tamanho escalado do canvas
         if (currentZoom > 1.0) {
-            // O tamanho do wrapper agora reflete o tamanho escalado do canvas, permitindo o scroll
             canvasWrapper.style.width = `${coloringCanvas.width * currentZoom}px`;
             canvasWrapper.style.height = `${coloringCanvas.height * currentZoom}px`;
             canvasWrapper.style.overflow = 'auto'; // Habilita o scroll
         } else {
-            // Volta ao tamanho original (com limites max-width/max-height definidos no CSS)
             canvasWrapper.style.width = '100%'; 
             canvasWrapper.style.height = 'auto'; 
             canvasWrapper.style.overflow = 'hidden'; // Desabilita o scroll quando não há zoom
@@ -635,12 +616,10 @@
         const x_visual = clientX - rect.left;
         const y_visual = clientY - rect.top;
         
-        // A escala real de pixels do canvas (canvas.width / rect.width)
         const scaleX = coloringCanvas.width / rect.width;
         const scaleY = coloringCanvas.height / rect.height;
         
         // Coordenadas do pixel no canvas INTERNO (ajustadas pela escala visual e pelo zoom)
-        // Usa o currentZoom para reverter o efeito da transformação CSS
         const x_original = Math.floor(x_visual * scaleX / currentZoom);
         const y_original = Math.floor(y_visual * scaleY / currentZoom);
         
@@ -675,17 +654,15 @@
         });
     }
 
-    // Carrega a imagem P&B no canvas e prepara para colorir (AJUSTADA)
+    // Carrega a imagem P&B no canvas e prepara para colorir
     function initColoringMode() {
         const imagePath = content[currentLang].images[currentGender].bw;
         
         if (!imagePath) return;
 
-        // Se a imagem P&B já está carregada no canvas (para evitar recarregar)
         if (imagePath === currentColoringPath && coloringCanvas.width > 0) {
-            // Garante que o estado visual do zoom seja redefinido ao reabrir o modo
             if (currentZoom !== 1.0) {
-                toggleZoom(); // Reseta para 1.0x
+                toggleZoom(); 
             }
             return;
         }
@@ -731,10 +708,8 @@
             imagesSection.style.display = 'none'; 
             coloringModeEl.classList.add('active');
             
-            // Rola para o topo do modo colorir para visualização
             coloringModeEl.scrollIntoView({ behavior: 'smooth' });
             
-            // Garante que o header fique encolhido
             mainHeader.classList.add('scrolled-up');
             
             initColoringMode();
@@ -783,25 +758,24 @@
     // Adiciona o manipulador de clique ao botão de zoom
     zoomBtn.addEventListener('click', toggleZoom);
 
-    // CAMINHOS DE IMAGEM UNIFICADOS (RELATIVOS)
+    // Caminhos de imagem (iniciais)
     const BOY_COLOR_IMG = './img/dia-1/boy.png'; 
     const GIRL_COLOR_IMG = './img/dia-1/girl.png'; 
-    // Caminhos P&B corrigidos (confirmados pelo usuário)
     const BOY_BW_IMG = './img/dia-1/color/color_boy.png'; 
     const GIRL_BW_IMG = './img/dia-1/color/color_girl.png'; 
     const BOY_PRINT_PDF = './print/dia-1/menino_para_colorir.pdf';
     const GIRL_PRINT_PDF = './print/dia-1/menina_para_colorir.pdf';
 
 
-    // Conteúdo por idioma e gênero (Completo com PT, EN, ES, FR)
+    // Conteúdo por idioma e gênero
     const content = {
       pt: {
         header: {
             mainTitle: 'Devocional para Crianças',
             htmlTitle: 'Devocional para Crianças — Dia 1',
             play: '▶️ Ouvir Devocional',
-            speed: 'Velocidade',
-            stop: '⏹️ Parar',
+            speed: 'Velocidade', // Mantido no objeto, mas não mais usado na UI
+            stop: '⏹️ Parar Devocional',
         },
         boy: {
           title: 'Dia 1 — O Presente Único de Deus',
@@ -850,7 +824,7 @@
             htmlTitle: 'Devotional for Children — Day 1',
             play: '▶️ Listen to Devotional',
             speed: 'Speed',
-            stop: '⏹️ Stop',
+            stop: '⏹️ Stop Devotional',
         },
         boy: { 
           title: "Day 1 — God’s Unique Gift", 
@@ -899,7 +873,7 @@
             htmlTitle: 'Devocional para Niños — Día 1',
             play: '▶️ Escuchar Devocional',
             speed: 'Velocidad',
-            stop: '⏹️ Parar',
+            stop: '⏹️ Parar Devocional',
         },
         boy: { 
           title: 'Día 1 — El Regalo Único de Dios', 
@@ -948,7 +922,7 @@
             htmlTitle: 'Dévotion pour Enfants — Jour 1',
             play: '▶️ Écouter la Dévotion',
             speed: 'Vitesse',
-            stop: '⏹️ Arrêter',
+            stop: '⏹️ Arrêtez la dévotion',
         },
         boy: { 
           title: 'Jour 1 — Le Cadeau Unique de Dieu', 
@@ -969,7 +943,7 @@
             <h3>Verset Clé</h3>
             <p><strong>Galates 1:8-9 (LSG):</strong> “Mais si nous-mêmes, ou un ange du ciel, vous annonçait un Évangile s’écartant de celui que nous vous avons annoncé, qu’il soit anathème !”</p>
             <h3>Résumé</h3>
-            <p>Il n'y a qu'une seule nouvelle merveilleuse sur la façon dont nous devenons amies avec Dieu : le salut est un cadeau que Jésus nous offre. Ce n'est pas une médaille pour celle qui fait tout correctement. C'est juste Sa grâce, un cadeau d'amour qui ne peut être ni échangé, ni complété, ni améliorado.</p>
+            <p>Il n'y a qu'une seule nouvelle merveilleuse sur la façon dont nous devenons amies avec Dieu : le salut est un cadeau que Jésus nous offre. Ce n'est pas une médaille pour celle qui fait tout correctement. C'est juste Sa grâce, un cadeau d'amour que ne peut être ni échangé, ni complété, ni améliorado.</p>
             <h3>Aplicação Prática</h3>
             <p>Parfois, tu peux penser que tu dois être parfaite, ne jamais te tromper ou toujours plaire à tout le monde para que God t'ame. Mais l'amour de Jesus est já completo, telle que tu es. Tu peux te reposer sur cela : Jésus a déjà fait tout ce dont tu as besoin.</p>
             <h3>Prière</h3>
@@ -1054,25 +1028,20 @@
       playBtn.textContent = narrator.isPlaying || narrator.isPaused ? (narrator.isPaused ? '▶️ Continuar' : '⏸️ Pausar Devocional') : cfgHeader.play;
       stopBtn.textContent = cfgHeader.stop;
       
-      const currentRate = speeds[speedIdx].toFixed(2);
-      speedBtn.textContent = `${cfgHeader.speed}: ${currentRate}x`; 
+      // Linha removida: speedBtn.textContent = ...
       
       zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`; 
 
       updateContent(currentLang, currentGender);
-      // Se o modo colorir estiver ativo, reinicia ele para carregar a imagem correta (linguagem)
       if (isColoringMode) {
           initColoringMode();
       }
     }
 
     function setGender(gender) {
-      // 1. Garante que o modo colorir esteja fechado ao mudar de gênero
       if(isColoringMode) toggleColoringMode(false);
       
-      // 2. Comportamento de rolagem e ocultação de título (mantido)
       mainHeader.classList.remove('scrolled-up'); 
-      // devBox.style.display = 'none'; <--- MANTIDO FORA (o CSS já garante o display: none)
 
       currentGender = gender === 'girl' ? 'girl' : 'boy';
       
@@ -1080,7 +1049,7 @@
 
       playBtn.removeAttribute('disabled');
       stopBtn.removeAttribute('disabled');
-      speedBtn.removeAttribute('disabled'); 
+      // Linha removida: speedBtn.removeAttribute('disabled');
       printBtn.removeAttribute('disabled');
       coloringBtn.removeAttribute('disabled'); 
 
@@ -1119,7 +1088,7 @@
       }
     }
 
-    // Narração — Web Speech API (Mantido inalterado)
+    // Narração — Web Speech API (AJUSTADA: Removido controle de velocidade)
     const voicePrefs = {
       pt: { boy: ['Julio','Ricardo','Felipe'], girl: ['Francisca','Heloisa','Camila'] },
       en: { boy: ['Guy','Brian','Christopher'], girl: ['Aria','Jenny','Sarah'] },
@@ -1165,7 +1134,7 @@
     class Narrator {
       constructor() {
         this.synth = window.speechSynthesis;
-        this.rate = 0.95;
+        this.rate = 0.95; // Taxa fixa
         this.pitchGirl = 1.3;
         this.pitchBoy = 1.2;
         this.voice = null;
@@ -1236,15 +1205,13 @@
         const header = content[currentLang].header;
         playBtn.textContent = header.play;
       }
-
-      setRate(rate) {
-        this.rate = rate;
-      }
+      
+      // Método setRate removido
     }
 
     const narrator = new Narrator();
 
-    // Event Listeners (Mantidos inalterados)
+    // Event Listeners
     playBtn.addEventListener('click', async () => {
       // Garante que o modo colorir esteja fechado se tentarem dar play
       if(isColoringMode) toggleColoringMode(false);
@@ -1266,19 +1233,7 @@
       narrator.play();
     });
 
-    speedBtn.addEventListener('click', () => {
-      speedIdx = (speedIdx + 1) % speeds.length;
-      const rate = speeds[speedIdx];
-      narrator.setRate(rate);
-      
-      const speedText = content[currentLang].header.speed;
-      speedBtn.textContent = `${speedText}: ${rate.toFixed(2)}x`; 
-      
-      if (narrator.isPlaying) {
-        narrator.stop();
-        narrator.play();
-      }
-    });
+    // Event Listener do speedBtn removido
 
     stopBtn.addEventListener('click', () => {
       narrator.stop();
@@ -1311,7 +1266,7 @@
     // Botões de Áudio/Ação desabilitados
     playBtn.setAttribute('disabled', 'disabled');
     stopBtn.setAttribute('disabled', 'disabled');
-    speedBtn.setAttribute('disabled', 'disabled');
+    // speedBtn.setAttribute('disabled', 'disabled'); removido
     printBtn.setAttribute('disabled', 'disabled'); 
     coloringBtn.setAttribute('disabled', 'disabled'); 
     
