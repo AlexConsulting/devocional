@@ -1,1335 +1,153 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title id="htmlTitle">Devocional para Crianças — Dia 1</title>
-  <style>
-    :root { --bg: #fffaf2; --text: #2b2b2b; --theme: #4a90e2; }
-    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
-
-    /* NOVO CONTAINER DO SELETOR DE IDIOMAS FLUTUANTE */
-    #lang-container {
-        position: fixed; 
-        top: 15px;
-        right: 15px;
-        z-index: 100;
-    }
-
-    /* BOTAO DE TOGGLE (AGORA COM BANDEIRA DO PAÍS ATUAL) */
-    #lang-toggle-btn {
-        background: #fff;
-        border: 2px solid #ccc;
-        border-radius: 50%;
-        width: 44px;
-        height: 44px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        padding: 0; 
-        overflow: hidden; 
-    }
-    #lang-toggle-btn img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-    }
-    #lang-toggle-btn:hover {
-        border-color: var(--theme, #4a90e2);
-    }
-
-    /* DROPDOWN DE IDIOMAS */
-    .lang-switch {
-        display: none; 
-        flex-direction: column;
-        gap: 8px;
-        margin-top: 8px;
-        padding: 8px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        align-items: flex-end; 
-    }
-    .lang-switch.active {
-        display: flex; 
-    }
-
-    /* BOTOES DE IDIOMA INDIVIDUAIS */
-    .lang-switch button { 
-      background: #fff; 
-      color: #333; 
-      border: 2px solid #ccc; 
-      border-radius: 50%; 
-      padding: 0; 
-      width: 36px; 
-      height: 36px;
-      text-align: center;
-      cursor: pointer; 
-      transition: all 0.2s ease; 
-      margin: 0; 
-      display: flex; 
-      align-items: center;
-      justify-content: center;
-      overflow: hidden; 
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .lang-switch button img {
-      width: 100%; 
-      height: 100%;
-      object-fit: cover; 
-      border-radius: 50%; 
-    }
-    .lang-switch button:hover { 
-      border-color: var(--theme, #4a90e2); 
-    }
-    /* FIM CSS DO SELETOR DE IDIOMAS */
-
-    header { 
-        padding: 16px; 
-        text-align: center; 
-        background: #fff; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-        transition: padding 0.3s ease;
-    }
-    .title { font-size: 1.8rem; margin: 0 0 8px; color: var(--theme); transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease; }
-    .subtitle { color: #555; margin: 0 0 16px; transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease; }
-
-    /* ESTILO PARA OCULTAR TÍTULO E SUBTÍTULO APÓS ROLAGEM (OU SELEÇÃO DE GÊNERO) */
-    header.scrolled-up {
-        padding-top: 8px; /* Reduz o padding para "encolher" o header */
-        padding-bottom: 8px;
-    }
-
-
-    header.scrolled-up #mainTitle,
-    header.scrolled-up #subtitle {
-        opacity: 0;
-        height: 0; /* Colapsa a altura */
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        transform: translateY(-10px);
-        pointer-events: none;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Devocional Acessível - Libras - Dia 1</title>
     
-    /* CORREÇÃO ACRESCENTADA: Oculta o botão de acessibilidade quando o header está "encolhido" */
-    header.scrolled-up .accessibility-switch {
-        display: none;
-    }
-    /* FIM DA CORREÇÃO */
-
-
-    .container { max-width: 880px; margin: 0 auto; padding: 16px; }
-    .card { background: #fff; border-radius: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.08); padding: 16px; margin-bottom: 20px; }
-
-    /* Esconde o bloco de texto do devocional */
-    #devocional { display: none; }
-    
-    /* ********************************************************** */
-    /* ESTILOS DO MODO DE COLORIR */
-    /* ********************************************************** */
-
-    #coloring-mode {
-        display: none; /* Inicia oculto */
-        flex-direction: column;
-        align-items: center;
-        margin-top: 16px;
-        
-        padding: 10px; 
-        max-width: 256px; 
-        
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-        
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    #coloring-mode.active {
-        display: flex;
-    }
-    
-    /* Wrapper para o Canvas: Define a área visível e o scroll */
-    #canvas-wrapper {
-        overflow: auto; 
-        max-width: 100%;
-        max-height: 400px; 
-        
-        margin-bottom: 10px;
-        display: flex; 
-        justify-content: center; 
-        align-items: center;
-        
-        border: 2px solid #ccc;
-        border-radius: 8px;
-    }
-    
-    /* Estilos do Canvas */
-    #coloring-canvas {
-        max-width: 100%; 
-        height: auto;
-        display: block; 
-        cursor: crosshair; 
-        
-        transform: scale(1);
-        transform-origin: top left;
-    }
-    
-    #color-palette {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 16px;
-        justify-content: center;
-        padding: 10px;
-        background: #f7f7f7;
-        border-radius: 8px;
-        max-width: 100%;
-    }
-    
-    .color-swatch {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        cursor: pointer;
-        transition: transform 0.1s ease, border-color 0.2s ease;
-    }
-    
-    .color-swatch.active {
-        transform: scale(1.15);
-        border-color: #333;
-    }
-    
-    /* ********************************************************** */
-    /* FIM ESTILOS DO MODO DE COLORIR */
-    /* ********************************************************** */
-
-
-    .gender-switch { margin: 12px 0; text-align: center; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-    header.scrolled-up .gender-switch { margin-top: 0; }
-    
-    .gender-switch button { 
-      border-radius: 999px; padding: 10px 16px; font-weight: 600; cursor: pointer; font-size: 1rem; 
-      background: transparent;
-      border: 2px solid;
-      color: var(--text); 
-      transition: all 0.2s ease;
-    }
-    .gender-switch button[onclick="setGender('boy')"] { border-color: #4a90e2; }
-    .gender-switch button[onclick="setGender('girl')"] { border-color: #e75480; }
-    .gender-switch button.active-boy { background: #4a90e2; border-color: #4a90e2; color: #fff; }
-    .gender-switch button.active-girl { background: #e75480; border-color: #e75480; color: #fff; }
-
-    /* AJUSTE: Removemos o botão de velocidade, mantendo o layout centralizado */
-    .audio { 
-        display: flex; 
-        align-items: center; 
-        gap: 12px; 
-        justify-content: center; 
-        margin: 12px 0 20px; 
-    }
-    header.scrolled-up .audio { margin-top: 8px; }
-    
-    /* Estilo Outline Cinza Escuro para botões de áudio e ação */
-    .audio button, .link-btn {
-        border: 2px solid #555; 
-        background: transparent;
-        color: #555; 
-        border-radius: 999px;
-        padding: 10px 16px;
-        font-weight: 600;
-        cursor: pointer;
-        font-size: 1rem;
-        text-decoration: none;
-        display: inline-block;
-        transition: all 0.2s ease;
-    }
-    
-    /* Regra 1: Hover padrão (azul/rosa sólido) */
-    .audio button:hover, .link-btn:hover { 
-        background: var(--theme);
-        border-color: var(--theme);
-        color: #fff;
-    }
-    
-    /* Regra 2: Hover neutro (cinza claro) - Estado inicial */
-    .neutral-hover .audio button:hover, 
-    .neutral-hover .link-btn:hover,
-    .neutral-hover .stop-btn:hover {
-        background: #f0f0f0 !important; 
-        border-color: #555 !important; 
-        color: #2b2b2b !important; 
-    }
-    
-    /* Estilo para botões desabilitados */
-    .audio button[disabled], .link-btn[disabled], .stop-btn[disabled] {
-        cursor: not-allowed !important;
-        opacity: 0.5;
-        background: transparent !important;
-        color: #555 !important;
-        border-color: #555 !important;
-        pointer-events: none; 
-    }
-
-    /* O stop-btn usa borda e cor de fundo */
-    .stop-btn { background: #f44336; color: #fff; border: 2px solid #f44336; border-radius: 999px; padding: 10px 16px;
-      font-weight: 600; cursor: pointer; font-size: 1rem; transition: background 0.2s ease; }
-    
-    body:not(.neutral-hover) .stop-btn:hover { 
-        background: #d32f2f; border-color: #d32f2f; 
-    }
-
-    /* Centraliza a única imagem */
-    #imagesSection { 
-      display: none;
-      justify-content: center; 
-      margin-top: 16px; 
-    }
-    header.scrolled-up #imagesSection { margin-top: 8px; }
-
-    figure { 
-      margin: 0; 
-      background: #f7f7f7; 
-      border-radius: 12px; 
-      padding: 10px; 
-      text-align: center; 
-      border: 2px solid var(--theme); 
-      max-width: 256px; 
-      width: 100%; 
-    }
-    img { 
-      width: 100%; 
-      height: auto; 
-      border-radius: 8px; 
-      display: block; 
-      margin: 0 auto; 
-    }
-    figcaption { font-size: 0.9rem; color: #666; margin-top: 6px; }
-
-    .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; justify-content: center; }
-
-    body.boy { --theme: #4a90e2; }
-    body.girl { --theme: #e75480; }
-
-
-    /* ********************************************************** */
-    /* AJUSTES PARA MOBILE (Media Query) */
-    /* ********************************************************** */
-    @media (max-width: 600px) {
-        /* 1. Título principal */
-        .title {
-            font-size: 1.5rem; 
-            margin-bottom: 4px;
+    <style>
+        /* CSS OMITIDO POR SER O MESMO DAS VERSÕES ANTERIORES */
+        :root { 
+            --bg: #fffaf2; 
+            --text: #2b2b2b; 
+            --theme: #008080; 
+        }
+        body { 
+            margin: 0; 
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6;
+            padding-bottom: 40px;
         }
 
-        /* 2. Subtítulo */
-        .subtitle {
-            margin-top: 4px; 
-            margin-bottom: 12px;
-        }
-
-        /* 3. Bandeira de Idiomas (Toggle) */
-        #lang-container {
-            top: 8px; 
-            right: 8px; 
-        }
-        #lang-toggle-btn {
-            width: 36px; 
-            height: 36px; 
-        }
+        .container { max-width: 880px; margin: 0 auto; padding: 16px; }
+        .card { background: #fff; border-radius: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.08); padding: 24px; margin-bottom: 20px; }
+        header { padding: 16px; text-align: center; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
         
-        /* 4. Botões de Gênero */
-        .gender-switch button {
-            padding: 8px 14px; 
-            font-size: 0.95rem; 
-        }
-        
-        /* 5. Botões de Ação (Imprimir, Colorir, Próximo) */
-        .buttons {
-            flex-direction: column;
+        .title { 
+            font-size: 1.8rem; 
+            margin: 0 0 16px; 
+            color: var(--theme);
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
-    }
-    /* ********************************************************** */
-    
-    /* NOVOS ESTILOS PARA O BOTÃO DE ACESSIBILIDADE EM LIBRAS */
-    .accessibility-switch { 
-        margin: 12px 0 20px; 
-        text-align: center; 
-    }
-    
-    /* Definindo a cor de tema para Acessibilidade */
-    #btnAccessibility {
-        border-color: #008080; /* Cor de acessibilidade (Verde-Azulado) */
-        color: #008080;
-    }
-    
-    body:not(.neutral-hover) #btnAccessibility:hover {
-        background: #008080; 
-        border-color: #008080; 
-        color: #fff;
-    }
-    
-    /* AJUSTE: Ocupa menos espaço em telas menores */
-    @media (max-width: 600px) {
-        .accessibility-switch {
-            margin: 8px 0 16px;
+        .flag-icon-title { height: 24px; width: auto; border-radius: 2px; margin-left: 10px; }
+        .section-title { color: var(--theme); border-bottom: 2px solid var(--theme); padding-bottom: 5px; margin-top: 30px; font-size: 1.6rem; }
+        .topic { color: #555; margin-top: 20px; margin-bottom: 5px; font-size: 1.2rem; }
+        .bible-ref { font-weight: 600; color: #008080; display: block; margin-bottom: 10px; }
+        .verse { font-style: italic; font-size: 1.1rem; color: #777; border-left: 4px solid #ccc; padding-left: 10px; margin: 20px 0; }
+
+        #btnReturn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid #555; 
+            background: transparent;
+            color: #555; 
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: 10px;
         }
-    }
-    /* FIM DOS NOVOS ESTILOS PARA ACESSIBILIDADE */
+        #btnReturn:hover { background: #555; border-color: #555; color: #fff; }
+        
+        @media (max-width: 600px) {
+             .title { font-size: 1.5rem; }
+            .card { padding: 16px; }
+        }
 
-  </style>
+        /* ⭐️ NOVO CSS COPIADO DO SEU ARQUIVO FUNCIONAL PARA POSICIONAMENTO ⭐️ */
+        div[vw] {
+            position: fixed !important;
+            right: 15px !important; 
+            left: auto !important; 
+            top: 60% !important; /* Posição que funciona no seu outro arquivo */
+            bottom: auto !important; 
+            z-index: 998 !important; 
+        }
+        
+        @media (max-width: 600px) {
+            div[vw] {
+                top: 72% !important; /* Ajuste para mobile */
+                right: 5px !important; 
+            }
+        }
+    </style>
 </head>
-<body class="boy neutral-hover">
-  <div id="lang-container">
-    <button id="lang-toggle-btn" title="Selecionar Idioma" onclick="toggleLangSwitch()">
-        <img id="current-lang-flag" src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Bandeira do Brasil">
-    </button>
-    <div class="lang-switch">
-      <button onclick="setLang('pt')" title="Português"><img src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Bandeira do Brasil"></button>
-      <button onclick="setLang('en')" title="English"><img src="https://flagicons.lipis.dev/flags/4x3/us.svg" alt="US Flag"></button>
-      <button onclick="setLang('es')" title="Español"><img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Bandera de España"></button>
-      <button onclick="setLang('fr')" title="Français"><img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" alt="Drapeau de la France"></button>
-    </div>
-  </div>
-
-  <header id="mainHeader">
-    <h1 id="mainTitle" class="title">Devocional Infantil</h1>
-    <p id="subtitle" class="subtitle"></p>
-
-    <div class="accessibility-switch">
-      <a id="btnAccessibility" class="link-btn" href="acessibilidade/dia-1/index.html">
-        <span role="img" aria-label="Acessibilidade Libras">🤟</span> Acessibilidade para Surdos 
-      </a>
-    </div>
-    <div class="gender-switch">
-      <button id="btnBoy" onclick="setGender('boy')">👦 Sou Menino</button>
-      <button id="btnGirl" onclick="setGender('girl')">👧 Sou Menina</button>
-    </div>
-
-    <div class="audio">
-      <button id="playBtn" class="link-btn" disabled>▶️ Ouvir Devocional</button>
-      <button id="stopBtn" class="stop-btn" disabled>⏹️ Parar Devocional</button>
-    </div>
-
-    <section id="imagesSection" class="images">
-      <figure><img id="imgColorSrc" src="" alt="" /><figcaption id="captionColor"></figcaption></figure>
-    </section>
-</header>
-  <main class="container">
-    <div id="devocional" class="card"></div>
+<body>
     
-    <div id="coloring-mode" class="card">
-        <h3>🎨 É hora de Colorir!</h3>
-        
-        <div id="canvas-wrapper">
-            <canvas id="coloring-canvas"></canvas>
+    <header>
+        <div class="container">
+            
+            <h1 class="title">
+                Devocional em Libras
+                <img src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Bandeira do Brasil" class="flag-icon-title">
+            </h1>
+            
+            <a id="btnReturn" href="../../index.html">
+                ⬅️ Voltar ao Devocional Principal
+            </a>
         </div>
-        
-        <div id="color-palette">
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="section-title">Dia 1: O Evangelho Verdadeiro</h2>
+            
+            <p class="bible-ref">Gálatas 1:8-9</p>
+            
+            <p class="verse">
+                “Se alguém ensinar outra mensagem, diferente do evangelho verdadeiro, está errado.”
+            </p>
+            
+            <div id="devocional-acessivel">
+                <p>
+                    Olá! Bem-vindo ao seu devocional adaptado. **Lembre-se de clicar no boneco VLibras** que está na lateral da tela para ver a tradução em Libras do texto.
+                </p>
+                
+                <h3 class="topic">1. O QUE APRENDEMOS?</h3>
+                <p>
+                    Existe **só uma mensagem** verdadeira: o evangelho de Jesus Cristo. Não há outro caminho. Se alguém disser que você precisa fazer outra coisa para ser salvo, essa pessoa está errada.
+                </p>
+                
+                <h3 class="topic">2. O PRESENTE DE JESUS</h3>
+                <p>
+                    **Jesus ama você!** Ele dá o presente da **salvação** de graça. Você não pode pagar por ela. Você não pode conquistar a salvação sendo perfeito.
+                    A salvação é um presente!
+                </p>
+                
+                <h3 class="topic">3. SEU VALOR</h3>
+                <p>
+                    Deus ama você **como você é**. Você é **especial**. Você não precisa ser perfeito. Jesus já fez todo o trabalho! Você pode **descansar** no amor de Jesus e saber que Ele já fez tudo por você.
+                </p>
+
+                <h3 class="topic">4. VAMOS ORAR!</h3>
+                <p>
+                    Deus, obrigado por Jesus. Obrigado pelo presente da salvação. Obrigado porque o Senhor me ama como eu sou. Amém.
+                </p>
             </div>
-        
-        <div style="margin-top: 20px; display: flex; gap: 10px;">
-            <button id="zoomBtn" class="link-btn">🔍 Zoom: 1.0x</button>
-            <button id="closeColoringBtn" class="stop-btn">❌ Fechar Modo Colorir</button>
         </div>
     </div>
     
-    <div class="buttons">
-      <a id="coloringBtn" class="link-btn" onclick="toggleColoringMode(true)" disabled>🎨 Colorir Digitalmente</a>
-      <a id="printBtn" class="link-btn" href="" target="_blank" disabled>Imprimir</a>
-      <a id="nextBtn" class="link-btn" href="/devocionais/dia-2.html" onclick="saveProgress()">Próximo devocional</a>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
     </div>
-  </main>
-  <footer>
+    
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app', 'vw-plugin-wrapper');
+    </script>
+	<footer>
     <center><p>Devocional adaptado e criado por Alex Silva | Direitos Reservados 2025  <span id="footerText"></span></p></center>
     </footer>
-
-  <script>
-    // Estado
-    let currentLang = 'pt';
-    let currentGender = 'boy';
-    // Variáveis de velocidade (speedIdx e speeds) removidas
-    
-    // Referências do App
-    const htmlTitleEl = document.getElementById('htmlTitle');
-    const mainTitleEl = document.getElementById('mainTitle');
-    const playBtn = document.getElementById('playBtn'); 
-    // speedBtn removido
-    const stopBtn = document.getElementById('stopBtn');
-    const devBox = document.getElementById('devocional');
-    const subtitleEl = document.getElementById('subtitle');
-    const printBtn = document.getElementById('printBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const captionColor = document.getElementById('captionColor');
-    const imgColorSrc = document.getElementById('imgColorSrc');
-    const btnBoy = document.getElementById('btnBoy');
-    const btnGirl = document.getElementById('btnGirl');
-    const imagesSection = document.getElementById('imagesSection'); 
-    const langSwitchEl = document.querySelector('.lang-switch');
-    const currentLangFlagEl = document.getElementById('current-lang-flag');
-    const mainHeader = document.getElementById('mainHeader');
-
-    // Referências do Modo Colorir
-    const coloringModeEl = document.getElementById('coloring-mode');
-    const coloringCanvas = document.getElementById('coloring-canvas');
-    const colorPaletteEl = document.getElementById('color-palette');
-    const coloringBtn = document.getElementById('coloringBtn');
-    const closeColoringBtn = document.getElementById('closeColoringBtn');
-    const canvasWrapper = document.getElementById('canvas-wrapper'); 
-    const zoomBtn = document.getElementById('zoomBtn'); 
-    
-    // Adicionamos { willReadFrequently: true } para otimizar o getImageData
-    const ctx = coloringCanvas.getContext('2d', { willReadFrequently: true }); 
-    
-    let isColoringMode = false;
-    let selectedColor = '#FF0000'; // Cor inicial: Vermelho
-    let currentColoringPath = ''; // Armazena o caminho da imagem P&B atual
-    
-    // Variáveis do Zoom
-    const zoomLevels = [1.0, 1.5, 2.0, 3.0]; // Níveis de zoom
-    let zoomIdx = 0;
-    let currentZoom = zoomLevels[0];
-
-    // Paleta de cores para o modo de colorir
-    const COLORS = [
-        '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', 
-        '#FF8000', '#8000FF', '#008000', '#800000', 
-        '#FFC0CB', '#ADD8E6', '#90EE90', '#F4A460', 
-        '#A52A2A', '#808080', '#000000', '#FFFFFF'  
-    ];
-    
-    // **********************************************************
-    // Lógica de Progresso
-    // **********************************************************
-    const STORAGE_KEY = 'dev_babys';
-    const CURRENT_DEVOTIONAL_DAY = 1; 
-    const NEXT_DEVOTIONAL_DAY = 2; 
-
-    function saveProgress() {
-        if (typeof localStorage !== 'undefined') {
-            localStorage.setItem(STORAGE_KEY, NEXT_DEVOTIONAL_DAY.toString());
-            console.log(`Progresso salvo para ${STORAGE_KEY}: Próximo dia é ${NEXT_DEVOTIONAL_DAY}`);
-        }
-    }
-    
-    function checkAndRedirect() {
-        if (typeof localStorage !== 'undefined') {
-            const savedDay = parseInt(localStorage.getItem(STORAGE_KEY));
-            
-            if (!isNaN(savedDay) && savedDay > CURRENT_DEVOTIONAL_DAY) {
-                const targetHref = `/devocionais/dia-${savedDay}.html`;
-                
-                nextBtn.href = targetHref;
-                
-                console.log(`Progresso encontrado: Ajustando link para o Dia ${savedDay} (${targetHref})`);
-            } else {
-                 console.log(`Progresso não encontrado ou está no dia correto (${CURRENT_DEVOTIONAL_DAY}).`);
-            }
-        }
-    }
-    // **********************************************************
-    // FIM Lógica de Progresso
-    // **********************************************************
-
-
-    // Funções de UI
-    function toggleLangSwitch() {
-        langSwitchEl.classList.toggle('active');
-    }
-
-    // Funções do Modo Colorir
-    
-    function hexToRgba(hex) {
-        const bigint = parseInt(hex.slice(1), 16);
-        const r = (bigint >> 16) & 255;
-        const g = (bigint >> 8) & 255;
-        const b = bigint & 255;
-        return [r, g, b, 255]; // Adiciona 255 para o canal alfa
-    }
-
-    function matchColor(data, index, color, tolerance = 32) {
-        return (
-            Math.abs(data[index] - color[0]) <= tolerance &&
-            Math.abs(data[index + 1] - color[1]) <= tolerance &&
-            Math.abs(data[index + 2] - color[2]) <= tolerance &&
-            Math.abs(data[index + 3] - color[3]) <= tolerance 
-        );
-    }
-    
-    // IMPLEMENTAÇÃO SIMPLIFICADA E SINCRONA DO ALGORITMO FLOOD FILL (BALDE DE TINTA)
-    function floodFill(startX, startY, newColorHex) {
-        if (!currentColoringPath) return;
-
-        const { width, height } = coloringCanvas;
-        try {
-            const imageData = ctx.getImageData(0, 0, width, height);
-            const data = imageData.data;
-
-            const newColor = hexToRgba(newColorHex);
-            const targetIndex = (startY * width + startX) * 4;
-            const targetColor = [
-                data[targetIndex],
-                data[targetIndex + 1],
-                data[targetIndex + 2],
-                data[targetIndex + 3] 
-            ];
-
-            if (targetColor.every((c, i) => c === newColor[i])) {
-                return;
-            }
-            
-            const TOLERANCE = 30;
-
-            const pixelStack = [[startX, startY]];
-
-            while (pixelStack.length) {
-                let [x, y] = pixelStack.pop();
-                let index = (y * width + x) * 4;
-
-                if (!matchColor(data, index, targetColor, TOLERANCE)) {
-                    continue;
-                }
-                
-                data[index] = newColor[0];
-                data[index + 1] = newColor[1];
-                data[index + 2] = newColor[2];
-                data[index + 3] = newColor[3];
-
-                if (x > 0) pixelStack.push([x - 1, y]);
-                if (x < width - 1) pixelStack.push([x + 1, y]);
-                if (y > 0) pixelStack.push([x, y - 1]);
-                if (y < height - 1) pixelStack.push([x, y + 1]);
-            }
-            
-            ctx.putImageData(imageData, 0, 0);
-
-        } catch (e) {
-            console.error('ERRO de segurança/tinta no Canvas:', e);
-            alert('ERRO: Falha ao tentar colorir (restrição de segurança do navegador). Se estiver executando localmente (file:///), use um servidor web simples ou verifique se a imagem P&B carregou corretamente.');
-        }
-    }
-
-    // Função para alternar o nível de zoom
-    function toggleZoom() {
-        zoomIdx = (zoomIdx + 1) % zoomLevels.length;
-        currentZoom = zoomLevels[zoomIdx];
-        
-        coloringCanvas.style.transformOrigin = 'top left'; 
-        coloringCanvas.style.transform = `scale(${currentZoom})`;
-        
-        zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`;
-        
-        if (currentZoom > 1.0) {
-            canvasWrapper.style.width = `${coloringCanvas.width * currentZoom}px`;
-            canvasWrapper.style.height = `${coloringCanvas.height * currentZoom}px`;
-            canvasWrapper.style.overflow = 'auto'; // Habilita o scroll
-        } else {
-            canvasWrapper.style.width = '100%'; 
-            canvasWrapper.style.height = 'auto'; 
-            canvasWrapper.style.overflow = 'hidden'; // Desabilita o scroll quando não há zoom
-        }
-    }
-
-    // Manipulador de clique no canvas
-    function handleColoringClick(event) {
-        if (!isColoringMode) return;
-
-        const rect = coloringCanvas.getBoundingClientRect();
-        
-        let clientX, clientY;
-        if (event.touches && event.touches.length > 0) {
-            clientX = event.touches[0].clientX;
-            clientY = event.touches[0].clientY;
-        } else {
-            clientX = event.clientX;
-            clientY = event.clientY;
-        }
-        
-        const x_visual = clientX - rect.left;
-        const y_visual = clientY - rect.top;
-        
-        const scaleX = coloringCanvas.width / rect.width;
-        const scaleY = coloringCanvas.height / rect.height;
-        
-        // Coordenadas do pixel no canvas INTERNO (ajustadas pela escala visual e pelo zoom)
-        const x_original = Math.floor(x_visual * scaleX / currentZoom);
-        const y_original = Math.floor(y_visual * scaleY / currentZoom);
-        
-        const x = Math.min(Math.max(0, x_original), coloringCanvas.width - 1);
-        const y = Math.min(Math.max(0, y_original), coloringCanvas.height - 1);
-        
-        floodFill(x, y, selectedColor);
-    }
-
-
-    // Define a cor selecionada (chamado ao clicar nos swatches)
-    function setColor(color, element) {
-        selectedColor = color;
-        // Atualiza o estado visual da paleta
-        document.querySelectorAll('.color-swatch').forEach(sw => sw.classList.remove('active'));
-        element.classList.add('active');
-    }
-    
-    // Cria a paleta de cores no HTML
-    function createColorPalette() {
-        colorPaletteEl.innerHTML = '';
-        COLORS.forEach((color, index) => {
-            const swatch = document.createElement('div');
-            swatch.className = 'color-swatch';
-            swatch.style.backgroundColor = color;
-            swatch.onclick = () => setColor(color, swatch);
-            if (index === 0) {
-                swatch.classList.add('active');
-                selectedColor = color; 
-            }
-            colorPaletteEl.appendChild(swatch);
-        });
-    }
-
-    // Carrega a imagem P&B no canvas e prepara para colorir
-    function initColoringMode() {
-        const imagePath = content[currentLang].images[currentGender].bw;
-        
-        if (!imagePath) return;
-
-        if (imagePath === currentColoringPath && coloringCanvas.width > 0) {
-            if (currentZoom !== 1.0) {
-                toggleZoom(); 
-            }
-            return;
-        }
-
-        currentColoringPath = imagePath;
-        const img = new Image();
-        img.crossOrigin = 'Anonymous'; 
-        
-        img.onload = function() {
-            // Define o tamanho nativo do canvas para a imagem
-            coloringCanvas.width = img.naturalWidth;
-            coloringCanvas.height = img.naturalHeight;
-            
-            // Desenha a imagem P&B
-            ctx.drawImage(img, 0, 0);
-            
-            // Reseta o zoom para 1.0x e ajusta o wrapper
-            zoomIdx = 0;
-            currentZoom = zoomLevels[0];
-            coloringCanvas.style.transform = `scale(1.0)`; // Aplica o reset diretamente no canvas
-            canvasWrapper.style.width = '100%'; 
-            canvasWrapper.style.height = 'auto'; 
-            canvasWrapper.style.overflow = 'hidden'; // Esconde o scrollbar inicialmente
-            zoomBtn.textContent = `🔍 Zoom: 1.0x`;
-        };
-        
-        img.onerror = function() {
-            console.error('ERRO: A imagem P&B para colorir não foi carregada. Verifique se o arquivo existe em:', imagePath);
-            alert('ERRO: A imagem para colorir não foi encontrada. Verifique se o arquivo está na pasta correta: ' + imagePath);
-            toggleColoringMode(false); 
-        };
-
-        img.src = imagePath; 
-    }
-
-    // Alterna entre o modo Devocional e o Modo Colorir
-    function toggleColoringMode(activate) {
-        isColoringMode = activate;
-        
-        if (activate) {
-            // Entra no modo colorir: esconde devocional e imagem colorida
-            devBox.style.display = 'none';
-            imagesSection.style.display = 'none'; 
-            coloringModeEl.classList.add('active');
-            
-            coloringModeEl.scrollIntoView({ behavior: 'smooth' });
-            
-            mainHeader.classList.add('scrolled-up');
-            
-            initColoringMode();
-        } else {
-            // Sai do modo colorir: Garante que a imagem colorida esteja visível se o gênero foi selecionado
-            coloringModeEl.classList.remove('active');
-            
-            if (!document.body.classList.contains('neutral-hover')) {
-                imagesSection.style.display = 'flex';
-            } else {
-                imagesSection.style.display = 'none';
-            }
-            
-            // Reseta o zoom ao fechar
-            if (currentZoom !== 1.0) {
-                if (zoomBtn && !zoomBtn.disabled) {
-                    toggleZoom();
-                } else {
-                    zoomIdx = 0;
-                    currentZoom = zoomLevels[0];
-                }
-            }
-
-            // LIMPA O CANVAS ao fechar
-            ctx.clearRect(0, 0, coloringCanvas.width, coloringCanvas.height);
-            currentColoringPath = ''; // Força o recarregamento na próxima vez
-        }
-    }
-    
-    // Adiciona o manipulador de clique ao canvas
-    coloringCanvas.addEventListener('mousedown', handleColoringClick);
-    coloringCanvas.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Previne o zoom ou rolagem do mobile
-        if (e.touches && e.touches.length > 0) {
-            handleColoringClick({ 
-                clientX: e.touches[0].clientX, 
-                clientY: e.touches[0].clientY,
-                target: coloringCanvas 
-            });
-        }
-    });
-    
-    // Adiciona o manipulador de clique ao botão de fechar
-    closeColoringBtn.addEventListener('click', () => toggleColoringMode(false));
-    
-    // Adiciona o manipulador de clique ao botão de zoom
-    zoomBtn.addEventListener('click', toggleZoom);
-
-    // Caminhos de imagem (iniciais)
-    const BOY_COLOR_IMG = './img/dia-1/boy.png'; 
-    const GIRL_COLOR_IMG = './img/dia-1/girl.png'; 
-    const BOY_BW_IMG = './img/dia-1/color/color_boy.png'; 
-    const GIRL_BW_IMG = './img/dia-1/color/color_girl.png'; 
-    const BOY_PRINT_PDF = './print/dia-1/menino_para_colorir.pdf';
-    const GIRL_PRINT_PDF = './print/dia-1/menina_para_colorir.pdf';
-
-
-    // Conteúdo por idioma e gênero
-    const content = {
-      pt: {
-        header: {
-            mainTitle: 'Devocional para Crianças',
-            htmlTitle: 'Devocional para Crianças — Dia 1',
-            play: '▶️ Ouvir Devocional',
-            speed: 'Velocidade', // Mantido no objeto, mas não mais usado na UI
-            stop: '⏹️ Parar Devocional',
-        },
-        boy: {
-          title: 'Dia 1 — O Presente Único de Deus',
-          html: `
-            <h3>Versículo Chave</h3>
-            <p><strong>Gálatas 1:8-9 (NTLH):</strong> “Mas que fiquem debaixo da maldição de Deus todos aqueles que anunciem uma mensagem diferente da que nós anunciamos.”</p>
-            <h3>Resumo</h3>
-            <p>Existe só uma notícia incrível sobre como ficamos amigos de Deus: a salvação é um presente que Jesus nos dá. Não é um troféu que a gente ganha fazendo tudo certo ou obedecendo um monte de regras. É só pela graça de Deus — o presente mais valioso que existe.</p>
-            <h3>Aplicação Prática</h3>
-            <p>Você já pensou que precisa ser o melhor, obedecer sempre, ou nunca errar para Deus gostar mais de você? Não precisa! Jesus já fez tudo por você. Agradeça e confie: o amor dEle não depende do seu desempenho.</p>
-            <h3>Oração</h3>
-            <p>“Querido Deus, obrigado porque a salvação é um presente de Jesus. Me ajuda a lembrar que o Senhor me ama mesmo quando eu erro. E que minhas boas ações não compram o Teu amor. Amém!”</p>
-          `
-        },
-        girl: {
-          title: 'Dia 1 — O Presente Único de Deus',
-          html: `
-            <h3>Versículo Chave</h3>
-            <p><strong>Gálatas 1:8-9 (NTLH):</strong> “Mas que fiquem debaixo da maldição de Deus todos aqueles que anunciem uma mensagem diferente da que nós anunciamos.”</p>
-            <h3>Resumo</h3>
-            <p>Existe só uma notícia maravilhosa sobre como ficamos amigas de Deus: a salvação é um presente que Jesus nos dá. Não é uma medalha para quem faz tudo certinho. É só a graça dEle — um presente de amor que não dá pra trocar, completar ou melhorar.</p>
-            <h3>Aplicação Prática</h3>
-            <p>Às vezes você pode achar que precisa ser perfeita, nunca errar ou sempre agradar todo mundo para Deus te amar. Mas o amor de Jesus já é completo, do jeitinho que você é. Você pode descansar nisso: Jesus já fez tudo o que você precisa.</p>
-            <h3>Oração</h3>
-            <p>“Querido Deus, obrigada porque a salvação é um presente de Jesus. Me ajuda a lembrar que o Senhor me ama até quando eu erro. E que minhas boas ações não compram o Teu amor. Amém!”</p>
-          `
-        },
-        captions: { color: 'Presente de Deus', bw: 'Para colorir' },
-        buttons: {
-          printBoy: 'Imprimir Desenho (Menino)',
-          printGirl: 'Imprimir Desenho (Menina)',
-          coloring: '🎨 Colorir Digitalmente',
-          next: 'Próximo devocional',
-          boy: '👦 Sou Menino',
-          girl: '👧 Sou Menina'
-        },
-        images: {
-          boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
-        },
-        print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
-      },
-      en: { 
-        header: {
-            mainTitle: 'Devotional for Children',
-            htmlTitle: 'Devotional for Children — Day 1',
-            play: '▶️ Listen to Devotional',
-            speed: 'Speed',
-            stop: '⏹️ Stop Devotional',
-        },
-        boy: { 
-          title: "Day 1 — God’s Unique Gift", 
-          html: `
-            <h3>Key Verse</h3>
-            <p><strong>Galatians 1:8-9 (NIV):</strong> “But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God’s curse!”</p>
-            <h3>Summary</h3>
-            <p>There is only one incredible news about how we become friends with God: salvation is a gift that Jesus gives us. It is not a trophy that we win by doing everything right or obeying a lot of rules. It is only by God's grace—the most valuable gift there is.</p>
-            <h3>Practical Application</h3>
-            <p>Have you ever thought you need to be the best, always obey, or never make a mistake for God to like you more? You don't need to! Jesus has already done everything for you. Be thankful and trust: His love doesn't depend on your performance.</p>
-            <h3>Prayer</h3>
-            <p>“Dear God, thank you that salvation is a gift from Jesus. Help me remember that You love me even when I make mistakes. And that my good deeds do not buy Your love. Amen!”</p>
-          `
-        },
-        girl: { 
-          title: "Day 1 — God’s Unique Gift", 
-          html: `
-            <h3>Key Verse</h3>
-            <p><strong>Galatians 1:8-9 (NIV):</strong> “But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God’s curse!”</p>
-            <h3>Summary</h3>
-            <p>There is only one wonderful news about how we become friends with God: salvation is a gift that Jesus gives us. It is not a medal for those who do everything right. It is just His grace—a gift of love that cannot be exchanged, completed, or improved.</p>
-            <h3>Practical Application</h3>
-            <p>Sometimes you might think you need to be perfect, never make a mistake, or always please everyone for God to love you. But Jesus' love is already complete, just the way you are. You can rest in this: Jesus has already done everything you need.</p>
-            <h3>Prayer</h3>
-            <p>“Dear God, thank you that salvation is a gift from Jesus. Help me remember that You love me even when I make mistakes. And that my good deeds do not buy Your love. Amen!”</p>
-          ` 
-        },
-        captions: { color: 'Gift from God', bw: 'Coloring page' },
-        buttons: {
-          printBoy: 'Print Coloring Page (Boy)',
-          printGirl: 'Print Coloring Page (Girl)',
-          coloring: '🎨 Color Digitally',
-          next: 'Next devotional',
-          boy: '👦 I am a Boy',
-          girl: '👧 I am a Girl'
-        },
-        images: {
-          boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
-        },
-        print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
-      },
-      es: { 
-        header: {
-            mainTitle: 'Devocional para Niños',
-            htmlTitle: 'Devocional para Niños — Día 1',
-            play: '▶️ Escuchar Devocional',
-            speed: 'Velocidad',
-            stop: '⏹️ Parar Devocional',
-        },
-        boy: { 
-          title: 'Día 1 — El Regalo Único de Dios', 
-          html: `
-            <h3>Versículo Clave</h3>
-            <p><strong>Gálatas 1:8-9 (NVI):</strong> “Pero si aun nosotros, o un ángel del cielo, les anunciamos un evangelio diferente del que les hemos anunciado, ¡sea anatema!”</p>
-            <h3>Resumen</h3>
-            <p>Solo hay una noticia increíble sobre cómo nos hacemos amigos de Dios: la salvación es un regalo que Jesús nos da. No es un trofeo que ganamos haciendo todo bien u obedeciendo un montón de reglas. Es solo por la gracia de Dios, el regalo más valioso que existe.</p>
-            <h3>Aplicación Práctica</h3>
-            <p>¿Alguna vez pensaste que necesitas ser el mejor, obedecer siempre o nunca equivocarte para que le gustes más a Dios? ¡No es necesario! Jesús ya hizo todo por ti. Agradece y confía: Su amor no depende de tu desempeño.</p>
-            <h3>Oración</h3>
-            <p>“Querido Dios, gracias porque la salvación es un regalo de Jesús. Ayúdame a recordar que me amas incluso cuando me equivoco. Y que mis buenas acciones no compran Tu amor. ¡Amén!”</p>
-          ` 
-        },
-        girl: { 
-          title: 'Día 1 — El Regalo Único de Dios', 
-          html: `
-            <h3>Versículo Clave</h3>
-            <p><strong>Gálatas 1:8-9 (NVI):</strong> “Pero si aun nosotros, o un ángel del cielo, les anunciamos un evangelio diferente del que les hemos anunciado, ¡sea anatema!”</p>
-            <h3>Resumen</h3>
-            <p>Solo hay una noticia maravillosa sobre cómo nos hacemos amigas de Dios: la salvación es un regalo que Jesús nos da. No es una medalla para quien hace todo correctamente. Es solo Su gracia, un regalo de amor que no se puede cambiar, completar ni mejorar.</p>
-            <h3>Aplicación Práctica</h3>
-            <p>A veces puedes pensar que necesitas ser perfecta, nunca equivocarte o agradar a todos para que Dios te ame. Pero el amor de Jesús ya es completo, tal como eres. Puedes descansar en esto: Jesús ya hizo todo lo que necesitas.</p>
-            <h3>Oración</h3>
-            <p>“Querido Dios, gracias porque la salvación es un regalo de Jesús. Ayúdame a recordar que me amas incluso cuando me equivoco. Y que mis buenas acciones no compran Tu amor. ¡Amén!”</p>
-          ` 
-        },
-        captions: { color: 'Regalo de Dios', bw: 'Página para colorear' },
-        buttons: {
-          printBoy: 'Imprimir dibujo (Niño)',
-          printGirl: 'Imprimir dibujo (Niña)',
-          coloring: '🎨 Colorear Digitalmente',
-          next: 'Siguiente devocional',
-          boy: '👦 Soy Niño',
-          girl: '👧 Soy Niña'
-        },
-        images: {
-          boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
-        },
-        print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
-      },
-      fr: { 
-        header: {
-            mainTitle: 'Dévotion pour Enfants',
-            htmlTitle: 'Dévotion pour Enfants — Jour 1',
-            play: '▶️ Écouter la Dévotion',
-            speed: 'Vitesse',
-            stop: '⏹️ Arrêtez la dévotion',
-        },
-        boy: { 
-          title: 'Jour 1 — Le Cadeau Unique de Dieu', 
-          html: `
-            <h3>Verset Clé</h3>
-            <p><strong>Galates 1:8-9 (LSG):</strong> “Mais si nous-mêmes, ou un ange du ciel, vous annonçait un Évangile s’écartant de celui que nous vous avons annoncé, qu’il soit anathème !”</p>
-            <h3>Résumé</h3>
-            <p>Il n'y a qu'une seule nouvelle incroyable sur la façon dont nous devenons amis avec Dieu : le salut est un cadeau que Jésus nous offre. Ce n'est pas un trophée que l'on gagne en faisant tout bien ou en obéissant à beaucoup de règles. C'est uniquement par la grâce de Dieu, le cadeau le plus précieux qui soit.</p>
-            <h3>Application Pratique</h3>
-            <p>As-tu déjà pensé que tu devais être le meilleur, obéir toujours, ou ne jamais te tromper pour que Dieu t'aime davantage ? Ce n'est pas nécessaire ! Jésus a déjà tout fait pour toi. Remercie et aie confiance : Son amour ne dépend pas de tes performances.</p>
-            <h3>Prière</h3>
-            <p>“Cher Dieu, merci parce que le salut est un cadeau de Jésus. Aide-moi à me souvenir que Tu m'aimes même lorsque je me trompe. Et que mes bonnes actions n'achètent pas Ton amour. Amen !”</p>
-          `
-        },
-        girl: { 
-          title: 'Jour 1 — Le Cadeau Unique de Dieu', 
-          html: `
-            <h3>Verset Clé</h3>
-            <p><strong>Galates 1:8-9 (LSG):</strong> “Mais si nous-mêmes, ou un ange du ciel, vous annonçait un Évangile s’écartant de celui que nous vous avons annoncé, qu’il soit anathème !”</p>
-            <h3>Résumé</h3>
-            <p>Il n'y a qu'une seule nouvelle merveilleuse sur la façon dont nous devenons amies avec Dieu : le salut est un cadeau que Jésus nous offre. Ce n'est pas une médaille pour celle qui fait tout correctement. C'est juste Sa grâce, un cadeau d'amour que ne peut être ni échangé, ni complété, ni améliorado.</p>
-            <h3>Aplicação Prática</h3>
-            <p>Parfois, tu peux penser que tu dois être parfaite, ne jamais te tromper ou toujours plaire à tout le monde para que God t'ame. Mais l'amour de Jesus est já completo, telle que tu es. Tu peux te reposer sur cela : Jésus a déjà fait tout ce dont tu as besoin.</p>
-            <h3>Prière</h3>
-            <p>“Cher Dieu, merci parce que le salut est un cadeau de Jésus. Aide-moi à me souvenir que Tu m'aimes même lorsque je me trompe. Et que mes bonnes actions n'achètent pas Ton amor. Amen !”</p>
-          ` 
-        },
-        captions: { color: 'Don de Dieu', bw: 'Page à colorier' },
-        buttons: {
-          printBoy: 'Imprimer le dessin (Garçon)',
-          printGirl: 'Imprimer le dessin (Fille)',
-          coloring: '🎨 Colorier Numériquement',
-          next: 'Dévotion suivante',
-          boy: '👦 Je suis un Garçon',
-          girl: '👧 Je suis une Fille'
-        },
-        images: {
-          boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
-        },
-        print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
-      }
-    };
-
-    // Helper para atualizar o conteúdo e o tema visual, sem mexer no estado de "disabled" dos botões de áudio.
-    function updateContent(langCode, gender) {
-        const cfgLang = content[langCode];
-        const cfg = cfgLang[gender];
-
-        document.body.classList.remove('boy', 'girl');
-        document.body.classList.add(gender);
-        
-        subtitleEl.textContent = cfg.title;
-        devBox.innerHTML = cfg.html;
-
-        imgColorSrc.src = cfgLang.images[gender].color;
-
-        imgColorSrc.alt = gender === 'boy'
-            ? (langCode === 'pt' ? 'Menino recebendo um presente colorido' :
-            langCode === 'en' ? 'Boy receiving a colorful gift' :
-            langCode === 'es' ? 'Niño recibiendo um regalo colorido' :
-            'Garçon recevant un cadeau coloré')
-            : (langCode === 'pt' ? 'Menina recebendo um presente colorido' :
-            langCode === 'en' ? 'Girl receiving a colorful gift' :
-            langCode === 'es' ? 'Niña recibindo um regalo colorido' :
-            'Fille recevant un cadeau coloré');
-
-        captionColor.textContent = cfgLang.captions.color;
-        
-        printBtn.href = cfgLang.print[gender];
-        printBtn.textContent = gender === 'boy' ? cfgLang.buttons.printBoy : cfgLang.buttons.printGirl;
-        coloringBtn.textContent = cfgLang.buttons.coloring; 
-    }
-
-    // Dados das Bandeiras para o Botão de Toggle
-    const flagLanguageMap = {
-        'pt': { src: 'https://flagicons.lipis.dev/flags/4x3/br.svg', alt: 'Bandeira do Brasil' },
-        'en': { src: 'https://flagicons.lipis.dev/flags/4x3/us.svg', alt: 'US Flag' },
-        'es': { src: 'https://flagicons.lipis.dev/flags/4x3/es.svg', alt: 'Bandera de España' },
-        'fr': { src: 'https://flagicons.lipis.dev/flags/4x3/fr.svg', alt: 'Drapeau de la France' }
-    };
-
-    // Idioma e gênero
-    function setLang(lang) {
-      currentLang = content[lang] ? lang : 'pt';
-      const cfgLang = content[currentLang];
-      const cfgHeader = cfgLang.header;
-
-      const currentFlag = flagLanguageMap[currentLang];
-      currentLangFlagEl.src = currentFlag.src;
-      currentLangFlagEl.alt = currentFlag.alt;
-
-      document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : currentLang;
-      langSwitchEl.classList.remove('active');
-
-      htmlTitleEl.textContent = cfgHeader.htmlTitle;
-      mainTitleEl.textContent = cfgHeader.mainTitle;
-      
-      btnBoy.textContent = cfgLang.buttons.boy;
-      btnGirl.textContent = cfgLang.buttons.girl;
-      nextBtn.textContent = cfgLang.buttons.next;
-
-      playBtn.textContent = narrator.isPlaying || narrator.isPaused ? (narrator.isPaused ? '▶️ Continuar' : '⏸️ Pausar Devocional') : cfgHeader.play;
-      stopBtn.textContent = cfgHeader.stop;
-      
-      // Linha removida: speedBtn.textContent = ...
-      
-      zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`; 
-
-      updateContent(currentLang, currentGender);
-      if (isColoringMode) {
-          initColoringMode();
-      }
-    }
-
-    function setGender(gender) {
-      if(isColoringMode) toggleColoringMode(false);
-      
-      mainHeader.classList.remove('scrolled-up'); 
-
-      currentGender = gender === 'girl' ? 'girl' : 'boy';
-      
-      document.body.classList.remove('neutral-hover'); 
-
-      playBtn.removeAttribute('disabled');
-      stopBtn.removeAttribute('disabled');
-      // Linha removida: speedBtn.removeAttribute('disabled');
-      printBtn.removeAttribute('disabled');
-      coloringBtn.removeAttribute('disabled'); 
-
-      btnBoy.classList.remove('active-boy', 'active-girl');
-      btnGirl.classList.remove('active-boy', 'active-girl');
-      if (currentGender === 'boy') {
-          btnBoy.classList.add('active-boy');
-      } else {
-          btnGirl.classList.add('active-girl');
-      }
-
-      imagesSection.style.display = 'flex';
-
-      updateContent(currentLang, currentGender);
-
-      narrator.stop();
-      const header = content[currentLang].header;
-      playBtn.textContent = header.play;
-      
-      const targetY = mainHeader.offsetTop; 
-      if (window.scrollY !== targetY) {
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-          let lastScrollY = window.scrollY;
-          function checkScrollEnd() {
-            if (window.scrollY === lastScrollY || window.scrollY <= targetY) {
-                mainHeader.classList.add('scrolled-up');
-                window.scrollTo({ top: targetY, behavior: 'instant' }); 
-                return;
-            }
-            lastScrollY = window.scrollY;
-            window.requestAnimationFrame(checkScrollEnd);
-          }
-          window.requestAnimationFrame(checkScrollEnd);
-      } else {
-          mainHeader.classList.add('scrolled-up');
-      }
-    }
-
-    // Narração — Web Speech API (AJUSTADA: Removido controle de velocidade)
-    const voicePrefs = {
-      pt: { boy: ['Julio','Ricardo','Felipe'], girl: ['Francisca','Heloisa','Camila'] },
-      en: { boy: ['Guy','Brian','Christopher'], girl: ['Aria','Jenny','Sarah'] },
-      es: { boy: ['Alvaro','Jorge','Miguel'],   girl: ['Elvira','Lucia','Marta'] },
-      fr: { boy: ['Henri','Paul','Philippe'],   girl: ['Denise','Celine','Amelie'] }
-    };
-    const localeMap = { pt: 'pt-BR', en: 'en-US', es: 'es-ES', fr: 'fr-FR' };
-    let availableVoices = [];
-
-    function voicesReady() {
-      return new Promise(resolve => {
-        const synth = window.speechSynthesis;
-        let tries = 0;
-        function check() {
-          const voices = synth.getVoices();
-          if (voices && voices.length > 0) {
-            availableVoices = voices;
-            resolve(voices);
-          } else if (tries++ < 20) {
-            setTimeout(check, 200);
-          } else {
-            availableVoices = voices || [];
-            resolve(availableVoices);
-          }
-        }
-        synth.onvoiceschanged = check;
-        check();
-      });
-    }
-
-    function pickVoice(langCode, gender) {
-      const locale = localeMap[langCode] || 'pt-BR';
-      const prefs = voicePrefs[langCode]?.[gender] || [];
-      let v = availableVoices.find(x => x.lang === locale && prefs.some(n => x.name.toLowerCase().includes(n.toLowerCase())));
-      if (v) return v;
-      v = availableVoices.find(x => x.lang === locale);
-      if (v) return v;
-      v = availableVoices.find(x => (x.lang || '').toLowerCase().startsWith(langCode));
-      if (v) return v;
-      return availableVoices[0] || null;
-    }
-
-    class Narrator {
-      constructor() {
-        this.synth = window.speechSynthesis;
-        this.rate = 0.95; // Taxa fixa
-        this.pitchGirl = 1.3;
-        this.pitchBoy = 1.2;
-        this.voice = null;
-        this.isPlaying = false;
-        this.isPaused = false;
-        this.text = '';
-        this.langCode = 'pt';
-        this.gender = 'boy';
-      }
-
-      async init(langCode, gender, text) {
-        await voicesReady();
-        this.voice = pickVoice(langCode, gender);
-        this.langCode = langCode;
-        this.gender = gender;
-        this.text = text;
-      }
-
-      play() {
-        if (!this.text) return;
-        
-        if (this.synth.speaking && this.isPaused) {
-             this.synth.resume();
-             this.isPaused = false;
-             this.isPlaying = true;
-             playBtn.textContent = '⏸️ Pausar Devocional';
-             return;
-        }
-
-        this.isPlaying = true;
-        this.isPaused = false;
-        this.synth.cancel(); 
-        const utter = new SpeechSynthesisUtterance(this.text);
-        utter.lang = localeMap[this.langCode] || 'pt-BR';
-        if (this.voice) utter.voice = this.voice;
-        utter.rate = this.rate;
-        utter.pitch = this.gender === 'girl' ? this.pitchGirl : this.pitchBoy;
-        
-        utter.onstart = () => {
-             playBtn.textContent = '⏸️ Pausar Devocional';
-        };
-        utter.onend = () => {
-             this.stop();
-             const header = content[currentLang].header;
-             playBtn.textContent = header.play;
-             
-             // Salva o progresso ao finalizar o áudio
-             saveProgress();
-        };
-
-        this.synth.speak(utter);
-      }
-
-      pause() {
-        if (!this.isPlaying) return;
-        this.isPaused = true;
-        this.isPlaying = false;
-        try { 
-            this.synth.pause();
-            playBtn.textContent = '▶️ Continuar';
-        } catch {}
-      }
-
-      stop() {
-        this.isPlaying = false;
-        this.isPaused = false;
-        try { this.synth.cancel(); } catch {}
-        const header = content[currentLang].header;
-        playBtn.textContent = header.play;
-      }
-      
-      // Método setRate removido
-    }
-
-    const narrator = new Narrator();
-
-    // Event Listeners
-    playBtn.addEventListener('click', async () => {
-      // Garante que o modo colorir esteja fechado se tentarem dar play
-      if(isColoringMode) toggleColoringMode(false);
-      
-      if (narrator.isPaused) {
-        narrator.play(); 
-        return;
-      }
-
-      if (narrator.isPlaying) {
-        narrator.pause();
-        return;
-      }
-
-      const text = (devBox.innerText || '').replace(/\s+/g, ' ').trim();
-      if (!text) return;
-      
-      await narrator.init(currentLang, currentGender, text);
-      narrator.play();
-    });
-
-    // Event Listener do speedBtn removido
-
-    stopBtn.addEventListener('click', () => {
-      narrator.stop();
-    });
-
-    // Inicialização
-    currentLang = 'pt';
-    currentGender = 'boy';
-
-    // 1. Carrega a paleta de cores
-    createColorPalette();
-
-    // Verifica o progresso salvo e ajusta o link do "Próximo Devocional" se necessário.
-    checkAndRedirect(); 
-
-    // 2. Carrega o idioma (para os textos dos botões e títulos)
-    setLang('pt'); 
-
-    // 3. Define o estado visual inicial (NEUTRO)
-    
-    // Gêneros: transparentes (sem classe 'active')
-    btnBoy.classList.remove('active-boy', 'active-girl');
-    btnGirl.classList.remove('active-boy', 'active-girl');
-    
-    // Tema: neutro para hover, mas mantém a cor padrão (boy) para a borda do header, etc.
-    document.body.classList.remove('boy', 'girl'); 
-    document.body.classList.add('boy'); 
-    document.body.classList.add('neutral-hover'); 
-    
-    // Botões de Áudio/Ação desabilitados
-    playBtn.setAttribute('disabled', 'disabled');
-    stopBtn.setAttribute('disabled', 'disabled');
-    // speedBtn.setAttribute('disabled', 'disabled'); removido
-    printBtn.setAttribute('disabled', 'disabled'); 
-    coloringBtn.setAttribute('disabled', 'disabled'); 
-    
-    // Imagem, Devocional e Modo Colorir ocultos
-    imagesSection.style.display = 'none';
-    devBox.style.display = 'none'; 
-    coloringModeEl.classList.remove('active');
-    
-    mainHeader.classList.remove('scrolled-up');
-    
-    // Reseta o estado inicial do zoom
-    zoomIdx = 0;
-    currentZoom = zoomLevels[0];
-    zoomBtn.textContent = `🔍 Zoom: 1.0x`;
-
-    // Garante que o áudio pare ao recarregar ou sair da página.
-    window.addEventListener('unload', () => {
-        if (window.speechSynthesis) {
-            window.speechSynthesis.cancel();
-        }
-    });
-
-  </script>
 </body>
-
 </html>
