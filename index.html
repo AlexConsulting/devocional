@@ -224,29 +224,35 @@
 
 
     /* ********************************************************** */
-    /* NOVO: AJUSTES PARA MOBILE (Media Query) */
+    /* AJUSTES PARA MOBILE (Media Query) */
     /* ********************************************************** */
     @media (max-width: 600px) {
         /* 1. Título principal */
         .title {
-            font-size: 1.5rem; /* Reduz o tamanho da fonte do título principal */
+            font-size: 1.5rem; 
             margin-bottom: 4px;
         }
 
         /* 2. Subtítulo */
         .subtitle {
-            margin-top: 4px; /* Adiciona um pequeno espaçamento no topo do subtítulo */
-            margin-bottom: 12px; /* Espaçamento menor abaixo */
+            margin-top: 4px; 
+            margin-bottom: 12px;
         }
 
         /* 3. Bandeira de Idiomas (Toggle) */
         #lang-container {
-            top: 8px; /* Move para mais perto do topo */
-            right: 8px; /* Move para mais perto da direita */
+            top: 8px; 
+            right: 8px; 
         }
         #lang-toggle-btn {
-            width: 38px; /* Reduz o tamanho do botão (de 44px) */
+            width: 38px; 
             height: 38px;
+        }
+        
+        /* 4. Botões de Gênero (NOVO AJUSTE) */
+        .gender-switch button {
+            padding: 8px 14px; /* Reduz o padding interno */
+            font-size: 0.95rem; /* Leve redução no tamanho da fonte */
         }
     }
     /* ********************************************************** */
@@ -776,9 +782,7 @@
         utter.pitch = this.gender === 'girl' ? this.pitchGirl : this.pitchBoy;
         
         utter.onstart = () => {
-             // LINHAS REMOVIDAS:
-             // devBox.style.display = 'block'; // Oculta o bloco de texto, conforme solicitado
-             // devBox.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Não rola para o texto
+             // O texto permanece oculto, conforme sua solicitação anterior.
              playBtn.textContent = '⏸️ Pausar Devocional';
         };
         utter.onend = () => {
