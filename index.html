@@ -29,8 +29,8 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        padding: 0; /* Garante que a imagem se encaixe */
-        overflow: hidden; /* Corta o excesso da imagem */
+        padding: 0; 
+        overflow: hidden; 
     }
     #lang-toggle-btn img {
         width: 100%;
@@ -88,17 +88,42 @@
     }
     /* FIM CSS DO SELETOR DE IDIOMAS */
 
-    header { padding: 16px; text-align: center; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .title { font-size: 1.8rem; margin: 0 0 8px; color: var(--theme); }
-    .subtitle { color: #555; margin: 0 0 16px; }
+    header { 
+        padding: 16px; 
+        text-align: center; 
+        background: #fff; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+        transition: padding 0.3s ease;
+    }
+    .title { font-size: 1.8rem; margin: 0 0 8px; color: var(--theme); transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease; }
+    .subtitle { color: #555; margin: 0 0 16px; transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease; }
+
+    /* ESTILO PARA OCULTAR TÍTULO E SUBTÍTULO APÓS ROLAGEM */
+    header.scrolled-up {
+        padding-top: 8px; /* Reduz o padding para "encolher" o header */
+        padding-bottom: 8px;
+    }
+
+    header.scrolled-up #mainTitle,
+    header.scrolled-up #subtitle {
+        opacity: 0;
+        height: 0; /* Colapsa a altura */
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        pointer-events: none;
+    }
 
     .container { max-width: 880px; margin: 0 auto; padding: 16px; }
     .card { background: #fff; border-radius: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.08); padding: 16px; margin-bottom: 20px; }
 
-    /* Esconde o bloco de texto do devocional (Versículo, Resumo, Aplicação, Oração) */
+    /* Esconde o bloco de texto do devocional */
     #devocional { display: none; }
 
     .gender-switch { margin: 12px 0; text-align: center; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    header.scrolled-up .gender-switch { margin-top: 0; }
+    
     .gender-switch button { 
       border-radius: 999px; padding: 10px 16px; font-weight: 600; cursor: pointer; font-size: 1rem; 
       background: transparent;
@@ -112,6 +137,7 @@
     .gender-switch button.active-girl { background: #e75480; border-color: #e75480; color: #fff; }
 
     .audio { display: flex; align-items: center; gap: 12px; justify-content: center; margin: 12px 0 20px; }
+    header.scrolled-up .audio { margin-top: 8px; }
     
     /* Estilo Outline Cinza Escuro para botões de áudio e ação */
     .audio button, .link-btn {
@@ -136,10 +162,13 @@
     }
     
     /* Regra 2: Hover neutro (cinza claro) - Estado inicial */
-    .neutral-hover .audio button:hover, .neutral-hover .link-btn:hover {
-        background: #f0f0f0; 
-        border-color: #555; 
-        color: #2b2b2b; 
+    /* Garante que o hover neutro se aplique aos botões de ação e áudio no estado inicial */
+    .neutral-hover .audio button:hover, 
+    .neutral-hover .link-btn:hover,
+    .neutral-hover .stop-btn:hover {
+        background: #f0f0f0 !important; /* !important para sobrescrever o estilo do stop-btn */
+        border-color: #555 !important; 
+        color: #2b2b2b !important; 
     }
     
     /* Estilo para botões desabilitados */
@@ -155,18 +184,19 @@
     /* O stop-btn usa borda e cor de fundo */
     .stop-btn { background: #f44336; color: #fff; border: 2px solid #f44336; border-radius: 999px; padding: 10px 16px;
       font-weight: 600; cursor: pointer; font-size: 1rem; transition: background 0.2s ease; }
-    .neutral-hover .stop-btn:hover { background: #f0f0f0; border-color: #555; color: #2b2b2b; }
-    body:not(.neutral-hover) .stop-btn:hover { background: #d32f2f; border-color: #d32f2f; }
-    .stop-btn[disabled] { background: transparent !important; color: #555 !important; border-color: #555 !important; }
+    
+    body:not(.neutral-hover) .stop-btn:hover { 
+        background: #d32f2f; border-color: #d32f2f; 
+    }
 
     /* Centraliza a única imagem */
     #imagesSection { 
-      /* OCULTA por padrão */
+      /* OCULTA no estado neutro (será alterado para 'flex' em setGender) */
       display: none;
-      /* Exibe como flex para centralizar o único figure quando visível */
       justify-content: center; 
       margin-top: 16px; 
     }
+    header.scrolled-up #imagesSection { margin-top: 8px; }
 
     figure { 
       margin: 0; 
@@ -175,8 +205,7 @@
       padding: 10px; 
       text-align: center; 
       border: 2px solid var(--theme); 
-      max-width: 320px; /* Desenho Colorido Reduzido */
-      /* Garante que o figure preencha o máximo permitido na centralização */
+      max-width: 320px; 
       width: 100%; 
     }
     img { 
@@ -194,7 +223,7 @@
     body.girl { --theme: #e75480; }
   </style>
 </head>
-<body class="boy">
+<body class="boy neutral-hover">
   <div id="lang-container">
     <button id="lang-toggle-btn" title="Selecionar Idioma" onclick="toggleLangSwitch()">
         <img id="current-lang-flag" src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Bandeira do Brasil">
@@ -207,7 +236,7 @@
     </div>
   </div>
 
-  <header>
+  <header id="mainHeader">
     <h1 id="mainTitle" class="title">Devocional Infantil</h1>
     <p id="subtitle" class="subtitle"></p>
 
@@ -230,7 +259,7 @@
   <main class="container">
     <div id="devocional" class="card"></div>
     <div class="buttons">
-      <a id="printBtn" class="link-btn" href="" target="_blank">Imprimir</a>
+      <a id="printBtn" class="link-btn" href="" target="_blank" disabled>Imprimir</a>
       <a id="nextBtn" class="link-btn" href="/devocionais/dia-2.html">Próximo devocional</a>
     </div>
   </main>
@@ -258,7 +287,8 @@
     const btnGirl = document.getElementById('btnGirl');
     const imagesSection = document.getElementById('imagesSection'); 
     const langSwitchEl = document.querySelector('.lang-switch');
-    const currentLangFlagEl = document.getElementById('current-lang-flag'); // NOVO: Referência para a bandeira no botão de toggle
+    const currentLangFlagEl = document.getElementById('current-lang-flag');
+    const mainHeader = document.getElementById('mainHeader'); // Referência ao header para a rolagem
 
     // Dados das Bandeiras para o Botão de Toggle
     const flagData = {
@@ -273,11 +303,9 @@
         langSwitchEl.classList.toggle('active');
     }
 
-    // NOVOS CAMINHOS DE IMAGEM UNIFICADOS (AGORA RELATIVOS, CONFORME SOLICITADO)
+    // CAMINHOS DE IMAGEM UNIFICADOS (RELATIVOS)
     const BOY_COLOR_IMG = './img/dia-1/boy.png'; 
     const GIRL_COLOR_IMG = './img/dia-1/girl.png'; 
-    
-    // Caminhos originais para BW e Print (AJUSTADOS PARA RELATIVOS)
     const BOY_BW_IMG = './img/dia-1/menino_para_colorir.webp'; 
     const GIRL_BW_IMG = './img/dia-1/menina_para_colorir.webp';
     const BOY_PRINT_PDF = './print/dia-1/menino_para_colorir.pdf';
@@ -329,13 +357,12 @@
           girl: '👧 Sou Menina'
         },
         images: {
-          // Usa os caminhos RELATIVOS
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      en: {
+      en: { /* ... (Conteúdo em EN inalterado) ... */
         header: {
             mainTitle: 'Devotional for Children',
             htmlTitle: 'Devotional for Children — Day 1',
@@ -379,11 +406,11 @@
         },
         images: {
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      es: {
+      es: { /* ... (Conteúdo em ES inalterado) ... */
         header: {
             mainTitle: 'Devocional para Niños',
             htmlTitle: 'Devocional para Niños — Día 1',
@@ -427,11 +454,11 @@
         },
         images: {
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      fr: {
+      fr: { /* ... (Conteúdo em FR inalterado) ... */
         header: {
             mainTitle: 'Dévotion pour Enfants',
             htmlTitle: 'Dévotion pour Enfants — Jour 1',
@@ -467,7 +494,7 @@
         },
         captions: { color: 'Image en couleur', bw: 'Page à colorier' },
         buttons: {
-          printBoy: 'Imprimer le dessin (Garçon)',
+          printBoy: 'Imprimir le dessin (Garçon)',
           printGirl: 'Imprimer le dessin (Fille)',
           next: 'Dévotion suivante',
           boy: '👦 Je suis un Garçon',
@@ -475,7 +502,7 @@
         },
         images: {
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       }
@@ -494,7 +521,7 @@
         subtitleEl.textContent = cfg.title;
         devBox.innerHTML = cfg.html;
 
-        // ATUALIZA A FONTE DA IMAGEM COLORIDA (com o novo caminho RELATIVO)
+        // ATUALIZA A FONTE DA IMAGEM COLORIDA
         imgColorSrc.src = cfgLang.images[gender].color;
 
         // ATUALIZA O TEXTO ALT da imagem colorida
@@ -559,18 +586,23 @@
     }
 
     function setGender(gender) {
+      // 1. Remove a classe que oculta o título/subtítulo, caso ela exista
+      mainHeader.classList.remove('scrolled-up'); 
+      // 2. Oculta o texto do devocional se estiver visível (retorna ao estado inicial)
+      devBox.style.display = 'none';
+
       currentGender = gender === 'girl' ? 'girl' : 'boy';
       
-      // 1. Remove a classe de hover neutro (pois um tema foi escolhido)
+      // 3. Remove a classe de hover neutro (pois um tema foi escolhido)
       document.body.classList.remove('neutral-hover'); 
 
-      // 2. Habilita os botões de áudio/ação
+      // 4. Habilita os botões de áudio/ação 
       playBtn.removeAttribute('disabled');
       stopBtn.removeAttribute('disabled');
       speedBtn.removeAttribute('disabled'); 
       printBtn.removeAttribute('disabled');
 
-      // 3. Gerencia a classe 'active' para os botões de gênero
+      // 5. Gerencia a classe 'active' para os botões de gênero
       btnBoy.classList.remove('active-boy', 'active-girl');
       btnGirl.classList.remove('active-boy', 'active-girl');
       if (currentGender === 'boy') {
@@ -579,19 +611,55 @@
           btnGirl.classList.add('active-girl');
       }
 
-      // 4. Exibe a seção de imagens (TIRANDO O DISPLAY: NONE DO CSS)
+      // 6. Exibe a seção de imagens
       imagesSection.style.display = 'flex';
 
-      // 5. Atualiza conteúdo e tema do body (chama updateContent)
+      // 7. Atualiza conteúdo e tema do body (chama updateContent)
       updateContent(currentLang, currentGender);
 
-      // Garante que o texto do play/pause seja redefinido para 'Play' após a mudança de conteúdo/gênero
+      // 8. Garante que o texto do play/pause seja redefinido para 'Play' após a mudança de conteúdo/gênero
       narrator.stop(); // Para a narração ativa, se houver
       const header = content[currentLang].header;
       playBtn.textContent = header.play;
+      
+      
+      // **LÓGICA DE ROLAGEM E OCULTAR TÍTULO/SUBTÍTULO**
+      
+      const targetY = mainHeader.offsetTop; // Posição Y do topo do cabeçalho
+      
+      // A rolagem só é necessária se a página não estiver já no topo
+      if (window.scrollY !== targetY) {
+          window.scrollTo({ 
+              top: targetY, 
+              behavior: 'smooth' 
+          });
+
+          // Verifica quando a rolagem termina para aplicar a classe que oculta
+          let lastScrollY = window.scrollY;
+          
+          function checkScrollEnd() {
+            // Se a rolagem parou OU atingiu o topo desejado
+            if (window.scrollY === lastScrollY || window.scrollY <= targetY) {
+                // A rolagem terminou: aplica a classe para ocultar o título/subtítulo
+                mainHeader.classList.add('scrolled-up');
+                
+                // Corrige o posicionamento final (caso o smooth não tenha sido exato)
+                window.scrollTo({ top: targetY, behavior: 'instant' }); 
+                return;
+            }
+
+            lastScrollY = window.scrollY;
+            window.requestAnimationFrame(checkScrollEnd);
+          }
+          
+          window.requestAnimationFrame(checkScrollEnd);
+      } else {
+          // Se já estava na posição, aplica a classe imediatamente
+          mainHeader.classList.add('scrolled-up');
+      }
     }
 
-    // Narração — Web Speech API (Mantido inalterado)
+    // Narração — Web Speech API (Corrigido para não exibir o texto)
     const voicePrefs = {
       pt: { boy: ['Julio','Ricardo','Felipe'], girl: ['Francisca','Heloisa','Camila'] },
       en: { boy: ['Guy','Brian','Christopher'], girl: ['Aria','Jenny','Sarah'] },
@@ -677,6 +745,9 @@
         utter.pitch = this.gender === 'girl' ? this.pitchGirl : this.pitchBoy;
         
         utter.onstart = () => {
+             // LINHAS REMOVIDAS:
+             // devBox.style.display = 'block'; // Oculta o bloco de texto, conforme solicitado
+             // devBox.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Não rola para o texto
              playBtn.textContent = '⏸️ Pausar Devocional';
         };
         utter.onend = () => {
@@ -754,23 +825,32 @@
     currentLang = 'pt';
     currentGender = 'boy';
 
-    // 1. Carrega o idioma 
+    // 1. Carrega o idioma (para os textos dos botões e títulos)
     setLang('pt'); 
 
-    // 2. Define o estado visual inicial: botões de gênero transparentes, hover neutro.
-    btnBoy.classList.remove('active-boy');
-    btnGirl.classList.remove('active-girl');
+    // 2. Define o estado visual inicial (NEUTRO)
+    
+    // Gêneros: transparentes (sem classe 'active')
+    btnBoy.classList.remove('active-boy', 'active-girl');
+    btnGirl.classList.remove('active-boy', 'active-girl');
+    
+    // Tema: neutro para hover, mas mantém a cor padrão (boy) para a borda do header, etc.
     document.body.classList.remove('boy', 'girl'); 
-    document.body.classList.add('neutral-hover');
-
-    // 3. Garante que os botões de áudio/ação estejam desabilitados no carregamento inicial
+    document.body.classList.add('boy'); 
+    document.body.classList.add('neutral-hover'); 
+    
+    // Botões de Áudio/Ação desabilitados
     playBtn.setAttribute('disabled', 'disabled');
     stopBtn.setAttribute('disabled', 'disabled');
     speedBtn.setAttribute('disabled', 'disabled');
     printBtn.setAttribute('disabled', 'disabled'); 
     
-    // 4. Garante que a seção de imagens esteja OCULTA no carregamento inicial
+    // Imagem e Devocional ocultos
     imagesSection.style.display = 'none';
+    devBox.style.display = 'none';
+    
+    // Garante que o cabeçalho NÃO esteja encolhido no carregamento
+    mainHeader.classList.remove('scrolled-up');
 
   </script>
 </body>
