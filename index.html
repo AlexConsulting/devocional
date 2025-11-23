@@ -122,7 +122,7 @@
     #devocional { display: none; }
     
     /* ********************************************************** */
-    /* ESTILOS DO MODO DE COLORIR (NOVO) */
+    /* ESTILOS DO MODO DE COLORIR (AJUSTADO) */
     /* ********************************************************** */
 
     #coloring-mode {
@@ -130,30 +130,50 @@
         flex-direction: column;
         align-items: center;
         margin-top: 16px;
-        padding: 16px;
+        
+        padding: 10px; 
+        max-width: 256px; 
+        
         background: #fff;
         border-radius: 16px;
         box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+        
+        margin-left: auto;
+        margin-right: auto;
     }
     
     #coloring-mode.active {
         display: flex;
     }
     
-    /* NOVO: Wrapper para o Canvas, necessário para o Zoom e o Scroll */
+    /* Wrapper para o Canvas: Define a área visível e o scroll */
     #canvas-wrapper {
-        overflow: auto; /* Adiciona scrollbars quando o conteúdo (canvas) é maior */
+        /* PROPRIEDADES AJUSTADAS PARA O SCROLL E DIMENSIONAMENTO */
+        overflow: auto; 
         max-width: 100%;
-        margin-bottom: 10px; /* Espaço entre o canvas e a paleta */
-    }
-    /* Estilos do Canvas */
-    #coloring-canvas {
-        /* max-width: 100%; Removido pois o canvas deve ter seu tamanho nativo */
-        height: auto;
+        /* Altura máxima para permitir rolagem vertical (opcional) */
+        max-height: 400px; 
+        
+        margin-bottom: 10px;
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        
         border: 2px solid #ccc;
         border-radius: 8px;
-        cursor: crosshair; /* Cursor visual de pintura */
-        /* O estilo de largura e altura do canvas será gerenciado pelo JS/transform */
+    }
+    
+    /* Estilos do Canvas */
+    #coloring-canvas {
+        /* GARANTE QUE O CANVAS NUNCA EXCEDA O TAMANHO DO PAI ANTES DO ZOOM */
+        max-width: 100%; 
+        height: auto;
+        display: block; 
+        cursor: crosshair; 
+        
+        /* Reset de transform padrão, a ser controlado pelo JS */
+        transform: scale(1);
+        transform-origin: top left;
     }
     
     #color-palette {
@@ -272,7 +292,7 @@
       padding: 10px; 
       text-align: center; 
       border: 2px solid var(--theme); 
-      max-width: 320px; 
+      max-width: 256px; 
       width: 100%; 
     }
     img { 
@@ -388,7 +408,7 @@
     <div class="buttons">
       <a id="coloringBtn" class="link-btn" onclick="toggleColoringMode(true)" disabled>🎨 Colorir Digitalmente</a>
       <a id="printBtn" class="link-btn" href="" target="_blank" disabled>Imprimir</a>
-      <a id="nextBtn" class="link-btn" href="/devocionais/dia-2.html">Próximo devocional</a>
+      <a id="nextBtn" class="link-btn" href="/devocionais/dia-2.html" onclick="saveProgress()">Próximo devocional</a>
     </div>
   </main>
 
@@ -424,8 +444,8 @@
     const colorPaletteEl = document.getElementById('color-palette');
     const coloringBtn = document.getElementById('coloringBtn');
     const closeColoringBtn = document.getElementById('closeColoringBtn');
-    const canvasWrapper = document.getElementById('canvas-wrapper'); // NOVO
-    const zoomBtn = document.getElementById('zoomBtn'); // NOVO
+    const canvasWrapper = document.getElementById('canvas-wrapper'); 
+    const zoomBtn = document.getElementById('zoomBtn'); 
     
     // Adicionamos { willReadFrequently: true } para otimizar o getImageData
     const ctx = coloringCanvas.getContext('2d', { willReadFrequently: true }); 
@@ -434,18 +454,56 @@
     let selectedColor = '#FF0000'; // Cor inicial: Vermelho
     let currentColoringPath = ''; // Armazena o caminho da imagem P&B atual
     
-    // Variáveis do Zoom (NOVO)
+    // Variáveis do Zoom
     const zoomLevels = [1.0, 1.5, 2.0, 3.0]; // Níveis de zoom
     let zoomIdx = 0;
     let currentZoom = zoomLevels[0];
 
-    // Paleta de cores para o modo de colorir (EXPANDIDA)
+    // Paleta de cores para o modo de colorir
     const COLORS = [
-        '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', // Cores primárias/secundárias
-        '#FF8000', '#8000FF', '#008000', '#800000', // Terciárias e Escuros
-        '#FFC0CB', '#ADD8E6', '#90EE90', '#F4A460', // Pastéis/Tons Claros
-        '#A52A2A', '#808080', '#000000', '#FFFFFF'  // Marrom, Cinza, Preto, Branco
+        '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', 
+        '#FF8000', '#8000FF', '#008000', '#800000', 
+        '#FFC0CB', '#ADD8E6', '#90EE90', '#F4A460', 
+        '#A52A2A', '#808080', '#000000', '#FFFFFF'  
     ];
+    
+    // **********************************************************
+    // Lógica de Progresso (NOVA)
+    // **********************************************************
+    const STORAGE_KEY = 'dev_babys';
+    // Se o arquivo atual é o Dia 1, o próximo dia é o Dia 2.
+    const CURRENT_DEVOTIONAL_DAY = 1; 
+    const NEXT_DEVOTIONAL_DAY = 2; 
+
+    function saveProgress() {
+        if (typeof localStorage !== 'undefined') {
+            // Salva o número do próximo dia a ser feito.
+            localStorage.setItem(STORAGE_KEY, NEXT_DEVOTIONAL_DAY.toString());
+            console.log(`Progresso salvo para ${STORAGE_KEY}: Próximo dia é ${NEXT_DEVOTIONAL_DAY}`);
+        }
+    }
+    
+    function checkAndRedirect() {
+        if (typeof localStorage !== 'undefined') {
+            const savedDay = parseInt(localStorage.getItem(STORAGE_KEY));
+            
+            // Verifica se o progresso indica um dia posterior
+            if (!isNaN(savedDay) && savedDay > CURRENT_DEVOCIONAL_DAY) {
+                const targetHref = `/devocionais/dia-${savedDay}.html`;
+                
+                // Atualiza o link do botão "Próximo Devocional" para o dia correto.
+                nextBtn.href = targetHref;
+                
+                console.log(`Progresso encontrado: Ajustando link para o Dia ${savedDay} (${targetHref})`);
+            } else {
+                 console.log(`Progresso não encontrado ou está no dia correto (${CURRENT_DEVOTIONAL_DAY}).`);
+            }
+        }
+    }
+    // **********************************************************
+    // FIM Lógica de Progresso
+    // **********************************************************
+
 
     // Funções de UI
     function toggleLangSwitch() {
@@ -477,7 +535,6 @@
         if (!currentColoringPath) return;
 
         const { width, height } = coloringCanvas;
-        // Tenta obter a imagem data. Isso pode falhar silenciosamente se o canvas estiver "contaminado" (tainted)
         try {
             const imageData = ctx.getImageData(0, 0, width, height);
             const data = imageData.data;
@@ -534,39 +591,38 @@
         }
     }
 
-    // Função para alternar o nível de zoom (NOVO)
+    // Função para alternar o nível de zoom (AJUSTADA)
     function toggleZoom() {
         // Cicla entre os níveis de zoom
         zoomIdx = (zoomIdx + 1) % zoomLevels.length;
         currentZoom = zoomLevels[zoomIdx];
         
-        // Aplica o zoom via CSS transform
-        canvasWrapper.style.transformOrigin = 'top left'; 
-        canvasWrapper.style.transform = `scale(${currentZoom})`;
+        // Aplica o zoom diretamente no CANVAS
+        coloringCanvas.style.transformOrigin = 'top left'; 
+        coloringCanvas.style.transform = `scale(${currentZoom})`;
         
         zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`;
         
-        // Ajusta a largura e altura do wrapper para que o canvas escalado caiba e o scrollbar apareça
+        // Ajusta o tamanho do wrapper para o tamanho escalado do canvas
         if (currentZoom > 1.0) {
-            // Define o tamanho do wrapper para o tamanho escalado do canvas
+            // O tamanho do wrapper agora reflete o tamanho escalado do canvas, permitindo o scroll
             canvasWrapper.style.width = `${coloringCanvas.width * currentZoom}px`;
             canvasWrapper.style.height = `${coloringCanvas.height * currentZoom}px`;
+            canvasWrapper.style.overflow = 'auto'; // Habilita o scroll
         } else {
-            // Volta ao tamanho original
+            // Volta ao tamanho original (com limites max-width/max-height definidos no CSS)
             canvasWrapper.style.width = '100%'; 
             canvasWrapper.style.height = 'auto'; 
+            canvasWrapper.style.overflow = 'hidden'; // Desabilita o scroll quando não há zoom
         }
     }
 
-    // Manipulador de clique no canvas (AJUSTADO PARA O ZOOM)
+    // Manipulador de clique no canvas
     function handleColoringClick(event) {
-        // Garante que o canvas está visível
         if (!isColoringMode) return;
 
-        // Obtém a posição do clique relativa ao elemento
         const rect = coloringCanvas.getBoundingClientRect();
         
-        // Determina as coordenadas do clique (para mouse ou primeiro toque)
         let clientX, clientY;
         if (event.touches && event.touches.length > 0) {
             clientX = event.touches[0].clientX;
@@ -576,29 +632,24 @@
             clientY = event.clientY;
         }
         
-        // Calcula a posição do clique relativa ao topo/esquerda do canvas VISUAL
         const x_visual = clientX - rect.left;
         const y_visual = clientY - rect.top;
         
-        // 1. Coordenadas RAW (0 a width/height)
         // A escala real de pixels do canvas (canvas.width / rect.width)
         const scaleX = coloringCanvas.width / rect.width;
         const scaleY = coloringCanvas.height / rect.height;
         
-        // 2. Coordenadas do pixel no canvas INTERNO (ajustadas pela escala visual e pelo zoom)
-        // Como o rect.width/height é o tamanho escalado, ajustamos apenas para o zoom
-        // Se usarmos event.target.clientWidth/height, a proporção (scaleX/Y) já inclui o zoom.
-        // Se a escala for aplicada no wrapper, o rect.width já é o tamanho com zoom.
-        
+        // Coordenadas do pixel no canvas INTERNO (ajustadas pela escala visual e pelo zoom)
+        // Usa o currentZoom para reverter o efeito da transformação CSS
         const x_original = Math.floor(x_visual * scaleX / currentZoom);
         const y_original = Math.floor(y_visual * scaleY / currentZoom);
         
-        // Ajuste para garantir que as coordenadas fiquem dentro dos limites do canvas
         const x = Math.min(Math.max(0, x_original), coloringCanvas.width - 1);
         const y = Math.min(Math.max(0, y_original), coloringCanvas.height - 1);
         
         floodFill(x, y, selectedColor);
     }
+
 
     // Define a cor selecionada (chamado ao clicar nos swatches)
     function setColor(color, element) {
@@ -624,13 +675,13 @@
         });
     }
 
-    // Carrega a imagem P&B no canvas e prepara para colorir
+    // Carrega a imagem P&B no canvas e prepara para colorir (AJUSTADA)
     function initColoringMode() {
         const imagePath = content[currentLang].images[currentGender].bw;
         
-        // CORREÇÃO: Apenas retorna se a imagem já foi carregada com sucesso antes.
         if (!imagePath) return;
 
+        // Se a imagem P&B já está carregada no canvas (para evitar recarregar)
         if (imagePath === currentColoringPath && coloringCanvas.width > 0) {
             // Garante que o estado visual do zoom seja redefinido ao reabrir o modo
             if (currentZoom !== 1.0) {
@@ -651,16 +702,16 @@
             // Desenha a imagem P&B
             ctx.drawImage(img, 0, 0);
             
-            // NOVO: Reseta o zoom para 1.0x e ajusta o wrapper
+            // Reseta o zoom para 1.0x e ajusta o wrapper
             zoomIdx = 0;
             currentZoom = zoomLevels[0];
-            canvasWrapper.style.transform = `scale(1.0)`;
+            coloringCanvas.style.transform = `scale(1.0)`; // Aplica o reset diretamente no canvas
             canvasWrapper.style.width = '100%'; 
             canvasWrapper.style.height = 'auto'; 
+            canvasWrapper.style.overflow = 'hidden'; // Esconde o scrollbar inicialmente
             zoomBtn.textContent = `🔍 Zoom: 1.0x`;
         };
         
-        // NOVO: Adiciona um manipulador de erro para ajudar a depurar o caminho da imagem.
         img.onerror = function() {
             console.error('ERRO: A imagem P&B para colorir não foi carregada. Verifique se o arquivo existe em:', imagePath);
             alert('ERRO: A imagem para colorir não foi encontrada. Verifique se o arquivo está na pasta correta: ' + imagePath);
@@ -688,15 +739,23 @@
             
             initColoringMode();
         } else {
-            // Sai do modo colorir: o bloco devocional permanecerá oculto.
+            // Sai do modo colorir: Garante que a imagem colorida esteja visível se o gênero foi selecionado
             coloringModeEl.classList.remove('active');
             
-            // Apenas reexibe a seção de imagens. O texto (#devocional) permanece oculto.
-            imagesSection.style.display = 'flex';
+            if (!document.body.classList.contains('neutral-hover')) {
+                imagesSection.style.display = 'flex';
+            } else {
+                imagesSection.style.display = 'none';
+            }
             
-            // NOVO: Reseta o zoom ao fechar
+            // Reseta o zoom ao fechar
             if (currentZoom !== 1.0) {
-                toggleZoom();
+                if (zoomBtn && !zoomBtn.disabled) {
+                    toggleZoom();
+                } else {
+                    zoomIdx = 0;
+                    currentZoom = zoomLevels[0];
+                }
             }
 
             // LIMPA O CANVAS ao fechar
@@ -710,11 +769,9 @@
     coloringCanvas.addEventListener('touchstart', (e) => {
         e.preventDefault(); // Previne o zoom ou rolagem do mobile
         if (e.touches && e.touches.length > 0) {
-            // Transforma o toque em um evento de clique para a função floodFill
             handleColoringClick({ 
                 clientX: e.touches[0].clientX, 
                 clientY: e.touches[0].clientY,
-                // Adiciona o target para que a função getBoundingClientRect funcione corretamente
                 target: coloringCanvas 
             });
         }
@@ -723,7 +780,7 @@
     // Adiciona o manipulador de clique ao botão de fechar
     closeColoringBtn.addEventListener('click', () => toggleColoringMode(false));
     
-    // Adiciona o manipulador de clique ao botão de zoom (NOVO)
+    // Adiciona o manipulador de clique ao botão de zoom
     zoomBtn.addEventListener('click', toggleZoom);
 
     // CAMINHOS DE IMAGEM UNIFICADOS (RELATIVOS)
@@ -736,7 +793,7 @@
     const GIRL_PRINT_PDF = './print/dia-1/menina_para_colorir.pdf';
 
 
-    // Conteúdo por idioma e gênero (Inalterado)
+    // Conteúdo por idioma e gênero (Completo com PT, EN, ES, FR)
     const content = {
       pt: {
         header: {
@@ -772,7 +829,7 @@
             <p>“Querido Deus, obrigada porque a salvação é um presente de Jesus. Me ajuda a lembrar que o Senhor me ama até quando eu erro. E que minhas boas ações não compram o Teu amor. Amém!”</p>
           `
         },
-        captions: { color: 'Imagem colorida', bw: 'Para colorir' },
+        captions: { color: 'Presente de Deus', bw: 'Para colorir' },
         buttons: {
           printBoy: 'Imprimir Desenho (Menino)',
           printGirl: 'Imprimir Desenho (Menina)',
@@ -787,7 +844,7 @@
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      en: { /* ... (Conteúdo em EN) ... */
+      en: { 
         header: {
             mainTitle: 'Devotional for Children',
             htmlTitle: 'Devotional for Children — Day 1',
@@ -795,9 +852,33 @@
             speed: 'Speed',
             stop: '⏹️ Stop',
         },
-        boy: { title: "Day 1 — God’s Unique Gift", html: `<h3>Key Verse...` },
-        girl: { title: "Day 1 — God’s Unique Gift", html: `<h3>Key Verse...` },
-        captions: { color: 'Colored image', bw: 'Coloring page' },
+        boy: { 
+          title: "Day 1 — God’s Unique Gift", 
+          html: `
+            <h3>Key Verse</h3>
+            <p><strong>Galatians 1:8-9 (NIV):</strong> “But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God’s curse!”</p>
+            <h3>Summary</h3>
+            <p>There is only one incredible news about how we become friends with God: salvation is a gift that Jesus gives us. It is not a trophy that we win by doing everything right or obeying a lot of rules. It is only by God's grace—the most valuable gift there is.</p>
+            <h3>Practical Application</h3>
+            <p>Have you ever thought you need to be the best, always obey, or never make a mistake for God to like you more? You don't need to! Jesus has already done everything for you. Be thankful and trust: His love doesn't depend on your performance.</p>
+            <h3>Prayer</h3>
+            <p>“Dear God, thank you that salvation is a gift from Jesus. Help me remember that You love me even when I make mistakes. And that my good deeds do not buy Your love. Amen!”</p>
+          `
+        },
+        girl: { 
+          title: "Day 1 — God’s Unique Gift", 
+          html: `
+            <h3>Key Verse</h3>
+            <p><strong>Galatians 1:8-9 (NIV):</strong> “But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God’s curse!”</p>
+            <h3>Summary</h3>
+            <p>There is only one wonderful news about how we become friends with God: salvation is a gift that Jesus gives us. It is not a medal for those who do everything right. It is just His grace—a gift of love that cannot be exchanged, completed, or improved.</p>
+            <h3>Practical Application</h3>
+            <p>Sometimes you might think you need to be perfect, never make a mistake, or always please everyone for God to love you. But Jesus' love is already complete, just the way you are. You can rest in this: Jesus has already done everything you need.</p>
+            <h3>Prayer</h3>
+            <p>“Dear God, thank you that salvation is a gift from Jesus. Help me remember that You love me even when I make mistakes. And that my good deeds do not buy Your love. Amen!”</p>
+          ` 
+        },
+        captions: { color: 'Gift from God', bw: 'Coloring page' },
         buttons: {
           printBoy: 'Print Coloring Page (Boy)',
           printGirl: 'Print Coloring Page (Girl)',
@@ -812,7 +893,7 @@
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      es: { /* ... (Conteúdo em ES) ... */
+      es: { 
         header: {
             mainTitle: 'Devocional para Niños',
             htmlTitle: 'Devocional para Niños — Día 1',
@@ -820,9 +901,33 @@
             speed: 'Velocidad',
             stop: '⏹️ Parar',
         },
-        boy: { title: 'Día 1 — El Regalo Único de Dios', html: `<h3>Versículo Clave...` },
-        girl: { title: 'Día 1 — El Regalo Único de Dios', html: `<h3>Versículo Clave...` },
-        captions: { color: 'Imagen a color', bw: 'Página para colorear' },
+        boy: { 
+          title: 'Día 1 — El Regalo Único de Dios', 
+          html: `
+            <h3>Versículo Clave</h3>
+            <p><strong>Gálatas 1:8-9 (NVI):</strong> “Pero si aun nosotros, o un ángel del cielo, les anunciamos un evangelio diferente del que les hemos anunciado, ¡sea anatema!”</p>
+            <h3>Resumen</h3>
+            <p>Solo hay una noticia increíble sobre cómo nos hacemos amigos de Dios: la salvación es un regalo que Jesús nos da. No es un trofeo que ganamos haciendo todo bien u obedeciendo un montón de reglas. Es solo por la gracia de Dios, el regalo más valioso que existe.</p>
+            <h3>Aplicación Práctica</h3>
+            <p>¿Alguna vez pensaste que necesitas ser el mejor, obedecer siempre o nunca equivocarte para que le gustes más a Dios? ¡No es necesario! Jesús ya hizo todo por ti. Agradece y confía: Su amor no depende de tu desempeño.</p>
+            <h3>Oración</h3>
+            <p>“Querido Dios, gracias porque la salvación es un regalo de Jesús. Ayúdame a recordar que me amas incluso cuando me equivoco. Y que mis buenas acciones no compran Tu amor. ¡Amén!”</p>
+          ` 
+        },
+        girl: { 
+          title: 'Día 1 — El Regalo Único de Dios', 
+          html: `
+            <h3>Versículo Clave</h3>
+            <p><strong>Gálatas 1:8-9 (NVI):</strong> “Pero si aun nosotros, o un ángel del cielo, les anunciamos un evangelio diferente del que les hemos anunciado, ¡sea anatema!”</p>
+            <h3>Resumen</h3>
+            <p>Solo hay una noticia maravillosa sobre cómo nos hacemos amigas de Dios: la salvación es un regalo que Jesús nos da. No es una medalla para quien hace todo correctamente. Es solo Su gracia, un regalo de amor que no se puede cambiar, completar ni mejorar.</p>
+            <h3>Aplicación Práctica</h3>
+            <p>A veces puedes pensar que necesitas ser perfecta, nunca equivocarte o agradar a todos para que Dios te ame. Pero el amor de Jesús ya es completo, tal como eres. Puedes descansar en esto: Jesús ya hizo todo lo que necesitas.</p>
+            <h3>Oración</h3>
+            <p>“Querido Dios, gracias porque la salvación es un regalo de Jesús. Ayúdame a recordar que me amas incluso cuando me equivoco. Y que mis buenas acciones no compran Tu amor. ¡Amén!”</p>
+          ` 
+        },
+        captions: { color: 'Regalo de Dios', bw: 'Página para colorear' },
         buttons: {
           printBoy: 'Imprimir dibujo (Niño)',
           printGirl: 'Imprimir dibujo (Niña)',
@@ -837,7 +942,7 @@
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       },
-      fr: { /* ... (Conteúdo em FR) ... */
+      fr: { 
         header: {
             mainTitle: 'Dévotion pour Enfants',
             htmlTitle: 'Dévotion pour Enfants — Jour 1',
@@ -845,9 +950,33 @@
             speed: 'Vitesse',
             stop: '⏹️ Arrêter',
         },
-        boy: { title: 'Jour 1 — Le Cadeau Unique de Dieu', html: `<h3>Verset Clé...` },
-        girl: { title: 'Jour 1 — Le Cadeau Unique de Dieu', html: `<h3>Verset Clé...` },
-        captions: { color: 'Image en couleur', bw: 'Page à colorier' },
+        boy: { 
+          title: 'Jour 1 — Le Cadeau Unique de Dieu', 
+          html: `
+            <h3>Verset Clé</h3>
+            <p><strong>Galates 1:8-9 (LSG):</strong> “Mais si nous-mêmes, ou un ange du ciel, vous annonçait un Évangile s’écartant de celui que nous vous avons annoncé, qu’il soit anathème !”</p>
+            <h3>Résumé</h3>
+            <p>Il n'y a qu'une seule nouvelle incroyable sur la façon dont nous devenons amis avec Dieu : le salut est un cadeau que Jésus nous offre. Ce n'est pas un trophée que l'on gagne en faisant tout bien ou en obéissant à beaucoup de règles. C'est uniquement par la grâce de Dieu, le cadeau le plus précieux qui soit.</p>
+            <h3>Application Pratique</h3>
+            <p>As-tu déjà pensé que tu devais être le meilleur, obéir toujours, ou ne jamais te tromper pour que Dieu t'aime davantage ? Ce n'est pas nécessaire ! Jésus a déjà tout fait pour toi. Remercie et aie confiance : Son amour ne dépend pas de tes performances.</p>
+            <h3>Prière</h3>
+            <p>“Cher Dieu, merci parce que le salut est un cadeau de Jésus. Aide-moi à me souvenir que Tu m'aimes même lorsque je me trompe. Et que mes bonnes actions n'achètent pas Ton amour. Amen !”</p>
+          `
+        },
+        girl: { 
+          title: 'Jour 1 — Le Cadeau Unique de Dieu', 
+          html: `
+            <h3>Verset Clé</h3>
+            <p><strong>Galates 1:8-9 (LSG):</strong> “Mais si nous-mêmes, ou un ange du ciel, vous annonçait un Évangile s’écartant de celui que nous vous avons annoncé, qu’il soit anathème !”</p>
+            <h3>Résumé</h3>
+            <p>Il n'y a qu'une seule nouvelle merveilleuse sur la façon dont nous devenons amies avec Dieu : le salut est un cadeau que Jésus nous offre. Ce n'est pas une médaille pour celle qui fait tout correctement. C'est juste Sa grâce, un cadeau d'amour qui ne peut être ni échangé, ni complété, ni améliorado.</p>
+            <h3>Aplicação Prática</h3>
+            <p>Parfois, tu peux penser que tu dois être parfaite, ne jamais te tromper ou toujours plaire à tout le monde para que God t'ame. Mais l'amour de Jesus est já completo, telle que tu es. Tu peux te reposer sur cela : Jésus a déjà fait tout ce dont tu as besoin.</p>
+            <h3>Prière</h3>
+            <p>“Cher Dieu, merci parce que le salut est un cadeau de Jésus. Aide-moi à me souvenir que Tu m'aimes même lorsque je me trompe. Et que mes bonnes actions n'achètent pas Ton amor. Amen !”</p>
+          ` 
+        },
+        captions: { color: 'Don de Dieu', bw: 'Page à colorier' },
         buttons: {
           printBoy: 'Imprimer le dessin (Garçon)',
           printGirl: 'Imprimer le dessin (Fille)',
@@ -858,7 +987,7 @@
         },
         images: {
           boy: { color: BOY_COLOR_IMG, bw: BOY_BW_IMG }, 
-          girl: { color: GIRL_COLOR_IMG, bw: GIRL_COLOR_IMG } 
+          girl: { color: GIRL_COLOR_IMG, bw: GIRL_BW_IMG } 
         },
         print: { boy: BOY_PRINT_PDF, girl: GIRL_PRINT_PDF }
       }
@@ -891,7 +1020,7 @@
         
         printBtn.href = cfgLang.print[gender];
         printBtn.textContent = gender === 'boy' ? cfgLang.buttons.printBoy : cfgLang.buttons.printGirl;
-        coloringBtn.textContent = cfgLang.buttons.coloring; // NOVO: Atualiza texto do botão Colorir
+        coloringBtn.textContent = cfgLang.buttons.coloring; 
     }
 
     // Dados das Bandeiras para o Botão de Toggle
@@ -928,7 +1057,7 @@
       const currentRate = speeds[speedIdx].toFixed(2);
       speedBtn.textContent = `${cfgHeader.speed}: ${currentRate}x`; 
       
-      zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`; // NOVO: Atualiza texto do botão Zoom
+      zoomBtn.textContent = `🔍 Zoom: ${currentZoom.toFixed(1)}x`; 
 
       updateContent(currentLang, currentGender);
       // Se o modo colorir estiver ativo, reinicia ele para carregar a imagem correta (linguagem)
@@ -943,7 +1072,7 @@
       
       // 2. Comportamento de rolagem e ocultação de título (mantido)
       mainHeader.classList.remove('scrolled-up'); 
-      devBox.style.display = 'none';
+      // devBox.style.display = 'none'; <--- MANTIDO FORA (o CSS já garante o display: none)
 
       currentGender = gender === 'girl' ? 'girl' : 'boy';
       
@@ -953,7 +1082,7 @@
       stopBtn.removeAttribute('disabled');
       speedBtn.removeAttribute('disabled'); 
       printBtn.removeAttribute('disabled');
-      coloringBtn.removeAttribute('disabled'); // NOVO: Habilita o botão Colorir
+      coloringBtn.removeAttribute('disabled'); 
 
       btnBoy.classList.remove('active-boy', 'active-girl');
       btnGirl.classList.remove('active-boy', 'active-girl');
@@ -1076,14 +1205,15 @@
         utter.pitch = this.gender === 'girl' ? this.pitchGirl : this.pitchBoy;
         
         utter.onstart = () => {
-             // devBox.style.display = 'block'; // REMOVIDO: O texto NUNCA deve ser exibido.
-             devBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
              playBtn.textContent = '⏸️ Pausar Devocional';
         };
         utter.onend = () => {
              this.stop();
              const header = content[currentLang].header;
              playBtn.textContent = header.play;
+             
+             // Salva o progresso ao finalizar o áudio
+             saveProgress();
         };
 
         this.synth.speak(utter);
@@ -1161,6 +1291,9 @@
     // 1. Carrega a paleta de cores
     createColorPalette();
 
+    // Verifica o progresso salvo e ajusta o link do "Próximo Devocional" se necessário.
+    checkAndRedirect(); 
+
     // 2. Carrega o idioma (para os textos dos botões e títulos)
     setLang('pt'); 
 
@@ -1180,19 +1313,26 @@
     stopBtn.setAttribute('disabled', 'disabled');
     speedBtn.setAttribute('disabled', 'disabled');
     printBtn.setAttribute('disabled', 'disabled'); 
-    coloringBtn.setAttribute('disabled', 'disabled'); // Botão Colorir desabilitado
+    coloringBtn.setAttribute('disabled', 'disabled'); 
     
     // Imagem, Devocional e Modo Colorir ocultos
     imagesSection.style.display = 'none';
-    devBox.style.display = 'none';
+    devBox.style.display = 'none'; 
     coloringModeEl.classList.remove('active');
     
     mainHeader.classList.remove('scrolled-up');
     
-    // NOVO: Reseta o estado inicial do zoom
+    // Reseta o estado inicial do zoom
     zoomIdx = 0;
     currentZoom = zoomLevels[0];
     zoomBtn.textContent = `🔍 Zoom: 1.0x`;
+
+    // Garante que o áudio pare ao recarregar ou sair da página.
+    window.addEventListener('unload', () => {
+        if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+    });
 
   </script>
 </body>
