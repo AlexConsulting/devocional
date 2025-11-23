@@ -8,29 +8,76 @@
     :root { --bg: #fffaf2; --text: #2b2b2b; --theme: #4a90e2; }
     body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
 
-    .lang-switch { position: sticky; top: 0; z-index: 10; background: #fff; padding: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-    
-    /* 🎨 NOVO CSS: Botões de idioma compactos (Apenas Bandeiras) */
+    /* NOVO CSS PARA O SELETOR DE IDIOMAS FLUTUANTE */
+    #lang-container {
+        position: fixed; /* Fixado na tela */
+        top: 15px;
+        right: 15px;
+        z-index: 100;
+    }
+
+    /* ÍCONE DE GLOBO */
+    #lang-toggle-btn {
+        background: #fff;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    #lang-toggle-btn:hover {
+        border-color: var(--theme, #4a90e2);
+    }
+
+    /* DROPDOWN DE IDIOMAS */
+    .lang-switch {
+        display: none; /* Escondido por padrão */
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+        padding: 8px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        align-items: flex-end; /* Alinha os botões à direita */
+    }
+    .lang-switch.active {
+        display: flex; /* Exibe ao ser ativado via JS */
+    }
+
+    /* BOTOES DE IDIOMA */
     .lang-switch button { 
       background: #fff; 
       color: #333; 
       border: 2px solid #ccc; 
-      border-radius: 50%; /* Torna-o um círculo */
-      padding: 0; /* Remove padding */
-      width: 38px; /* Largura e altura para um círculo pequeno */
-      height: 38px;
-      line-height: 38px; /* Centraliza verticalmente o emoji */
+      border-radius: 50%; 
+      padding: 0; 
+      width: 36px; /* Um pouco menor */
+      height: 36px; /* Um pouco menor */
       text-align: center;
-      font-size: 1.2rem; /* Aumenta o tamanho da bandeira */
-      font-weight: 600; 
       cursor: pointer; 
       transition: all 0.2s ease; 
-      margin: 0 4px; /* Adiciona um pequeno espaçamento lateral */
+      margin: 0; 
+      display: flex; 
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .lang-switch button img {
+      width: 100%; 
+      height: 100%;
+      object-fit: cover; 
+      border-radius: 50%; 
     }
     .lang-switch button:hover { 
-      border-color: var(--theme, #4a90e2); /* Adiciona a cor tema no hover */
-      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+      border-color: var(--theme, #4a90e2); 
     }
     /* FIM NOVO CSS */
 
@@ -121,7 +168,7 @@
       padding: 10px; 
       text-align: center; 
       border: 2px solid var(--theme); 
-      max-width: 450px; 
+      max-width: 320px; /* DIMINUÍDO DE 450px PARA 320px */
       /* Garante que o figure preencha o máximo permitido na centralização */
       width: 100%; 
     }
@@ -141,11 +188,14 @@
   </style>
 </head>
 <body class="boy">
-  <div class="lang-switch">
-    <button onclick="setLang('pt')" title="Português">🇧🇷</button>
-    <button onclick="setLang('en')" title="English">🇺🇸</button>
-    <button onclick="setLang('es')" title="Español">🇪🇸</button>
-    <button onclick="setLang('fr')" title="Français">🇫🇷</button>
+  <div id="lang-container">
+    <button id="lang-toggle-btn" title="Selecionar Idioma" onclick="toggleLangSwitch()">🌐</button>
+    <div class="lang-switch">
+      <button onclick="setLang('pt')" title="Português"><img src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Bandeira do Brasil"></button>
+      <button onclick="setLang('en')" title="English"><img src="https://flagicons.lipis.dev/flags/4x3/us.svg" alt="US Flag"></button>
+      <button onclick="setLang('es')" title="Español"><img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Bandera de España"></button>
+      <button onclick="setLang('fr')" title="Français"><img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" alt="Drapeau de la France"></button>
+    </div>
   </div>
 
   <header>
@@ -198,6 +248,12 @@
     const btnBoy = document.getElementById('btnBoy');
     const btnGirl = document.getElementById('btnGirl');
     const imagesSection = document.getElementById('imagesSection'); 
+    const langSwitchEl = document.querySelector('.lang-switch'); // NOVO: Referência para o dropdown
+
+    // Funções de UI (NOVO: Toggle do seletor de idiomas)
+    function toggleLangSwitch() {
+        langSwitchEl.classList.toggle('active');
+    }
 
     // NOVOS CAMINHOS DE IMAGEM UNIFICADOS (AGORA RELATIVOS, CONFORME SOLICITADO)
     const BOY_COLOR_IMG = './img/dia-1/boy.png'; 
@@ -372,7 +428,7 @@
             <p><strong>Galates 1:8-9 (PDV):</strong> « Que la malédiction de Dieu tombe sur ceux qui annoncent un message différent de celui que nous avons annoncé. »</p>
             <h3>Résumé</h3>
             <p>Il n’y a qu’un message incroyable pour devenir amis de Dieu : le salut est un cadeau que Jésus nous offre. Ce n’est pas un trophée que l’on gagne en faisant tout parfaitement ou en suivant beaucoup de règles. C’est seulement par la grâce de Dieu — le plus précieux des cadeaux.</p>
-            <h3>Aplicação Prática</h3>
+            <h3>Application Pratique</h3>
             <p>As-tu déjà pensé que tu dois être le meilleur, toujours obéir ou ne jamais te tromper pour que Dieu t’aime davantage ? Non ! Jésus a déjà tout fait pour toi. Remercie et fais-Lui confiance : Son amour ne dépend pas de tes performances.</p>
             <h3>Prière</h3>
             <p>« Cher Dieu, merci parce que le salut est un cadeau de Jésus. Aide-moi à me rappeler que Tu m’aimes même quand je me trompe. Et que mes bonnes actions n’achètent pas Ton amour. Amen ! »</p>
@@ -427,7 +483,7 @@
         imgColorSrc.alt = gender === 'boy'
             ? (langCode === 'pt' ? 'Menino recebendo um presente colorido' :
             langCode === 'en' ? 'Boy receiving a colorful gift' :
-            langCode === 'es' ? 'Niño recibindo um regalo colorido' :
+            langCode === 'es' ? 'Niño recibiendo um regalo colorido' :
             'Garçon recevant un cadeau coloré')
             : (langCode === 'pt' ? 'Menina recebendo um presente colorido' :
             langCode === 'en' ? 'Girl receiving a colorful gift' :
@@ -449,12 +505,13 @@
       const cfgHeader = cfgLang.header;
 
       document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : currentLang;
+      langSwitchEl.classList.remove('active'); // NOVO: Esconde o seletor após a seleção
 
       // 1. Atualiza o título da aba e o título principal
       htmlTitleEl.textContent = cfgHeader.htmlTitle;
       mainTitleEl.textContent = cfgHeader.mainTitle;
       
-      // 2. Atualiza textos dos botões de idioma e legendas
+      // 2. Atualiza textos dos botões de gênero e legendas
       btnBoy.textContent = cfgLang.buttons.boy;
       btnGirl.textContent = cfgLang.buttons.girl;
       captionColor.textContent = cfgLang.captions.color;
@@ -495,13 +552,7 @@
       // 4. Exibe a seção de imagens (TIRANDO O DISPLAY: NONE DO CSS)
       imagesSection.style.display = 'flex';
 
-      // 5. NOVO CÓDIGO: Rola suavemente para a seção de imagens ou conteúdo principal
-      const targetElement = document.querySelector('.images') || document.querySelector('.container');
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-      // 6. Atualiza conteúdo e tema do body (chama updateContent)
+      // 5. Atualiza conteúdo e tema do body (chama updateContent)
       updateContent(currentLang, currentGender);
 
       // Garante que o texto do play/pause seja redefinido para 'Play' após a mudança de conteúdo/gênero
