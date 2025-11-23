@@ -221,6 +221,37 @@
 
     body.boy { --theme: #4a90e2; }
     body.girl { --theme: #e75480; }
+
+
+    /* ********************************************************** */
+    /* NOVO: AJUSTES PARA MOBILE (Media Query) */
+    /* ********************************************************** */
+    @media (max-width: 600px) {
+        /* 1. Título principal */
+        .title {
+            font-size: 1.5rem; /* Reduz o tamanho da fonte do título principal */
+            margin-bottom: 4px;
+        }
+
+        /* 2. Subtítulo */
+        .subtitle {
+            margin-top: 4px; /* Adiciona um pequeno espaçamento no topo do subtítulo */
+            margin-bottom: 12px; /* Espaçamento menor abaixo */
+        }
+
+        /* 3. Bandeira de Idiomas (Toggle) */
+        #lang-container {
+            top: 8px; /* Move para mais perto do topo */
+            right: 8px; /* Move para mais perto da direita */
+        }
+        #lang-toggle-btn {
+            width: 38px; /* Reduz o tamanho do botão (de 44px) */
+            height: 38px;
+        }
+    }
+    /* ********************************************************** */
+
+
   </style>
 </head>
 <body class="boy neutral-hover">
@@ -494,7 +525,7 @@
         },
         captions: { color: 'Image en couleur', bw: 'Page à colorier' },
         buttons: {
-          printBoy: 'Imprimir le dessin (Garçon)',
+          printBoy: 'Imprimer le dessin (Garçon)',
           printGirl: 'Imprimer le dessin (Fille)',
           next: 'Dévotion suivante',
           boy: '👦 Je suis un Garçon',
@@ -659,7 +690,7 @@
       }
     }
 
-    // Narração — Web Speech API (Corrigido para não exibir o texto)
+    // Narração — Web Speech API (Mantido inalterado)
     const voicePrefs = {
       pt: { boy: ['Julio','Ricardo','Felipe'], girl: ['Francisca','Heloisa','Camila'] },
       en: { boy: ['Guy','Brian','Christopher'], girl: ['Aria','Jenny','Sarah'] },
