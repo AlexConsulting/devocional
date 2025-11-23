@@ -98,11 +98,12 @@
     .title { font-size: 1.8rem; margin: 0 0 8px; color: var(--theme); transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease; }
     .subtitle { color: #555; margin: 0 0 16px; transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, margin 0.3s ease; }
 
-    /* ESTILO PARA OCULTAR TÍTULO E SUBTÍTULO APÓS ROLAGEM */
+    /* ESTILO PARA OCULTAR TÍTULO E SUBTÍTULO APÓS ROLAGEM (OU SELEÇÃO DE GÊNERO) */
     header.scrolled-up {
         padding-top: 8px; /* Reduz o padding para "encolher" o header */
         padding-bottom: 8px;
     }
+
 
     header.scrolled-up #mainTitle,
     header.scrolled-up #subtitle {
@@ -114,6 +115,13 @@
         transform: translateY(-10px);
         pointer-events: none;
     }
+    
+    /* CORREÇÃO ACRESCENTADA: Oculta o botão de acessibilidade quando o header está "encolhido" */
+    header.scrolled-up .accessibility-switch {
+        display: none;
+    }
+    /* FIM DA CORREÇÃO */
+
 
     .container { max-width: 880px; margin: 0 auto; padding: 16px; }
     .card { background: #fff; border-radius: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.08); padding: 16px; margin-bottom: 20px; }
@@ -350,7 +358,32 @@
         }
     }
     /* ********************************************************** */
-
+    
+    /* NOVOS ESTILOS PARA O BOTÃO DE ACESSIBILIDADE EM LIBRAS */
+    .accessibility-switch { 
+        margin: 12px 0 20px; 
+        text-align: center; 
+    }
+    
+    /* Definindo a cor de tema para Acessibilidade */
+    #btnAccessibility {
+        border-color: #008080; /* Cor de acessibilidade (Verde-Azulado) */
+        color: #008080;
+    }
+    
+    body:not(.neutral-hover) #btnAccessibility:hover {
+        background: #008080; 
+        border-color: #008080; 
+        color: #fff;
+    }
+    
+    /* AJUSTE: Ocupa menos espaço em telas menores */
+    @media (max-width: 600px) {
+        .accessibility-switch {
+            margin: 8px 0 16px;
+        }
+    }
+    /* FIM DOS NOVOS ESTILOS PARA ACESSIBILIDADE */
 
   </style>
 </head>
@@ -371,6 +404,11 @@
     <h1 id="mainTitle" class="title">Devocional Infantil</h1>
     <p id="subtitle" class="subtitle"></p>
 
+    <div class="accessibility-switch">
+      <a id="btnAccessibility" class="link-btn" href="./acessibilidade/dia-1/index.html">
+        <span role="img" aria-label="Acessibilidade Libras">🤟</span> Acessibilidade para Surdos 
+      </a>
+    </div>
     <div class="gender-switch">
       <button id="btnBoy" onclick="setGender('boy')">👦 Sou Menino</button>
       <button id="btnGirl" onclick="setGender('girl')">👧 Sou Menina</button>
@@ -384,8 +422,7 @@
     <section id="imagesSection" class="images">
       <figure><img id="imgColorSrc" src="" alt="" /><figcaption id="captionColor"></figcaption></figure>
     </section>
-  </header>
-
+</header>
   <main class="container">
     <div id="devocional" class="card"></div>
     
@@ -411,6 +448,9 @@
       <a id="nextBtn" class="link-btn" href="/devocionais/dia-2.html" onclick="saveProgress()">Próximo devocional</a>
     </div>
   </main>
+  <footer>
+    <center><p>Devocional adaptado e criado por Alex Silva | Direitos Reservados 2025  <span id="footerText"></span></p></center>
+    </footer>
 
   <script>
     // Estado
