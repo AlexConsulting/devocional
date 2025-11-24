@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Devocional Acessível - Libras - Dia 1</title>
+    
+    <style>
+        /* CSS Base */
+        :root { 
+            --bg: #fffaf2; 
+            --text: #2b2b2b; 
+            --theme: #008080; 
+        }
+        body { 
+            margin: 0; 
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .container { max-width: 880px; margin: 0 auto; padding: 16px; }
+        .card { background: #fff; border-radius: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.08); padding: 24px; margin-bottom: 20px; }
+        header { padding: 16px; text-align: center; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        .title { 
+            font-size: 1.8rem; 
+            margin: 0 0 16px; 
+            color: var(--theme);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .flag-icon-title { height: 24px; width: auto; border-radius: 2px; margin-left: 10px; }
+        .section-title { color: var(--theme); border-bottom: 2px solid var(--theme); padding-bottom: 5px; margin-top: 30px; font-size: 1.6rem; }
+        .topic { color: #555; margin-top: 20px; margin-bottom: 5px; font-size: 1.2rem; }
+        .bible-ref { font-weight: 600; color: #008080; display: block; margin-bottom: 10px; }
+        .verse { font-style: italic; font-size: 1.1rem; color: #777; border-left: 4px solid #ccc; padding-left: 10px; margin: 20px 0; }
+
+        /* Estilo do botão Voltar (mantido do original) */
+        #btnReturn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid #555; 
+            background: transparent;
+            color: #555; 
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        #btnReturn:hover { background: #555; border-color: #555; color: #fff; }
+        
+        /* NOVO ESTILO: Container e Botão no Final do Card */
+        .footer-buttons {
+            text-align: center; /* Centraliza o botão */
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #eee; /* Linha de separação */
+        }
+        
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            /* Estilos de destaque para "Quero Colorir" */
+            border: 2px solid var(--theme);
+            background: var(--theme);
+            color: #fff;
+            border-radius: 999px;
+            padding: 12px 24px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            background: #006666; /* Tom mais escuro no hover */
+            border-color: #006666;
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 600px) {
+             .title { font-size: 1.5rem; }
+            .card { padding: 16px; }
+        }
+
+        /* CSS para Forçar Posicionamento do V-Libras (Solução Comprovada) */
+        div[vw] {
+            position: fixed !important;
+            right: 15px !important; 
+            left: auto !important; 
+            top: 60% !important; 
+            bottom: auto !important; 
+            z-index: 998 !important; 
+        }
+        @media (max-width: 600px) {
+            div[vw] {
+                top: 72% !important; 
+                right: 5px !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="container">
+            
+            <h1 class="title">
+                Devocional em Libras
+                <img src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Bandeira do Brasil" class="flag-icon-title">
+            </h1>
+            
+            <a id="btnReturn" href="../../index.html">
+                ⬅️ Voltar ao Devocional Principal
+            </a>
+            
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="section-title">Dia 2: Deus Criou Menino e Menina</h2>
+            
+            <p class="bible-ref">📖 Gênesis 1:27</p>
+            
+            <p class="verse">
+                “Deus criou o ser humano. Criou homem e criou mulher.””
+            </p>
+            
+            <div id="devocional-acessivel">
+                <p>
+                    Olá! Bem-vindo ao seu devocional adaptado. **Lembre-se de clicar no boneco VLibras** que está na lateral da tela para ver a tradução em Libras do texto.
+                </p>
+                
+                <h3 class="topic">1. O QUE APRENDEMOS?</h3>
+                <p>
+                    Deus é o Criador. Ele fez todas as coisas. E Ele criou duas pessoas diferentes: 👦 Menino e 👧 Menina. Isso é o que a Bíblia ensina. É a verdade de Deus.
+					Nós acreditamos no que Deus disse.
+                </p>
+                
+                <h3 class="topic">2. CRIAÇÃO DE DEUS</h3>
+                <p>
+                    Deus fez o menino/homem e a menina/mulher com amor. Ele deu um presente especial: ❤️ valor, ❤️ propósito, ❤️ vida. Cada pessoa é importante porque foi criada por Deus.
+                </p>
+                
+                <h3 class="topic">3. SEU VALOR</h3>
+                <p>
+                    Você é muito precioso. Deus fez você com cuidado. Deus não erra. Ele criou você do jeitinho que planejou. Você pode confiar:
+					👉 Deus criou homem. 👉 Deus criou mulher. E Deus ama você de verdade.
+                </p>
+
+                <h3 class="topic">4. VAMOS ORAR!</h3>
+                <p>
+                    Deus, obrigado porque o Senhor criou o homem e a mulher. Obrigado porque o Senhor cuida de nós. Obrigado porque eu tenho valor. Amém.
+                </p>
+				<h3 class="topic">5. COLORIR DIGITALMENTE!</h3>
+                <p>
+                   Clique no botão “Quero Colorir”, depois escolha “Menino” ou “Menina”, e então clique em “Colorir Digital” para brincar e se divertir.
+                </p>
+            </div>
+            
+            <div class="footer-buttons">
+                <a id="btnColoring" class="action-btn" href="../../index.html">
+                    🎨 Quero Colorir
+                </a>
+            </div>
+
+        </div>
+    </div>
+    
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app', 'vw-plugin-wrapper');
+    </script>
+	<footer>
+    <center><p>Devocional adaptado e criado por Alex Silva | Direitos Reservados 2025  <span id="footerText"></span></p></center>
+    </footer>
+</body>
+</html>
